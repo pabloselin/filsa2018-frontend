@@ -1,0 +1,4 @@
+{
+	"api_url.production": "http://localhost/wp-json",
+	"api_url.development": "http://localhost/wp-json"
+}
