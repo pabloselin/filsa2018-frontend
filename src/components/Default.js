@@ -1,7 +1,20 @@
 import React, { Component, Fragment } from "react";
 import { Container, Header } from "semantic-ui-react";
 import ReactHtmlParser from "react-html-parser";
+import styled from "styled-components";
 import api from "../utils/api.js";
+
+const Title = styled(Header)`
+	margin-top: 24px !important;`
+
+const MainContentText = styled.div`
+	margin-bottom: 36px;
+
+	img {
+		max-width: 100%;
+		height: auto;
+	}
+`
 
 class Default extends Component {
 	constructor(props) {
@@ -31,26 +44,11 @@ class Default extends Component {
 			content = (
 				<Fragment>
 					<Container text className="maincontent">
-						<Header as="h1">{this.state.title}</Header>
-						<div className="maincontent-text">
+						<Title as="h1">{this.state.title}</Title>
+						<MainContentText className="maincontent-text">
 							{ReactHtmlParser(this.state.content)}
-						</div>
+						</MainContentText>
 					</Container>
-					<style>
-						{`
-						h1.ui.header:first-child {
-							margin-top: 24px;
-						}
-
-						.maincontent img {
-							max-width: 100%; 
-						}
-
-						.maincontent-text {
-							margin-bottom: 36px;
-						}
-					`}
-					</style>
 				</Fragment>
 			);
 		}

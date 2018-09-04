@@ -1,11 +1,12 @@
 import React, { Component } from "react";
 import { BrowserRouter as Router, Route } from "react-router-dom";
-import { Container } from "semantic-ui-react";
+import { Container, Responsive } from "semantic-ui-react";
 import Header from "./components/Header";
 import PreHeader from "./components/PreHeader";
 import Home from "./components/Home";
 import Default from "./components/Default";
 import MenuTop from "./components/MenuTop";
+import MenuMobile from "./components/MenuMobile";
 import api from "./utils/api.js";
 import config from "./config.json";
 
@@ -15,7 +16,11 @@ class Filsa2018 extends Component {
 
     this.state = {
       headerimg: null,
-      menu_principal: null
+      menu_principal: null,
+      twitter: null,
+      facebook: null,
+      instagram: null,
+      flickr: null
     };
   }
 
@@ -32,10 +37,34 @@ class Filsa2018 extends Component {
         });
       });
     });
+    //Redes
+    api.get("/filsa2018/v1/options/filsa2018_twitter").then(res => {
+      this.setState({
+        twitter: res.data
+      });
+    });
+    api.get("/filsa2018/v1/options/filsa2018_facebook").then(res => {
+      this.setState({
+        facebook: res.data
+      });
+    });
+    api.get("/filsa2018/v1/options/filsa2018_instagram").then(res => {
+      this.setState({
+        instagram: res.data
+      });
+    });
+    api.get("/filsa2018/v1/options/filsa2018_flickr").then(res => {
+      this.setState({
+        flickr: res.data
+      });
+    });
   }
 
   refineURL(url) {
-    return config["base_path." + process.env.NODE_ENV] + url.substring(config["base_url." + process.env.NODE_ENV].length);
+    return (
+      config["base_path." + process.env.NODE_ENV] +
+      url.substring(config["base_url." + process.env.NODE_ENV].length)
+    );
   }
 
   menus() {
@@ -44,6 +73,14 @@ class Filsa2018 extends Component {
       menuitems = <MenuTop menuitems={this.state.menu_principal} />;
     }
     return menuitems;
+  }
+
+  mobilemenu() {
+    let menumobileitems;
+    if(this.state.menu_principal !== null) {
+      menumobileitems = <MenuMobile menuitems={this.state.menu_principal} />
+    }
+    return menumobileitems;
   }
 
   routes() {
@@ -63,19 +100,31 @@ class Filsa2018 extends Component {
 
   render() {
     return (
-      <div>
-        <PreHeader />
-        <Header headerimg={this.state.headerimg} />
-        <Container>
-          <Router>
+      <Router>
+        <div>
+          <Responsive {...Responsive.onlyComputer}>
+            <PreHeader
+              twitter={this.state.twitter}
+              facebook={this.state.facebook}
+              instagram={this.state.instagram}
+              flickr={this.state.flickr}
+            />
+          </Responsive>
+          <Header headerimg={this.state.headerimg} />
+          {this.mobilemenu()}
+          <Container>
             <div>
               {this.menus()}
-              <Route exact path="/" component={Home} />
+              <Route
+                exact
+                path={config["base_path." + process.env.NODE_ENV]}
+                component={Home}
+              />
               {this.routes()}
             </div>
-          </Router>
-        </Container>
-      </div>
+          </Container>
+        </div>
+      </Router>
     );
   }
 }
