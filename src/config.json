@@ -1,4 +1,6 @@
 {
 	"api_url.production": "http://localhost/wp-json",
-	"api_url.development": "http://localhost/wp-json"
+	"api_url.development": "http://localhost/wp-json",
+	"base_url.production": "https://camaradellibro.cl/ferias/filsa/filsa2018/",
+	"base_url.development": "http://localhost/ferias/filsa/filsa2018/"
 }
