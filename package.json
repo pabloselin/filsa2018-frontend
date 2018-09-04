@@ -15,7 +15,7 @@
   },
   "scripts": {
     "start": "react-scripts start",
-    "build": "react-scripts build",
+    "build": "react-scripts build && rm -rf ~/Documentos/code/php/cchl/public/wp-content/plugins/filsa2018/public/partials/ && mv build ~/Documentos/code/php/cchl/public/wp-content/plugins/filsa2018/public/partials && cp ~/Documentos/code/php/cchl/public/wp-content/plugins/filsa2018/public/partials/index.html ~/Documentos/code/php/cchl/public/wp-content/plugins/filsa2018/public/partials/filsa2018-public-display.php",
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject"
   }

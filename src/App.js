@@ -35,7 +35,7 @@ class Filsa2018 extends Component {
   }
 
   refineURL(url) {
-    return url.substring(config["base_url." + process.env.NODE_ENV].length);
+    return config["base_path." + process.env.NODE_ENV] + url.substring(config["base_url." + process.env.NODE_ENV].length);
   }
 
   menus() {
