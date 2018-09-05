@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { BrowserRouter as Router, Route } from "react-router-dom";
+import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import { Container, Responsive } from "semantic-ui-react";
 import ReactGA from "react-ga";
 import Header from "./components/Header";
@@ -8,14 +8,18 @@ import Home from "./components/Home";
 import Default from "./components/Default";
 import MenuTop from "./components/MenuTop";
 import MenuMobile from "./components/MenuMobile";
+import SingleNoticia from "./components/SingleNoticia";
 import api from "./utils/api";
-import withTracker from "./utils/withTracker";
 import config from "./config.json";
 
-ReactGA.initialize(config["google_analytics_ua"], {
-  testMode: true,
-  debug: true
-});
+if (process.env.NODE_ENV === "development") {
+  ReactGA.initialize(config["google_analytics_ua"], {
+    testMode: true,
+    debug: true
+  });
+} else {
+  ReactGA.initialize(config["google_analytics_ua"]);
+}
 
 class Filsa2018 extends Component {
   constructor(props) {
@@ -24,45 +28,29 @@ class Filsa2018 extends Component {
     this.state = {
       headerimg: null,
       menu_principal: null,
+      menu_noticias: null,
       twitter: null,
       facebook: null,
       instagram: null,
-      flickr: null
+      flickr: null,
+      params: null
     };
   }
 
   componentDidMount() {
-    //Header
-    api.get("/filsa2018/v1/options/filsa2018_cabecera_escritorio").then(res => {
-      this.setState({ headerimg: res.data });
-    });
-    //Menu
-    api.get("/filsa2018/v1/options/filsa2018_menu").then(res => {
-      api.get("/filsa2018/v1/menus/" + res.data).then(res => {
-        this.setState({
-          menu_principal: res.data
-        });
-      });
-    });
-    //Redes
-    api.get("/filsa2018/v1/options/filsa2018_twitter").then(res => {
+    //General options
+    api.get("/filsa2018/v1/params/").then(res => {
+      this.setState({ params: res.data });
+      this.setState({ facebook: this.state.params["filsa2018_facebook"] });
+      this.setState({ twitter: this.state.params["filsa2018_twitter"] });
+      this.setState({ instagram: this.state.params["filsa2018_instagram"] });
+      this.setState({ flickr: this.state.params["filsa2018_flickr"] });
       this.setState({
-        twitter: res.data
+        headerimg: this.state.params["filsa2018_cabecera_escritorio"]
       });
-    });
-    api.get("/filsa2018/v1/options/filsa2018_facebook").then(res => {
+      this.setState({ menu_principal: this.state.params["filsa2018_menu"] });
       this.setState({
-        facebook: res.data
-      });
-    });
-    api.get("/filsa2018/v1/options/filsa2018_instagram").then(res => {
-      this.setState({
-        instagram: res.data
-      });
-    });
-    api.get("/filsa2018/v1/options/filsa2018_flickr").then(res => {
-      this.setState({
-        flickr: res.data
+        menu_noticias: this.state.params["filsa2018_menunoticias"]
       });
     });
   }
@@ -72,6 +60,12 @@ class Filsa2018 extends Component {
       config["base_path." + process.env.NODE_ENV] +
       url.substring(config["base_url." + process.env.NODE_ENV].length)
     );
+  }
+
+  refineNewsURL(url) {
+    let slugsegment = url.split('/');
+    slugsegment = slugsegment[slugsegment.length -2];
+    return '/noticias/' + slugsegment;
   }
 
   menus() {
@@ -99,7 +93,9 @@ class Filsa2018 extends Component {
             <Route
               key={item.object_id}
               path={this.refineURL(item.url)}
-              component={withTracker((props) => <Default type={item.object} id={item.object_id} />)}
+              render={props => (
+                <Default {...props} type={item.object} id={item.object_id} />
+              )}
             />
           );
         } else {
@@ -109,6 +105,22 @@ class Filsa2018 extends Component {
     }
 
     return routeitems;
+  }
+
+  newsRoutes() {
+    let newsRoutes;
+    if (this.state.menu_noticias !== null) {
+      newsRoutes = this.state.menu_noticias.map(noticia => (
+        <Route
+          key={noticia.object_id}
+          path={this.refineNewsURL(noticia.url)}
+          render={props => (
+            <SingleNoticia {...props} type={noticia.object} id={noticia.object_id} title={noticia.title} />
+          )}
+        />
+      ));
+    }
+    return newsRoutes;
   }
 
   render() {
@@ -128,12 +140,17 @@ class Filsa2018 extends Component {
           <Container>
             <div>
               {this.menus()}
-              <Route
-                exact
-                path={config["base_path." + process.env.NODE_ENV]}
-                component={withTracker(Home)}
-              />
-              {this.routes()}
+              <Switch>
+                <Route
+                  exact
+                  path={config["base_path." + process.env.NODE_ENV]}
+                  render={props => (
+                    <Home {...props} noticias={this.state.menu_noticias} />
+                  )}
+                />
+                {this.routes()}
+                {this.newsRoutes()}
+              </Switch>
             </div>
           </Container>
         </div>

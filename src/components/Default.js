@@ -1,11 +1,13 @@
 import React, { Component, Fragment } from "react";
-import { Container, Header } from "semantic-ui-react";
+import { Container, Header, Icon } from "semantic-ui-react";
 import ReactHtmlParser from "react-html-parser";
+import ReactGA from "react-ga";
 import styled from "styled-components";
 import api from "../utils/api.js";
 
 const Title = styled(Header)`
-	margin-top: 24px !important;`
+	margin-top: 24px !important;
+`;
 
 const MainContentText = styled.div`
 	margin-bottom: 36px;
@@ -14,7 +16,7 @@ const MainContentText = styled.div`
 		max-width: 100%;
 		height: auto;
 	}
-`
+`;
 
 class Default extends Component {
 	constructor(props) {
@@ -26,18 +28,29 @@ class Default extends Component {
 		};
 	}
 
+	trackPage(page) {
+		ReactGA.set({
+			page
+		});
+		ReactGA.pageview(page);
+	}
+
 	componentDidMount() {
-		if(this.props.type === 'filsa-2018') {
-			api.get("/wp/v2/filsa-2018/" + this.props.id).then(res => {
-				this.setState({
-					fetched: true,
-					title: res.data.title.rendered,
-					content: res.data.content.rendered
+		this.trackPage(this.props.location.pathname);
+		//console.log(this.props);
+
+		if (this.props.type === "filsa-2018") {
+			api.get("/wp/v2/filsa-2018/" + this.props.id)
+				.then(res => {
+					this.setState({
+						fetched: true,
+						title: res.data.title.rendered,
+						content: res.data.content.rendered
+					});
+				})
+				.catch(error => {
+					console.log(error);
 				});
-			})
-			.catch(error => {
-				console.log(error);
-			});
 		}
 	}
 
@@ -52,6 +65,12 @@ class Default extends Component {
 							{ReactHtmlParser(this.state.content)}
 						</MainContentText>
 					</Container>
+				</Fragment>
+			);
+		} else {
+			content = (
+				<Fragment>
+					<Container text className="loading"><Icon loading name="asterisk" /></Container>
 				</Fragment>
 			);
 		}

@@ -11,14 +11,28 @@ import styled from "styled-components";
 import config from "../config.json";
 
 const Toggler = styled(Button)`
-	position:absolute;
-	top:0;
-	left:0;
+	&& {
+		position:absolute;
+		top:0;
+		left:0;
+		color: white;
+		border-radius: 0;
+		font-size: 24px;
+		padding: 12px;
+		i {
+			margin: 0 !important;
+		}
+	}
 `
 
 const StyledMenu = styled(Menu)`
 	&& {
-	border-radius: 0;
+		border-radius: 0;
+		position: absolute;
+		z-index: 10;
+		a {
+			text-transform: uppercase;
+		}
 	}
 `
 
@@ -47,7 +61,7 @@ class MenuMobile extends Component {
 
 		return (
 			<Responsive {...Responsive.onlyMobile}>
-				<Toggler onClick={this.handleVisibility}><Icon name="bars" /></Toggler>
+				<Toggler color="black" onClick={this.handleVisibility}><Icon name="bars" /></Toggler>
 				<Transition.Group animation="slide down" duration={500}>
 					{visible && (
 						<StyledMenu inverted vertical fluid animation="overlay">
