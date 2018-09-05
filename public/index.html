@@ -19,6 +19,13 @@
       work correctly both with client-side routing and a non-root public URL.
       Learn how to configure a non-root public URL by running `npm run build`.
     -->
+    <noscript>
+    <?php 
+      do_action('wpseo_head');
+      do_action('wpseo_opengraph');
+      ?>
+    </noscript>
+
     <title>FILSA 2018 - Cámara del Libro</title>
   </head>
   <body>

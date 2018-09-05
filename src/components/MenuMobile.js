@@ -3,7 +3,8 @@ import {
 	Button,
 	Menu,
 	Transition,
-	Responsive
+	Responsive,
+	Icon
 } from "semantic-ui-react";
 import { NavLink } from "react-router-dom";
 import styled from "styled-components";
@@ -13,6 +14,12 @@ const Toggler = styled(Button)`
 	position:absolute;
 	top:0;
 	left:0;
+`
+
+const StyledMenu = styled(Menu)`
+	&& {
+	border-radius: 0;
+	}
 `
 
 class MenuMobile extends Component {
@@ -40,10 +47,10 @@ class MenuMobile extends Component {
 
 		return (
 			<Responsive {...Responsive.onlyMobile}>
-				<Toggler onClick={this.handleVisibility}>Menu</Toggler>
+				<Toggler onClick={this.handleVisibility}><Icon name="bars" /></Toggler>
 				<Transition.Group animation="slide down" duration={500}>
 					{visible && (
-						<Menu inverted vertical animation="overlay">
+						<StyledMenu inverted vertical fluid animation="overlay">
 							<Menu.Item key="home">
 								<NavLink
 									to={
@@ -52,7 +59,7 @@ class MenuMobile extends Component {
 										]
 									}
 								>
-									Inicio
+									<Icon name="home" /> Inicio
 								</NavLink>
 							</Menu.Item>
 							{this.props.menuitems.map((item, index) => (
@@ -62,7 +69,7 @@ class MenuMobile extends Component {
 									</NavLink>
 								</Menu.Item>
 							))}
-						</Menu>
+						</StyledMenu>
 					)}
 				</Transition.Group>
 			</Responsive>

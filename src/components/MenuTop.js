@@ -1,7 +1,15 @@
 import React, { Component } from "react";
-import { Menu, Responsive } from "semantic-ui-react";
+import { Menu, Responsive, Icon } from "semantic-ui-react";
 import { NavLink } from "react-router-dom";
+import styled from "styled-components";
 import config from "../config.json";
+
+
+const StyledMenu = styled(Menu)`
+	&& {
+		border-radius: 0;	
+	}
+`
 
 class MenuTop extends Component {
 	refineURL(url) {
@@ -14,12 +22,12 @@ class MenuTop extends Component {
 	render() {
 		return (
 			<Responsive {...Responsive.onlyComputer}>
-				<Menu inverted>
+				<StyledMenu inverted>
 					<Menu.Item key="home">
 						<NavLink
 							to={config["base_path." + process.env.NODE_ENV]}
 						>
-							Inicio
+							<Icon name="home"/> Inicio
 						</NavLink>
 					</Menu.Item>
 					{this.props.menuitems.map((item, index) => (
@@ -29,7 +37,7 @@ class MenuTop extends Component {
 							</NavLink>
 						</Menu.Item>
 					))}
-				</Menu>
+				</StyledMenu>
 			</Responsive>
 		);
 	}

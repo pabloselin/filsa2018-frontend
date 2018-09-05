@@ -1,14 +1,21 @@
 import React, { Component } from "react";
 import { BrowserRouter as Router, Route } from "react-router-dom";
 import { Container, Responsive } from "semantic-ui-react";
+import ReactGA from "react-ga";
 import Header from "./components/Header";
 import PreHeader from "./components/PreHeader";
 import Home from "./components/Home";
 import Default from "./components/Default";
 import MenuTop from "./components/MenuTop";
 import MenuMobile from "./components/MenuMobile";
-import api from "./utils/api.js";
+import api from "./utils/api";
+import withTracker from "./utils/withTracker";
 import config from "./config.json";
+
+ReactGA.initialize(config["google_analytics_ua"], {
+  testMode: true,
+  debug: true
+});
 
 class Filsa2018 extends Component {
   constructor(props) {
@@ -77,8 +84,8 @@ class Filsa2018 extends Component {
 
   mobilemenu() {
     let menumobileitems;
-    if(this.state.menu_principal !== null) {
-      menumobileitems = <MenuMobile menuitems={this.state.menu_principal} />
+    if (this.state.menu_principal !== null) {
+      menumobileitems = <MenuMobile menuitems={this.state.menu_principal} />;
     }
     return menumobileitems;
   }
@@ -86,13 +93,19 @@ class Filsa2018 extends Component {
   routes() {
     let routeitems;
     if (this.state.menu_principal !== null) {
-      routeitems = this.state.menu_principal.map(item => (
-        <Route
-          key={item.object_id}
-          path={this.refineURL(item.url)}
-          component={render => <Default id={item.object_id} />}
-        />
-      ));
+      routeitems = this.state.menu_principal.map(item => {
+        if (item.object === "filsa-2018") {
+          return (
+            <Route
+              key={item.object_id}
+              path={this.refineURL(item.url)}
+              component={withTracker((props) => <Default type={item.object} id={item.object_id} />)}
+            />
+          );
+        } else {
+          return null;
+        }
+      });
     }
 
     return routeitems;
@@ -118,7 +131,7 @@ class Filsa2018 extends Component {
               <Route
                 exact
                 path={config["base_path." + process.env.NODE_ENV]}
-                component={Home}
+                component={withTracker(Home)}
               />
               {this.routes()}
             </div>

@@ -20,27 +20,30 @@ class Default extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
+			fetched: false,
 			content: null,
-			title: null,
-			nopost: null
+			title: null
 		};
 	}
 
 	componentDidMount() {
-		api.get("/wp/v2/filsa-2018/" + this.props.id).then(res => {
-			this.setState({
-				title: res.data.title.rendered,
-				content: res.data.content.rendered
+		if(this.props.type === 'filsa-2018') {
+			api.get("/wp/v2/filsa-2018/" + this.props.id).then(res => {
+				this.setState({
+					fetched: true,
+					title: res.data.title.rendered,
+					content: res.data.content.rendered
+				});
+			})
+			.catch(error => {
+				console.log(error);
 			});
-		})
-		.catch(error => {
-			this.setState({nopost: true});
-		});
+		}
 	}
 
 	renderContent() {
 		let content;
-		if (this.state.title !== null) {
+		if (this.state.fetched === true) {
 			content = (
 				<Fragment>
 					<Container text className="maincontent">
