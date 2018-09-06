@@ -36,7 +36,7 @@ class Noticia extends Component {
 		if(this.state.slug !== null) {
 			link = <Header as="h3">
 					<Link
-						to={"/ferias/filsa/filsa-2018/noticias/" + this.state.slug}
+						to={"/ferias/filsa/filsa-2018/noticias/" + this.state.slug + "/"}
 						onClick={this.openLink}
 					>
 						{this.props.title}

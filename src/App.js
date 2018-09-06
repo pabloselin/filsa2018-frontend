@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import { Container, Responsive } from "semantic-ui-react";
 import ReactGA from "react-ga";
+import styled from "styled-components";
 import Header from "./components/Header";
 import PreHeader from "./components/PreHeader";
 import Home from "./components/Home";
@@ -21,6 +22,15 @@ if (process.env.NODE_ENV === "development") {
   ReactGA.initialize(config["google_analytics_ua"]);
 }
 
+
+const MainContainer = styled(Container)`
+  && {
+    @media only screen and (min-width: 1200px) {
+      width: 1140px;
+    }
+  }
+`
+
 class Filsa2018 extends Component {
   constructor(props) {
     super(props);
@@ -29,6 +39,8 @@ class Filsa2018 extends Component {
       headerimg: null,
       menu_principal: null,
       menu_noticias: null,
+      intro: null,
+      title: null,
       twitter: null,
       facebook: null,
       instagram: null,
@@ -40,17 +52,17 @@ class Filsa2018 extends Component {
   componentDidMount() {
     //General options
     api.get("/filsa2018/v1/params/").then(res => {
-      this.setState({ params: res.data });
-      this.setState({ facebook: this.state.params["filsa2018_facebook"] });
-      this.setState({ twitter: this.state.params["filsa2018_twitter"] });
-      this.setState({ instagram: this.state.params["filsa2018_instagram"] });
-      this.setState({ flickr: this.state.params["filsa2018_flickr"] });
       this.setState({
-        headerimg: this.state.params["filsa2018_cabecera_escritorio"]
-      });
-      this.setState({ menu_principal: this.state.params["filsa2018_menu"] });
-      this.setState({
-        menu_noticias: this.state.params["filsa2018_menunoticias"]
+        params: res.data,
+        facebook: res.data["filsa2018_facebook"],
+        twitter: res.data["filsa2018_twitter"],
+        instagram: res.data["filsa2018_instagram"],
+        flickr: res.data["filsa2018_flickr"],
+        headerimg: res.data["filsa2018_cabecera_escritorio"],
+        menu_principal: res.data["filsa2018_menu"],
+        menu_noticias: res.data["filsa2018_menunoticias"],
+        intro: res.data["filsa2018_intro"],
+        title: res.data["filsa2018_title"]
       });
     });
   }
@@ -63,9 +75,9 @@ class Filsa2018 extends Component {
   }
 
   refineNewsURL(url) {
-    let slugsegment = url.split('/');
-    slugsegment = slugsegment[slugsegment.length -2];
-    return '/ferias/filsa/filsa-2018/noticias/' + slugsegment;
+    let slugsegment = url.split("/");
+    slugsegment = slugsegment[slugsegment.length - 2];
+    return "/ferias/filsa/filsa-2018/noticias/" + slugsegment + "/";
   }
 
   menus() {
@@ -107,22 +119,6 @@ class Filsa2018 extends Component {
     return routeitems;
   }
 
-  newsRoutes() {
-    let newsRoutes;
-    if (this.state.menu_noticias !== null) {
-      newsRoutes = this.state.menu_noticias.map(noticia => (
-        <Route
-          key={noticia.object_id}
-          path={this.refineNewsURL(noticia.url)}
-          render={props => (
-            <SingleNoticia {...props} type={noticia.object} id={noticia.object_id} title={noticia.title} />
-          )}
-        />
-      ));
-    }
-    return newsRoutes;
-  }
-
   render() {
     return (
       <Router>
@@ -137,7 +133,7 @@ class Filsa2018 extends Component {
           </Responsive>
           <Header headerimg={this.state.headerimg} />
           {this.mobilemenu()}
-          <Container>
+          <MainContainer>
             <div>
               {this.menus()}
               <Switch>
@@ -145,14 +141,19 @@ class Filsa2018 extends Component {
                   exact
                   path={config["base_path." + process.env.NODE_ENV]}
                   render={props => (
-                    <Home {...props} noticias={this.state.menu_noticias} />
+                    <Home
+                      {...props}
+                      noticias={this.state.menu_noticias}
+                      content={this.state.intro}
+                      title={this.state.title}
+                    />
                   )}
                 />
                 {this.routes()}
-                {this.newsRoutes()}
+                <Route path={'/ferias/filsa/filsa-2018/noticias/:slug'} component={SingleNoticia} />
               </Switch>
             </div>
-          </Container>
+          </MainContainer>
         </div>
       </Router>
     );

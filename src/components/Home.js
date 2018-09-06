@@ -1,10 +1,9 @@
-import React, { Component, Fragment } from "react";
+import React, { Component } from "react";
 import { Container, Header, Grid } from "semantic-ui-react";
 import ReactHtmlParser from "react-html-parser";
 import styled from "styled-components";
 import ReactGA from "react-ga";
-import api from "../utils/api.js";
-
+import queryString from "../vendor/query-string/index.js";
 import Noticia from "./Noticia";
 
 const Title = styled(Header)`
@@ -24,7 +23,6 @@ class Home extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			fetched: false,
 			content: null,
 			title: null,
 			noticias: null
@@ -38,29 +36,18 @@ class Home extends Component {
 		ReactGA.pageview(page);
 	}
 
+	refineSlugFromQuery(slug) {
+		let parsed = queryString.parse(slug);
+		return parsed.noticia;
+	}
+
 	componentDidMount() {
+		if(this.props.location.search.length > 0) {
+			let slug = this.refineSlugFromQuery(this.props.location.search);
+			this.props.history.push('/ferias/filsa/filsa-2018/noticias/' + slug + '/');
+			//console.log(slug);
+		}
 		this.trackPage(this.props.location.pathname);
-
-		api.get("/filsa2018/v1/options/filsa2018_intro")
-			.then(res => {
-				this.setState({
-					content: res.data
-				});
-			})
-			.catch(error => {
-				console.log(error);
-			});
-
-		api.get("/filsa2018/v1/options/filsa2018_title")
-			.then(res => {
-				this.setState({
-					fetched: true,
-					title: res.data
-				});
-			})
-			.catch(error => {
-				console.log(error);
-			});
 	}
 
 	renderNoticias() {
@@ -85,28 +72,15 @@ class Home extends Component {
 		return noticias;
 	}
 
-	renderContent() {
-		let content;
-		if (this.state.fetched === true) {
-			content = (
-				<Fragment>
-					<Container text className="maincontent">
-						<Title as="h1">{this.state.title}</Title>
-						<MainContentText className="maincontent-text">
-							{ReactHtmlParser(this.state.content)}
-						</MainContentText>
-					</Container>
-				</Fragment>
-			);
-		}
-
-		return content;
-	}
-
 	render() {
 		return (
 			<div>
-				{this.renderContent()}
+				<Container text className="maincontent">
+					<Title as="h1">{this.props.title}</Title>
+					<MainContentText className="maincontent-text">
+						{ReactHtmlParser(this.props.content)}
+					</MainContentText>
+				</Container>
 				{this.renderNoticias()}
 			</div>
 		);

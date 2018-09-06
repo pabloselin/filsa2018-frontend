@@ -9,6 +9,14 @@ const HeaderStyle = styled.div`
 	}
 `
 
+const ContainerHeader = styled(Container)`
+	&& {
+		@media only screen and (min-width: 1200px) {
+			width: 1140px;
+		}
+	}
+`
+
 const HeaderImage = styled.img`
 	max-width: 100%;
 	height: auto;
@@ -18,11 +26,11 @@ class Header extends Component {
 	render() {
 		return (
 			<div>
-			<Container>
+			<ContainerHeader>
 				<HeaderStyle>
 					<HeaderImage src={this.props.headerimg} alt="" />
 				</HeaderStyle>
-			</Container>
+			</ContainerHeader>
 			</div>
 		);
 	}
