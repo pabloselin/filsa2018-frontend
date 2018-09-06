@@ -5,5 +5,7 @@
 	"base_url.development": "http://localhost/ferias/filsa/filsa-2018/",
 	"base_path.development": "/",
 	"base_path.production": "/ferias/filsa/filsa-2018/",
+	"basename.development": "",
+	"basename.production": "/ferias/filsa/filsa-2018",
 	"google_analytics_ua": "UA-29366127-1"
 }

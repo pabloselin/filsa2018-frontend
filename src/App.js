@@ -65,7 +65,7 @@ class Filsa2018 extends Component {
   refineNewsURL(url) {
     let slugsegment = url.split('/');
     slugsegment = slugsegment[slugsegment.length -2];
-    return '/noticias/' + slugsegment;
+    return '/ferias/filsa/filsa-2018/noticias/' + slugsegment;
   }
 
   menus() {
