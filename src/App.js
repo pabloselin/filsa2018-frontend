@@ -9,7 +9,7 @@ import Home from "./components/Home";
 import Default from "./components/Default";
 import MenuTop from "./components/MenuTop";
 import MenuMobile from "./components/MenuMobile";
-import SingleNoticia from "./components/SingleNoticia";
+import SingleNoticiaAlt from "./components/SingleNoticiaAlt";
 import api from "./utils/api";
 import config from "./config.json";
 
@@ -45,7 +45,9 @@ class Filsa2018 extends Component {
       facebook: null,
       instagram: null,
       flickr: null,
-      params: null
+      params: null,
+      noticias: null,
+      itemsfilsa: null
     };
   }
 
@@ -65,6 +67,16 @@ class Filsa2018 extends Component {
         title: res.data["filsa2018_title"]
       });
     });
+    api.get("/better-rest-endpoints/v1/ferias/filsa-2018").then( res => {
+      this.setState({
+        noticias: res.data
+      })
+    });
+    api.get("/better-rest-endpoints/v1/filsa-2018").then( res => {
+      this.setState({
+        itemsfilsa: res.data
+      })
+    })
   }
 
   refineURL(url) {
@@ -98,25 +110,38 @@ class Filsa2018 extends Component {
 
   routes() {
     let routeitems;
-    if (this.state.menu_principal !== null) {
-      routeitems = this.state.menu_principal.map(item => {
-        if (item.object === "filsa-2018") {
+    if (this.state.itemsfilsa !== null) {
+      routeitems = this.state.itemsfilsa.map(item => {
           return (
             <Route
-              key={item.object_id}
-              path={this.refineURL(item.url)}
+              key={item.id}
+              path={"/" + item.slug + "/"}
               render={props => (
-                <Default {...props} type={item.object} id={item.object_id} />
+                <Default {...props} type={item.object} id={item.id} title={item.title} content={item.content} />
               )}
             />
           );
-        } else {
-          return null;
-        }
       });
     }
-
     return routeitems;
+  }
+
+  newsroutes() {
+    let newsroutes;
+     if (this.state.noticias !== null) {
+      newsroutes = this.state.noticias.map(item => {
+          return (
+            <Route
+              key={item.id}
+              path={"/noticias/" + item.slug + "/"}
+              render={props => (
+                <SingleNoticiaAlt{...props} type={item.object} id={item.id} content={item.content} title={item.title} media={item.media}/>
+              )}
+            />
+          );
+      });
+    }
+    return newsroutes;
   }
 
   render() {
@@ -144,13 +169,14 @@ class Filsa2018 extends Component {
                     <Home
                       {...props}
                       noticias={this.state.menu_noticias}
+                      noticias_content={this.state.noticias}
                       content={this.state.intro}
                       title={this.state.title}
                     />
                   )}
                 />
                 {this.routes()}
-                <Route path={'/ferias/filsa/filsa-2018/noticias/:slug'} component={SingleNoticia} />
+                {this.newsroutes()}
               </Switch>
             </div>
           </MainContainer>

@@ -42,28 +42,50 @@ class Home extends Component {
 	}
 
 	componentDidMount() {
-		if(this.props.location.search.length > 0) {
+		if (this.props.location.search.length > 0) {
 			let slug = this.refineSlugFromQuery(this.props.location.search);
-			this.props.history.push('/ferias/filsa/filsa-2018/noticias/' + slug + '/');
+			this.props.history.push(
+				"/ferias/filsa/filsa-2018/noticias/" + slug + "/"
+			);
 			//console.log(slug);
 		}
 		this.trackPage(this.props.location.pathname);
 	}
 
+	matchNews(postID) {
+		let match;
+		this.props.noticias_content.map(noticia => {
+			if (noticia.id === postID) {
+				match = noticia;
+			}
+		});
+
+		return match;
+	}
+
 	renderNoticias() {
 		let noticias;
-		if (this.props.noticias !== null) {
+		if (this.props.noticias !== null && this.props.noticias_content !== null) {
 			noticias = (
 				<Grid columns={3} divided stackable>
 					<Grid.Row>
-						{this.props.noticias.map(noticia => (
-							<Noticia
-								key={noticia.ID}
-								id={noticia.object_id}
-								title={noticia.title}
-								url={noticia.url}
-							/>
-						))}
+						{this.props.noticias.map(noticia => {
+							let match = this.matchNews(parseInt(noticia.object_id, 10));
+							if(match !== undefined) {
+								return (
+								<Noticia
+									key={noticia.ID}
+									id={noticia.object_id}
+									title={noticia.title}
+									slug={match.slug}
+									media={match.media}
+									content={match.content}
+									date={match.date}
+									match={match}
+								/>
+							);
+							}
+						})}
 					</Grid.Row>
 				</Grid>
 			);
