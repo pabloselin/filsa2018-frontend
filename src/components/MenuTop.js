@@ -14,8 +14,7 @@ const StyledMenu = styled(Menu)`
 class MenuTop extends Component {
 	refineURL(url) {
 		return (
-			config["base_path." + process.env.NODE_ENV] +
-			url.substring(config["base_url." + process.env.NODE_ENV].length)
+			"/" + url.substring(config["base_url." + process.env.NODE_ENV].length)
 		);
 	}
 
@@ -25,7 +24,7 @@ class MenuTop extends Component {
 				<StyledMenu inverted>
 					<Menu.Item key="home">
 						<NavLink
-							to={config["base_path." + process.env.NODE_ENV]}
+							to="/"
 						>
 							<Icon name="home"/> Inicio
 						</NavLink>

@@ -9,7 +9,7 @@ class Noticia extends Component {
 				<img src={this.props.media.imagen_single} alt={this.props.title}/>
 				<Header as="h3">
 					<Link
-						to={"/noticias/" + this.props.slug + "/"}
+						to={ this.props.link }
 					>
 						{this.props.title}
 					</Link>

@@ -3,6 +3,7 @@ import { Container } from "semantic-ui-react";
 import ReactHtmlParser from "react-html-parser";
 import ReactGA from "react-ga";
 import styled from "styled-components";
+import Helmet from "react-helmet";
 
 const TextContent = styled.div`
 	margin-bottom: 48px;
@@ -32,6 +33,9 @@ class SingleNoticiaAlt extends Component {
 	render() {
 		return (
 			<Container text>
+				<Helmet>
+					<title>{this.props.title}</title>
+				</Helmet>
 				<Title>{this.props.title}</Title>
 				<TextContent>
 					<img

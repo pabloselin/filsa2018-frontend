@@ -70,18 +70,18 @@ class Home extends Component {
 				<Grid columns={3} divided stackable>
 					<Grid.Row>
 						{this.props.noticias.map(noticia => {
-							let match = this.matchNews(parseInt(noticia.object_id, 10));
-							if(match !== undefined) {
+							let content = this.matchNews(parseInt(noticia.object_id, 10));
+							if(content !== undefined) {
 								return (
 								<Noticia
 									key={noticia.ID}
 									id={noticia.object_id}
 									title={noticia.title}
-									slug={match.slug}
-									media={match.media}
-									content={match.content}
-									date={match.date}
-									match={match}
+									link={"/noticias/" + content.slug + "/"}
+									slug={content.slug}
+									media={content.media}
+									content={content.content}
+									date={content.date}
 								/>
 							);
 							}

@@ -115,7 +115,7 @@ class Filsa2018 extends Component {
           return (
             <Route
               key={item.id}
-              path={"/" + item.slug + "/"}
+              path={ "/" + item.slug + "/"}
               render={props => (
                 <Default {...props} type={item.object} id={item.id} title={item.title} content={item.content} />
               )}
@@ -133,7 +133,7 @@ class Filsa2018 extends Component {
           return (
             <Route
               key={item.id}
-              path={"/noticias/" + item.slug + "/"}
+              path={ "/noticias/" + item.slug + "/"}
               render={props => (
                 <SingleNoticiaAlt{...props} type={item.object} id={item.id} content={item.content} title={item.title} media={item.media}/>
               )}
@@ -146,7 +146,7 @@ class Filsa2018 extends Component {
 
   render() {
     return (
-      <Router>
+      <Router basename={config["basename." + process.env.NODE_ENV]}>
         <div>
           <Responsive {...Responsive.onlyComputer}>
             <PreHeader
@@ -161,10 +161,10 @@ class Filsa2018 extends Component {
           <MainContainer>
             <div>
               {this.menus()}
-              <Switch>
+              
                 <Route
                   exact
-                  path={config["base_path." + process.env.NODE_ENV]}
+                  path="/"
                   render={props => (
                     <Home
                       {...props}
@@ -177,7 +177,7 @@ class Filsa2018 extends Component {
                 />
                 {this.routes()}
                 {this.newsroutes()}
-              </Switch>
+              
             </div>
           </MainContainer>
         </div>
