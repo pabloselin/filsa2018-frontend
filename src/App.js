@@ -11,6 +11,7 @@ import MenuTop from "./components/MenuTop";
 import MenuMobile from "./components/MenuMobile";
 import SingleNoticiaAlt from "./components/SingleNoticiaAlt";
 import Loading from "./components/Loading";
+import ScrollToTop from "./components/ScrollToTop";
 import api from "./utils/api";
 import config from "./config.json";
 
@@ -72,24 +73,11 @@ class Filsa2018 extends Component {
         noticias: res.data
       });
     });
-    api.get("/better-rest-endpoints/v1/filsa-2018").then(res => {
+    api.get("/wp/v2/filsa-2018").then(res => {
       this.setState({
         itemsfilsa: res.data
       });
     });
-  }
-
-  refineURL(url) {
-    return (
-      config["base_path." + process.env.NODE_ENV] +
-      url.substring(config["base_url." + process.env.NODE_ENV].length)
-    );
-  }
-
-  refineNewsURL(url) {
-    let slugsegment = url.split("/");
-    slugsegment = slugsegment[slugsegment.length - 2];
-    return "/ferias/filsa/filsa-2018/noticias/" + slugsegment + "/";
   }
 
   menus() {
@@ -108,21 +96,37 @@ class Filsa2018 extends Component {
     return menumobileitems;
   }
 
+  matchParent(postID) {
+    let matched;
+    this.state.itemsfilsa.map(item => {
+      if (item.id === postID) {
+        matched = item.slug;
+      }
+      return matched;
+    });
+    return matched;
+  }
+
   routes() {
     let routeitems;
     if (this.state.itemsfilsa !== null) {
       routeitems = this.state.itemsfilsa.map(item => {
+        let path =
+          this.matchParent(item.parent) !== undefined
+            ? `/${this.matchParent(item.parent)}/${item.slug}/`
+            : `/${item.slug}/`;
         return (
           <Route
             key={item.id}
-            path={"/" + item.slug + "/"}
+            path={path}
+            exact
             render={props => (
               <Default
                 {...props}
                 type={item.object}
                 id={item.id}
-                title={item.title}
-                content={item.content}
+                title={item.title.rendered}
+                content={item.content.rendered}
               />
             )}
           />
@@ -162,44 +166,45 @@ class Filsa2018 extends Component {
 
     return (
       <Router basename={config["basename." + process.env.NODE_ENV]}>
-        <div>
-          <Responsive {...Responsive.onlyComputer}>
-            <PreHeader
-              twitter={this.state.twitter}
-              facebook={this.state.facebook}
-              instagram={this.state.instagram}
-              flickr={this.state.flickr}
-            />
-          </Responsive>
-          <Header headerimg={this.state.headerimg} />
-          {this.mobilemenu()}
-          <MainContainer>
-            {}
-            <div>
-              {this.menus()}
-              {loading ? (
-                <Route
-                  exact
-                  path="/"
-                  render={props => (
-                    <Home
-                      {...props}
-                      noticias={this.state.menu_noticias}
-                      noticias_content={this.state.noticias}
-                      content={this.state.intro}
-                      title={this.state.title}
-                    />
-                  )}
-                />
-              ) : (
-                <Loading />
-              )}
+        <ScrollToTop>
+          <div>
+            <Responsive {...Responsive.onlyComputer}>
+              <PreHeader
+                twitter={this.state.twitter}
+                facebook={this.state.facebook}
+                instagram={this.state.instagram}
+                flickr={this.state.flickr}
+              />
+            </Responsive>
+            <Header headerimg={this.state.headerimg} />
+            {this.mobilemenu()}
+            <MainContainer>
+              <div>
+                {this.menus()}
+                {loading ? (
+                  <Route
+                    exact
+                    path="/"
+                    render={props => (
+                      <Home
+                        {...props}
+                        noticias={this.state.menu_noticias}
+                        noticias_content={this.state.noticias}
+                        content={this.state.intro}
+                        title={this.state.title}
+                      />
+                    )}
+                  />
+                ) : (
+                  <Loading />
+                )}
 
-              {this.routes()}
-              {this.newsroutes()}
-            </div>
-          </MainContainer>
-        </div>
+                {this.routes()}
+                {this.newsroutes()}
+              </div>
+            </MainContainer>
+          </div>
+        </ScrollToTop>
       </Router>
     );
   }

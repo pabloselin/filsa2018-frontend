@@ -68,7 +68,7 @@ class MenuMobile extends Component {
 							</Menu.Item>
 							{this.props.menuitems.map((item, index) => (
 								<Menu.Item key={index}>
-									<NavLink to={this.refineURL(item.url)}>
+									<NavLink to={"/" + this.refineURL(item.url)}>
 										{item.title}
 									</NavLink>
 								</Menu.Item>
