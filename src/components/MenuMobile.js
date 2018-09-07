@@ -1,20 +1,14 @@
 import React, { Component } from "react";
-import {
-	Button,
-	Menu,
-	Transition,
-	Responsive,
-	Icon
-} from "semantic-ui-react";
+import { Button, Menu, Transition, Responsive, Icon } from "semantic-ui-react";
 import { NavLink } from "react-router-dom";
 import styled from "styled-components";
 import config from "../config.json";
 
 const Toggler = styled(Button)`
 	&& {
-		position:absolute;
-		top:0;
-		left:0;
+		position: absolute;
+		top: 0;
+		left: 0;
 		color: white;
 		border-radius: 0;
 		font-size: 24px;
@@ -23,7 +17,7 @@ const Toggler = styled(Button)`
 			margin: 0 !important;
 		}
 	}
-`
+`;
 
 const StyledMenu = styled(Menu)`
 	&& {
@@ -34,7 +28,7 @@ const StyledMenu = styled(Menu)`
 			text-transform: uppercase;
 		}
 	}
-`
+`;
 
 class MenuMobile extends Component {
 	constructor(props) {
@@ -61,18 +55,14 @@ class MenuMobile extends Component {
 
 		return (
 			<Responsive {...Responsive.onlyMobile}>
-				<Toggler color="black" onClick={this.handleVisibility}><Icon name="bars" /></Toggler>
+				<Toggler color="black" onClick={this.handleVisibility}>
+					<Icon name="bars" />
+				</Toggler>
 				<Transition.Group animation="slide down" duration={500}>
 					{visible && (
 						<StyledMenu inverted vertical fluid animation="overlay">
 							<Menu.Item key="home">
-								<NavLink
-									to={
-										config[
-											"base_path." + process.env.NODE_ENV
-										]
-									}
-								>
+								<NavLink to="/">
 									<Icon name="home" /> Inicio
 								</NavLink>
 							</Menu.Item>

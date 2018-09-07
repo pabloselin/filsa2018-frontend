@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+import { BrowserRouter as Router, Route } from "react-router-dom";
 import { Container, Responsive } from "semantic-ui-react";
 import ReactGA from "react-ga";
 import styled from "styled-components";
@@ -10,6 +10,7 @@ import Default from "./components/Default";
 import MenuTop from "./components/MenuTop";
 import MenuMobile from "./components/MenuMobile";
 import SingleNoticiaAlt from "./components/SingleNoticiaAlt";
+import Loading from "./components/Loading";
 import api from "./utils/api";
 import config from "./config.json";
 
@@ -22,14 +23,13 @@ if (process.env.NODE_ENV === "development") {
   ReactGA.initialize(config["google_analytics_ua"]);
 }
 
-
 const MainContainer = styled(Container)`
   && {
     @media only screen and (min-width: 1200px) {
       width: 1140px;
     }
   }
-`
+`;
 
 class Filsa2018 extends Component {
   constructor(props) {
@@ -67,16 +67,16 @@ class Filsa2018 extends Component {
         title: res.data["filsa2018_title"]
       });
     });
-    api.get("/better-rest-endpoints/v1/ferias/filsa-2018").then( res => {
+    api.get("/better-rest-endpoints/v1/ferias/filsa-2018").then(res => {
       this.setState({
         noticias: res.data
-      })
+      });
     });
-    api.get("/better-rest-endpoints/v1/filsa-2018").then( res => {
+    api.get("/better-rest-endpoints/v1/filsa-2018").then(res => {
       this.setState({
         itemsfilsa: res.data
-      })
-    })
+      });
+    });
   }
 
   refineURL(url) {
@@ -112,15 +112,21 @@ class Filsa2018 extends Component {
     let routeitems;
     if (this.state.itemsfilsa !== null) {
       routeitems = this.state.itemsfilsa.map(item => {
-          return (
-            <Route
-              key={item.id}
-              path={ "/" + item.slug + "/"}
-              render={props => (
-                <Default {...props} type={item.object} id={item.id} title={item.title} content={item.content} />
-              )}
-            />
-          );
+        return (
+          <Route
+            key={item.id}
+            path={"/" + item.slug + "/"}
+            render={props => (
+              <Default
+                {...props}
+                type={item.object}
+                id={item.id}
+                title={item.title}
+                content={item.content}
+              />
+            )}
+          />
+        );
       });
     }
     return routeitems;
@@ -128,23 +134,32 @@ class Filsa2018 extends Component {
 
   newsroutes() {
     let newsroutes;
-     if (this.state.noticias !== null) {
+    if (this.state.noticias !== null) {
       newsroutes = this.state.noticias.map(item => {
-          return (
-            <Route
-              key={item.id}
-              path={ "/noticias/" + item.slug + "/"}
-              render={props => (
-                <SingleNoticiaAlt{...props} type={item.object} id={item.id} content={item.content} title={item.title} media={item.media}/>
-              )}
-            />
-          );
+        return (
+          <Route
+            key={item.id}
+            path={"/noticias/" + item.slug + "/"}
+            render={props => (
+              <SingleNoticiaAlt
+                {...props}
+                type={item.object}
+                id={item.id}
+                content={item.content}
+                title={item.title}
+                media={item.media}
+              />
+            )}
+          />
+        );
       });
     }
     return newsroutes;
   }
 
   render() {
+    const loading = this.state.menu_noticias !== null;
+
     return (
       <Router basename={config["basename." + process.env.NODE_ENV]}>
         <div>
@@ -159,9 +174,10 @@ class Filsa2018 extends Component {
           <Header headerimg={this.state.headerimg} />
           {this.mobilemenu()}
           <MainContainer>
+            {}
             <div>
               {this.menus()}
-              
+              {loading ? (
                 <Route
                   exact
                   path="/"
@@ -175,9 +191,12 @@ class Filsa2018 extends Component {
                     />
                   )}
                 />
-                {this.routes()}
-                {this.newsroutes()}
-              
+              ) : (
+                <Loading />
+              )}
+
+              {this.routes()}
+              {this.newsroutes()}
             </div>
           </MainContainer>
         </div>

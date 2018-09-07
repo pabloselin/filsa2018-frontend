@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { Container, Header, Grid } from "semantic-ui-react";
 import ReactHtmlParser from "react-html-parser";
+import Helmet from "react-helmet";
 import styled from "styled-components";
 import ReactGA from "react-ga";
 import queryString from "../vendor/query-string/index.js";
@@ -53,38 +54,45 @@ class Home extends Component {
 	}
 
 	matchNews(postID) {
-		let match;
-		this.props.noticias_content.map(noticia => {
+	let matched;
+	this.props.noticias_content.map(noticia => {
 			if (noticia.id === postID) {
-				match = noticia;
+				matched = noticia;
 			}
+			return matched;
 		});
-
-		return match;
+	return matched;
 	}
 
 	renderNoticias() {
 		let noticias;
-		if (this.props.noticias !== null && this.props.noticias_content !== null) {
+		if (
+			this.props.noticias !== null &&
+			this.props.noticias_content !== null
+		) {
 			noticias = (
 				<Grid columns={3} divided stackable>
 					<Grid.Row>
 						{this.props.noticias.map(noticia => {
-							let content = this.matchNews(parseInt(noticia.object_id, 10));
-							if(content !== undefined) {
-								return (
-								<Noticia
-									key={noticia.ID}
-									id={noticia.object_id}
-									title={noticia.title}
-									link={"/noticias/" + content.slug + "/"}
-									slug={content.slug}
-									media={content.media}
-									content={content.content}
-									date={content.date}
-								/>
+							let content = this.matchNews(
+								parseInt(noticia.object_id, 10)
 							);
+							let noticiacomponent;
+							if (content !== undefined) {
+								noticiacomponent = (
+									<Noticia
+										key={noticia.ID}
+										id={noticia.object_id}
+										title={noticia.title}
+										link={"/noticias/" + content.slug + "/"}
+										slug={content.slug}
+										media={content.media}
+										content={content.content}
+										date={content.date}
+									/>
+								);
 							}
+							return noticiacomponent;
 						})}
 					</Grid.Row>
 				</Grid>
@@ -97,6 +105,9 @@ class Home extends Component {
 	render() {
 		return (
 			<div>
+				<Helmet>
+					<title>{this.props.title}</title>
+				</Helmet>
 				<Container text className="maincontent">
 					<Title as="h1">{this.props.title}</Title>
 					<MainContentText className="maincontent-text">

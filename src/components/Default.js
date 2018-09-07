@@ -1,6 +1,7 @@
 import React, { Component, Fragment } from "react";
 import { Container, Header } from "semantic-ui-react";
 import ReactHtmlParser from "react-html-parser";
+import Helmet from "react-helmet";
 import ReactGA from "react-ga";
 import styled from "styled-components";
 
@@ -32,6 +33,9 @@ class Default extends Component {
 	render() {
 		return (
 			<Fragment>
+				<Helmet>
+					<title>{this.props.title}</title>
+				</Helmet>
 				<Container text className="maincontent">
 					<Title as="h1">{this.props.title}</Title>
 					<MainContentText className="maincontent-text">
