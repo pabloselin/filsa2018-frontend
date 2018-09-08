@@ -1,8 +1,8 @@
 import React, { Component } from "react";
 import { Button, Menu, Transition, Responsive, Icon } from "semantic-ui-react";
-import { NavLink } from "react-router-dom";
+import { NavLink, withRouter } from "react-router-dom";
 import styled from "styled-components";
-import config from "../config.json";
+import { menuItems } from "./menuItems";
 
 const Toggler = styled(Button)`
 	&& {
@@ -43,11 +43,10 @@ class MenuMobile extends Component {
 		this.setState({ visible: !this.state.visible });
 	}
 
-	refineURL(url) {
-		return (
-			config["base_path." + process.env.NODE_ENV] +
-			url.substring(config["base_url." + process.env.NODE_ENV].length)
-		);
+	componentDidUpdate(prevProps) {
+		if(this.props.location !== prevProps.location) {
+			this.setState({ visible: false })
+		}
 	}
 
 	render() {
@@ -66,13 +65,7 @@ class MenuMobile extends Component {
 									<Icon name="home" /> Inicio
 								</NavLink>
 							</Menu.Item>
-							{this.props.menuitems.map((item, index) => (
-								<Menu.Item key={index}>
-									<NavLink to={"/" + this.refineURL(item.url)}>
-										{item.title}
-									</NavLink>
-								</Menu.Item>
-							))}
+							{menuItems(this.props.menuitems)}
 						</StyledMenu>
 					)}
 				</Transition.Group>
@@ -81,4 +74,4 @@ class MenuMobile extends Component {
 	}
 }
 
-export default MenuMobile;
+export default withRouter(MenuMobile);

@@ -15,13 +15,15 @@ import ScrollToTop from "./components/ScrollToTop";
 import api from "./utils/api";
 import config from "./config.json";
 
-if (process.env.NODE_ENV === "development") {
-  ReactGA.initialize(config["google_analytics_ua"], {
+const node_env = process.env.NODE_ENV || "development";
+
+if (node_env === "development") {
+  ReactGA.initialize(config[node_env].google_analytics_ua, {
     testMode: true,
     debug: true
   });
 } else {
-  ReactGA.initialize(config["google_analytics_ua"]);
+  ReactGA.initialize(config[node_env].google_analytics_ua);
 }
 
 const MainContainer = styled(Container)`
@@ -48,7 +50,8 @@ class Filsa2018 extends Component {
       flickr: null,
       params: null,
       noticias: null,
-      itemsfilsa: null
+      itemsfilsa: null,
+      ismobile: false
     };
   }
 
@@ -161,12 +164,16 @@ class Filsa2018 extends Component {
     return newsroutes;
   }
 
+  handleOnUpdate = (e, { width }) => this.setState({ width });
+
   render() {
     const loading = this.state.menu_noticias !== null;
-
+    const { width } = this.state;
+    const top = width >= Responsive.onlyComputer.minWidth ? 360 : 0;
     return (
-      <Router basename={config["basename." + process.env.NODE_ENV]}>
-        <ScrollToTop>
+      <Responsive fireOnMount onUpdate={this.handleOnUpdate}>
+      <Router basename={config[node_env].basename}>      
+        <ScrollToTop top={top}>
           <div>
             <Responsive {...Responsive.onlyComputer}>
               <PreHeader
@@ -206,6 +213,7 @@ class Filsa2018 extends Component {
           </div>
         </ScrollToTop>
       </Router>
+      </Responsive>
     );
   }
 }
