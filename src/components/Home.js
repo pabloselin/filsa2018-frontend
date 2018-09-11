@@ -1,14 +1,20 @@
 import React, { Component } from "react";
-import { Container, Header, Grid } from "semantic-ui-react";
+import { Container, Grid } from "semantic-ui-react";
 import ReactHtmlParser from "react-html-parser";
 import Helmet from "react-helmet";
+import SocialButtons from "./SocialButtons";
 import styled from "styled-components";
 import ReactGA from "react-ga";
-import queryString from "../vendor/query-string/index.js";
 import Noticia from "./Noticia";
+//import Programa from "./Programa";
 
-const Title = styled(Header)`
+const Title = styled.h1`
 	margin-top: 24px !important;
+	font-size: 42px;
+	color: #cc1011;
+	@media screen and (max-width: 768px) {
+		font-size: 24px;
+	}
 `;
 
 const MainContentText = styled.div`
@@ -37,19 +43,7 @@ class Home extends Component {
 		ReactGA.pageview(page);
 	}
 
-	refineSlugFromQuery(slug) {
-		let parsed = queryString.parse(slug);
-		return parsed.noticia;
-	}
-
 	componentDidMount() {
-		if (this.props.location.search.length > 0) {
-			let slug = this.refineSlugFromQuery(this.props.location.search);
-			this.props.history.push(
-				"/ferias/filsa/filsa-2018/noticias/" + slug + "/"
-			);
-			//console.log(slug);
-		}
 		this.trackPage(this.props.location.pathname);
 	}
 
@@ -108,8 +102,9 @@ class Home extends Component {
 				<Helmet>
 					<title>{this.props.title}</title>
 				</Helmet>
-				<Container text className="maincontent">
+				<Container text className="maincontent">	
 					<Title as="h1">{this.props.title}</Title>
+					<SocialButtons url={this.props.location.pathname} title={this.props.title} />
 					<MainContentText className="maincontent-text">
 						{ReactHtmlParser(this.props.content)}
 					</MainContentText>

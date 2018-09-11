@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Container } from "semantic-ui-react";
+import { Container, Responsive } from "semantic-ui-react";
 import styled from "styled-components";
 
 const HeaderStyle = styled.div`
@@ -28,7 +28,12 @@ class Header extends Component {
 			<div>
 			<ContainerHeader>
 				<HeaderStyle>
+				<Responsive {...Responsive.onlyMobile}>
+					<HeaderImage src={this.props.mobileheaderimg} alt="" />
+				</Responsive>
+				<Responsive {...Responsive.onlyComputer}>
 					<HeaderImage src={this.props.headerimg} alt="" />
+				</Responsive>
 				</HeaderStyle>
 			</ContainerHeader>
 			</div>

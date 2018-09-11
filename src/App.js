@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { Component, Fragment } from "react";
 import { BrowserRouter as Router, Route } from "react-router-dom";
 import { Container, Responsive } from "semantic-ui-react";
 import ReactGA from "react-ga";
@@ -7,13 +7,23 @@ import Header from "./components/Header";
 import PreHeader from "./components/PreHeader";
 import Home from "./components/Home";
 import Default from "./components/Default";
+import EventSingle from "./components/EventSingle";
 import MenuTop from "./components/MenuTop";
 import MenuMobile from "./components/MenuMobile";
 import SingleNoticiaAlt from "./components/SingleNoticiaAlt";
+import Programa from "./components/Programa";
 import Loading from "./components/Loading";
 import ScrollToTop from "./components/ScrollToTop";
 import api from "./utils/api";
 import config from "./config.json";
+import WebFont from "webfontloader";
+
+WebFont.load({
+  custom: {
+    families: ["Biblioteca", "Biblioteca:n4,n7"],
+  }
+});
+
 
 const node_env = process.env.NODE_ENV || "development";
 
@@ -50,8 +60,10 @@ class Filsa2018 extends Component {
       flickr: null,
       params: null,
       noticias: null,
-      itemsfilsa: null,
-      ismobile: false
+      eventos: null,
+      ismobile: false,
+      filsa2018_contents: null,
+      filsa2018_noticias: null
     };
   }
 
@@ -65,20 +77,14 @@ class Filsa2018 extends Component {
         instagram: res.data["filsa2018_instagram"],
         flickr: res.data["filsa2018_flickr"],
         headerimg: res.data["filsa2018_cabecera_escritorio"],
+        mobileimg: res.data["filsa2018_cabecera_movil"],
         menu_principal: res.data["filsa2018_menu"],
         menu_noticias: res.data["filsa2018_menunoticias"],
         intro: res.data["filsa2018_intro"],
-        title: res.data["filsa2018_title"]
-      });
-    });
-    api.get("/better-rest-endpoints/v1/ferias/filsa-2018").then(res => {
-      this.setState({
-        noticias: res.data
-      });
-    });
-    api.get("/wp/v2/filsa-2018").then(res => {
-      this.setState({
-        itemsfilsa: res.data
+        title: res.data["filsa2018_title"],
+        filsa2018_contents: res.data["filsa2018_contents"],
+        filsa2018_noticias: res.data["filsa2018_noticias"],
+        eventos: res.data["eventos"]
       });
     });
   }
@@ -101,7 +107,8 @@ class Filsa2018 extends Component {
 
   matchParent(postID) {
     let matched;
-    this.state.itemsfilsa.map(item => {
+    let itemsfilsa = this.state.filsa2018_contents;
+    itemsfilsa.map(item => {
       if (item.id === postID) {
         matched = item.slug;
       }
@@ -112,8 +119,9 @@ class Filsa2018 extends Component {
 
   routes() {
     let routeitems;
-    if (this.state.itemsfilsa !== null) {
-      routeitems = this.state.itemsfilsa.map(item => {
+    if (this.state.filsa2018_contents !== null) {
+      let itemsfilsa = this.state.filsa2018_contents;
+      routeitems = itemsfilsa.map(item => {
         let path =
           this.matchParent(item.parent) !== undefined
             ? `/${this.matchParent(item.parent)}/${item.slug}/`
@@ -128,8 +136,9 @@ class Filsa2018 extends Component {
                 {...props}
                 type={item.object}
                 id={item.id}
-                title={item.title.rendered}
-                content={item.content.rendered}
+                title={item.title}
+                content={item.content}
+                component={item.component}
               />
             )}
           />
@@ -141,8 +150,8 @@ class Filsa2018 extends Component {
 
   newsroutes() {
     let newsroutes;
-    if (this.state.noticias !== null) {
-      newsroutes = this.state.noticias.map(item => {
+    if (this.state.filsa2018_noticias !== null) {
+      newsroutes = this.state.filsa2018_noticias.map(item => {
         return (
           <Route
             key={item.id}
@@ -164,6 +173,29 @@ class Filsa2018 extends Component {
     return newsroutes;
   }
 
+  programa() {
+    let programa;
+    if (this.state.params !== null) {
+      programa = (
+        <Route
+          key={"programa"}
+          path="/programa/"
+          render={props => (
+            <Programa
+              title="Programa"
+              dias={this.state.params.diasvisitasguiadas}
+              {...props}
+              inicio={this.state.params.filsa2018_inicio}
+              fin={this.state.params.filsa2018_fin}
+              eventos={this.state.eventos}
+            />
+          )}
+        />
+      );
+    }
+    return programa;
+  }
+
   handleOnUpdate = (e, { width }) => this.setState({ width });
 
   render() {
@@ -172,47 +204,48 @@ class Filsa2018 extends Component {
     const top = width >= Responsive.onlyComputer.minWidth ? 360 : 0;
     return (
       <Responsive fireOnMount onUpdate={this.handleOnUpdate}>
-      <Router basename={config[node_env].basename}>      
-        <ScrollToTop top={top}>
-          <div>
-            <Responsive {...Responsive.onlyComputer}>
-              <PreHeader
-                twitter={this.state.twitter}
-                facebook={this.state.facebook}
-                instagram={this.state.instagram}
-                flickr={this.state.flickr}
-              />
-            </Responsive>
-            <Header headerimg={this.state.headerimg} />
-            {this.mobilemenu()}
-            <MainContainer>
-              <div>
-                {this.menus()}
-                {loading ? (
-                  <Route
-                    exact
-                    path="/"
-                    render={props => (
-                      <Home
-                        {...props}
-                        noticias={this.state.menu_noticias}
-                        noticias_content={this.state.noticias}
-                        content={this.state.intro}
-                        title={this.state.title}
-                      />
-                    )}
-                  />
-                ) : (
-                  <Loading />
-                )}
+        <Router basename={config[node_env].basename}>
+          <ScrollToTop top={top}>
+            <Fragment>
+              <Responsive {...Responsive.onlyComputer}>
+                <PreHeader
+                  twitter={this.state.twitter}
+                  facebook={this.state.facebook}
+                  instagram={this.state.instagram}
+                  flickr={this.state.flickr}
+                />
+              </Responsive>
+              <Header headerimg={this.state.headerimg} mobileheaderimg={this.state.mobileimg} />
+              {this.mobilemenu()}
+              <MainContainer>
+                <Fragment>
+                  {this.menus()}
+                  {loading ? (
+                    <Route
+                      exact
+                      path="/"
+                      render={props => (
+                        <Home
+                          {...props}
+                          noticias={this.state.menu_noticias}
+                          noticias_content={this.state.filsa2018_noticias}
+                          content={this.state.intro}
+                          title={this.state.title}
+                        />
+                      )}
+                    />
+                  ) : (
+                    <Loading />
+                  )}
 
-                {this.routes()}
-                {this.newsroutes()}
-              </div>
-            </MainContainer>
-          </div>
-        </ScrollToTop>
-      </Router>
+                  {this.routes()}
+                  {this.newsroutes()}
+                  <Route key="eventos" path="/eventos/:slug/" component={EventSingle} />
+                </Fragment>
+              </MainContainer>
+            </Fragment>
+          </ScrollToTop>
+        </Router>
       </Responsive>
     );
   }

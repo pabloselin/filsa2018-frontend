@@ -4,6 +4,9 @@ import ReactHtmlParser from "react-html-parser";
 import Helmet from "react-helmet";
 import ReactGA from "react-ga";
 import styled from "styled-components";
+import editUrl from "../utils/editUrl";
+import SocialButtons from "./SocialButtons";
+import ComponentSelect from "./ComponentSelect";
 
 const Title = styled(Header)`
 	margin-top: 24px !important;
@@ -18,6 +21,14 @@ const MainContentText = styled.div`
 	}
 `;
 
+const EditLink = styled.a`
+	font-family: sans-serif;
+	font-size: 13px;
+	display: inline-block;
+	margin-left: 6px;
+	font-weight: normal;
+`
+
 class Default extends Component {
 	trackPage(page) {
 		ReactGA.set({
@@ -30,17 +41,32 @@ class Default extends Component {
 		this.trackPage(this.props.location.pathname);
 	}
 
+	editLink() {
+		let editlink;
+		if(window.loggedin === true) {
+			editlink = <EditLink href={editUrl(this.props.id)}>[Editar]</EditLink>
+		}
+		return editlink;
+	}
+
 	render() {
+		const ComponentOption = this.props.component
+			? ComponentSelect[this.props.component]
+			: null;
 		return (
 			<Fragment>
 				<Helmet>
 					<title>{this.props.title}</title>
 				</Helmet>
 				<Container text className="maincontent">
-					<Title as="h1">{this.props.title}</Title>
+					<Title as="h1">{this.props.title}{this.editLink()}</Title>
+					<SocialButtons title={this.props.title} url={this.props.location.pathname} />
 					<MainContentText className="maincontent-text">
 						{ReactHtmlParser(this.props.content)}
 					</MainContentText>
+				</Container>
+				<Container className="componentcontent">
+					{ComponentOption ? <ComponentOption /> : <div />}
 				</Container>
 			</Fragment>
 		);

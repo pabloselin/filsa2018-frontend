@@ -6,17 +6,21 @@ const ContainerLoader = styled(Container)`
 	text-align: center;
 	padding: 24px 0;
 	font-size: 36px;
-	color: #ccc;
+	color: #ccc; 
+	p {
+		font-size: 14px;
+	}
 `;
 
-class Noticia extends Component {
+class Loading extends Component {
 	render() {
 		return (
 			<ContainerLoader className="loading">
 				<Icon loading name="asterisk" />
+				<p>Cargando ...</p>
 			</ContainerLoader>
 		);
 	}
 }
 
-export default Noticia;
+export default Loading;
