@@ -1,10 +1,18 @@
 import React from "react";
 import { Menu, Dropdown } from "semantic-ui-react";
 import { NavLink } from "react-router-dom";
+import styled from "styled-components";
 import config from "../config.json";
 
 const node_env = process.env.NODE_ENV || 'development';
 
+const StyledDropdown = styled(Dropdown.Item)`
+	&&&&&&,
+	&&&&&&:hover {
+	background-color: #000 !important;
+	color: white !important;
+	}
+`
 
 function refineURL(url) {
 		return (
@@ -22,7 +30,7 @@ export function menuItems(menuitems) {
 				let dropdown_items = [];
 				for(let sub in child) {
 					dropdown_items.push(
-						<Dropdown.Item key={sub}><NavLink to={refineURL(child[sub].url)}>{child[sub].title}</NavLink></Dropdown.Item>
+						<StyledDropdown key={sub}><NavLink to={refineURL(child[sub].url)}>{child[sub].title}</NavLink></StyledDropdown>
 						);
 				}
 				buttons.push(<Dropdown key={item} item text={menuitems[item].title}><Dropdown.Menu>{dropdown_items}</Dropdown.Menu></Dropdown>);

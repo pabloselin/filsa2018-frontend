@@ -1,8 +1,7 @@
 import React, { Component, Fragment } from "react";
 import { BrowserRouter as Router, Route } from "react-router-dom";
-import { Container, Responsive } from "semantic-ui-react";
+import { Responsive } from "semantic-ui-react";
 import ReactGA from "react-ga";
-import styled from "styled-components";
 import Header from "./components/Header";
 import PreHeader from "./components/PreHeader";
 import Home from "./components/Home";
@@ -11,19 +10,20 @@ import EventSingle from "./components/EventSingle";
 import MenuTop from "./components/MenuTop";
 import MenuMobile from "./components/MenuMobile";
 import SingleNoticiaAlt from "./components/SingleNoticiaAlt";
+import ArchiveNoticias from "./components/ArchiveNoticias";
 import Programa from "./components/Programa";
 import Loading from "./components/Loading";
 import ScrollToTop from "./components/ScrollToTop";
+import Footer from "./components/Footer";
 import api from "./utils/api";
 import config from "./config.json";
 import WebFont from "webfontloader";
 
 WebFont.load({
   custom: {
-    families: ["Biblioteca", "Biblioteca:n4,n7"],
+    families: ["Biblioteca", "Biblioteca:n4,n7"]
   }
 });
-
 
 const node_env = process.env.NODE_ENV || "development";
 
@@ -35,14 +35,6 @@ if (node_env === "development") {
 } else {
   ReactGA.initialize(config[node_env].google_analytics_ua);
 }
-
-const MainContainer = styled(Container)`
-  && {
-    @media only screen and (min-width: 1200px) {
-      width: 1140px;
-    }
-  }
-`;
 
 class Filsa2018 extends Component {
   constructor(props) {
@@ -215,34 +207,51 @@ class Filsa2018 extends Component {
                   flickr={this.state.flickr}
                 />
               </Responsive>
-              <Header headerimg={this.state.headerimg} mobileheaderimg={this.state.mobileimg} />
+              <Header
+                headerimg={this.state.headerimg}
+                mobileheaderimg={this.state.mobileimg}
+              />
               {this.mobilemenu()}
-              <MainContainer>
-                <Fragment>
-                  {this.menus()}
-                  {loading ? (
-                    <Route
-                      exact
-                      path="/"
-                      render={props => (
-                        <Home
-                          {...props}
-                          noticias={this.state.menu_noticias}
-                          noticias_content={this.state.filsa2018_noticias}
-                          content={this.state.intro}
-                          title={this.state.title}
-                        />
-                      )}
-                    />
-                  ) : (
-                    <Loading />
-                  )}
+              <Fragment>
+                {this.menus()}
+                {loading ? (
+                  <Route
+                    exact
+                    path="/"
+                    render={props => (
+                      <Home
+                        {...props}
+                        noticias={this.state.menu_noticias}
+                        noticias_content={this.state.filsa2018_noticias}
+                        content={this.state.intro}
+                        title={this.state.title}
+                      />
+                    )}
+                  />
+                ) : (
+                  <Loading />
+                )}
 
-                  {this.routes()}
-                  {this.newsroutes()}
-                  <Route key="eventos" path="/eventos/:slug/" component={EventSingle} />
-                </Fragment>
-              </MainContainer>
+                {this.routes()}
+                {this.newsroutes()}
+                <Route
+                  key="eventos"
+                  path="/eventos/:slug/"
+                  component={EventSingle}
+                />
+                <Route
+                  key="noticias"
+                  path="/noticias/"
+                  exact
+                  render={props => (
+                    <ArchiveNoticias
+                      {...props}
+                      noticias={this.state.filsa2018_noticias}
+                    />
+                  )}
+                />
+              </Fragment>
+              {this.state.params && <Footer />}
             </Fragment>
           </ScrollToTop>
         </Router>

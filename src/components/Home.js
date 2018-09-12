@@ -26,6 +26,14 @@ const MainContentText = styled.div`
 	}
 `;
 
+const MainContainer = styled(Container)`
+  && {
+    @media only screen and (min-width: 1200px) {
+      width: 1140px;
+    }
+  }
+`;
+
 class Home extends Component {
 	constructor(props) {
 		super(props);
@@ -109,7 +117,9 @@ class Home extends Component {
 						{ReactHtmlParser(this.props.content)}
 					</MainContentText>
 				</Container>
+				<MainContainer>
 				{this.renderNoticias()}
+				</MainContainer>
 			</div>
 		);
 	}

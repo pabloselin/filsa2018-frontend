@@ -9,7 +9,8 @@ class VisitasGuiadas extends Component {
 		super(props);
 		this.state = {
 			events: null,
-			curday: null
+			curday: null,
+			curcurso: null
 		};
 	}
 

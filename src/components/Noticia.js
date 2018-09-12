@@ -11,11 +11,16 @@ const StyledHeader = styled.h3`
 	}
 `
 
+const Image = styled.img`
+	max-width: 100%;
+	height: auto;
+`
+
 class Noticia extends Component {
 	render() {
 		return (
 			<Grid.Column className="noticia">
-				<img src={this.props.media.imagen_single} alt={this.props.title}/>
+				<Image src={this.props.media.imagen_single} alt={this.props.title}/>
 				<StyledHeader>
 					<Link
 						to={ this.props.link }

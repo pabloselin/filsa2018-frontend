@@ -1,5 +1,5 @@
 import React, { Component, Fragment } from "react";
-import { Container, Header } from "semantic-ui-react";
+import { Container } from "semantic-ui-react";
 import ReactHtmlParser from "react-html-parser";
 import Helmet from "react-helmet";
 import ReactGA from "react-ga";
@@ -8,8 +8,12 @@ import editUrl from "../utils/editUrl";
 import SocialButtons from "./SocialButtons";
 import ComponentSelect from "./ComponentSelect";
 
-const Title = styled(Header)`
+const Title = styled.h1`
 	margin-top: 24px !important;
+	text-transform: uppercase;
+	@media screen and (max-width: 768px) {
+		font-size: 24px;
+	}
 `;
 
 const MainContentText = styled.div`
@@ -59,7 +63,7 @@ class Default extends Component {
 					<title>{this.props.title}</title>
 				</Helmet>
 				<Container text className="maincontent">
-					<Title as="h1">{this.props.title}{this.editLink()}</Title>
+					<Title>{this.props.title}{this.editLink()}</Title>
 					<SocialButtons title={this.props.title} url={this.props.location.pathname} />
 					<MainContentText className="maincontent-text">
 						{ReactHtmlParser(this.props.content)}

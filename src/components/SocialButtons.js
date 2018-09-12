@@ -40,25 +40,60 @@ class SocialButtons extends Component {
 	render() {
 		return (
 			<Fragment>
-				<Button
-					as="a"
-					target="_blank"
-					href={`https://facebook.com/sharer.php?url=${encodeURIComponent(this.state.url)}`}
-					labelPosition="right"
-					size="mini"
-				>
-					<Button size="mini" color="facebook" icon>
+				{this.state.fbcount > 0 ? (
+					<Button
+						as="a"
+						target="_blank"
+						href={`https://facebook.com/sharer.php?url=${encodeURIComponent(
+							this.state.url
+						)}`}
+						labelPosition="right"
+						size="mini"
+					>
+						<Button size="mini" color="facebook" icon>
+							<Icon name="facebook f" />
+						</Button>
+						<Label basic pointing="left">
+							{this.state.fbcount}
+						</Label>
+					</Button>
+				) : (
+					<Button
+						icon
+						color="facebook"
+						as="a"
+						target="_blank"
+						href={`https://facebook.com/sharer.php?url=${encodeURIComponent(
+							this.state.url
+						)}`}
+						size="mini"
+					>
 						<Icon name="facebook f" />
 					</Button>
-					<Label basic pointing="left">
-						{this.state.fbcount}
-					</Label>
-				</Button>
-				<Button as="a" target="_blank" href={`https://twitter.com/home?status=${encodeURIComponent(this.props.title)}+${encodeURIComponent(this.state.url)}`} size="mini" color="twitter">
+				)}
+				<Button
+					icon
+					as="a"
+					target="_blank"
+					href={`https://twitter.com/home?status=${encodeURIComponent(
+						this.props.title
+					)}+${encodeURIComponent(this.state.url)}`}
+					size="mini"
+					color="twitter"
+				>
 					<Icon name="twitter" />
 				</Button>
 				<Responsive as="span" {...Responsive.onlyMobile}>
-					<Button as="a" target="_blank" href={`whatsapp://send?text=${encodeURIComponent(this.props.title)}+${encodeURIComponent(this.state.url)}`} size="mini" color="green">
+					<Button
+						icon
+						as="a"
+						target="_blank"
+						href={`whatsapp://send?text=${encodeURIComponent(
+							this.props.title
+						)}+${encodeURIComponent(this.state.url)}`}
+						size="mini"
+						color="green"
+					>
 						<Icon name="whatsapp" />
 					</Button>
 				</Responsive>

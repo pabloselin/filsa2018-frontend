@@ -13,15 +13,18 @@ class Event extends Component {
 							<Icon name="clock" /> {this.props.data.startdate} -{" "}
 							{this.props.data.enddate}
 						</p>
+						{this.props.data.cursos &&
 						<p>
 							<Icon name="users" />{" "}
 							{this.props.data.cursos.map((curso, key) => (
 								<Label key={key}>{curso}</Label>
 							))}
 						</p>
-						<p>
-							<Icon name="flag" /> Organiza: {this.props.data.organizadores}
-						</p>
+						}
+						{this.props.data.organizadores &&
+							<p><Icon name="flag" /> Organiza: {this.props.data.organizadores}</p>
+						}
+						
 					</Card.Meta>
 				</Card.Content>
 				<Card.Content extra>

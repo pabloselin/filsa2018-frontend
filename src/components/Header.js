@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { Container, Responsive } from "semantic-ui-react";
+import { Link } from "react-router-dom";
 import styled from "styled-components";
 
 const HeaderStyle = styled.div`
@@ -32,7 +33,9 @@ class Header extends Component {
 					<HeaderImage src={this.props.mobileheaderimg} alt="" />
 				</Responsive>
 				<Responsive {...Responsive.onlyComputer}>
+				<Link to="/">
 					<HeaderImage src={this.props.headerimg} alt="" />
+				</Link>
 				</Responsive>
 				</HeaderStyle>
 			</ContainerHeader>

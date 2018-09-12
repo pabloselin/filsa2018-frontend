@@ -3,7 +3,12 @@ import { Container } from "semantic-ui-react";
 import Loading from "./Loading";
 import SocialButtons from "./SocialButtons";
 import ReactHtmlParser from "react-html-parser";
+import styled from "styled-components";
 import api from "../utils/api";
+
+const OtherInfo = styled.div`
+	font-size: 14px;
+`;
 
 class EventSingle extends Component {
 	constructor(props) {
@@ -49,7 +54,10 @@ class EventSingle extends Component {
 				{loading ? (
 					<div>
 						<h1>{this.state.event.title}</h1>
-						<SocialButtons url={this.props.location.pathname} title={this.state.event.title} />
+						<SocialButtons
+							url={this.props.location.pathname}
+							title={this.state.event.title}
+						/>
 						<div>{ReactHtmlParser(this.state.event.intro)}</div>
 						<div className="timeinfo">
 							<div>
@@ -65,14 +73,12 @@ class EventSingle extends Component {
 								{this.state.end_hour}
 							</div>
 						</div>
-						<div className="otherinfo">
-							<div>
-								Organizadores:{" "}
-								{this.state.event.organizer.map(organize => (
-									<p>{organize.organizer}</p>
-								))}
-							</div>
-						</div>
+						<OtherInfo>
+							Organizadores:{" "}
+							{this.state.event.organizer.map(organize => (
+								<p>{organize.organizer}</p>
+							))}
+						</OtherInfo>
 					</div>
 				) : (
 					<Loading />
