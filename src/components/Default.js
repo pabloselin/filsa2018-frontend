@@ -6,7 +6,11 @@ import ReactGA from "react-ga";
 import styled from "styled-components";
 import editUrl from "../utils/editUrl";
 import SocialButtons from "./SocialButtons";
-import ComponentSelect from "./ComponentSelect";
+import Programa from "./Programa";
+import Invitados from "./Invitados";
+import VisitasGuiadas from "./VisitasGuiadas";
+import BuscaLibros from "./BuscaLibros";
+import ArchivoNoticias from "./ArchiveNoticias";
 
 const Title = styled.h1`
 	margin-top: 24px !important;
@@ -31,9 +35,16 @@ const EditLink = styled.a`
 	display: inline-block;
 	margin-left: 6px;
 	font-weight: normal;
-`
+`;
 
 class Default extends Component {
+	constructor(props) {
+		super(props);
+
+		this.state = {
+			params: this.props.params
+		};
+	}
 	trackPage(page) {
 		ReactGA.set({
 			page
@@ -47,31 +58,67 @@ class Default extends Component {
 
 	editLink() {
 		let editlink;
-		if(window.loggedin === true) {
-			editlink = <EditLink href={editUrl(this.props.id)}>[Editar]</EditLink>
+		if (window.loggedin === true) {
+			editlink = (
+				<EditLink href={editUrl(this.props.id)}>[Editar]</EditLink>
+			);
 		}
 		return editlink;
 	}
 
+	componentDidUpdate(prevProps, prevState) {
+		if (this.props.params !== prevProps.params) {
+			this.setState({
+				params: this.props.params
+			});
+		}
+	}
+
+	returnComponentOption() {
+		if (this.state.params !== null) {
+			const componentoption = this.props.component;
+			switch (componentoption) {
+				case "programa":
+					return <Programa />;
+				case "invitados":
+					return <Invitados />;
+				case "visitas-guiadas":
+					return <VisitasGuiadas />;
+				case "buscalibros":
+					return <BuscaLibros />;
+				case "archivonoticias":
+					return (
+						<ArchivoNoticias
+							noticias={this.props.params.filsa2018_noticias}
+						/>
+					);
+				default:
+					return null;
+			}
+		}
+	}
+
 	render() {
-		const ComponentOption = this.props.component
-			? ComponentSelect[this.props.component]
-			: null;
+		const text = this.props.component !== 'normal' ? null : 'text';
 		return (
 			<Fragment>
 				<Helmet>
 					<title>{this.props.title}</title>
 				</Helmet>
-				<Container text className="maincontent">
-					<Title>{this.props.title}{this.editLink()}</Title>
-					<SocialButtons title={this.props.title} url={this.props.location.pathname} />
+				<Container text={text} className="maincontent">
+					<Title>
+						{this.props.title}
+						{this.editLink()}
+					</Title>
+					<SocialButtons
+						title={this.props.title}
+						url={this.props.location.pathname}
+					/>
 					<MainContentText className="maincontent-text">
 						{ReactHtmlParser(this.props.content)}
 					</MainContentText>
 				</Container>
-				<Container className="componentcontent">
-					{ComponentOption ? <ComponentOption /> : <div />}
-				</Container>
+				{this.returnComponentOption()}
 			</Fragment>
 		);
 	}

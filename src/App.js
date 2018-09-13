@@ -10,7 +10,6 @@ import EventSingle from "./components/EventSingle";
 import MenuTop from "./components/MenuTop";
 import MenuMobile from "./components/MenuMobile";
 import SingleNoticiaAlt from "./components/SingleNoticiaAlt";
-import ArchiveNoticias from "./components/ArchiveNoticias";
 import Programa from "./components/Programa";
 import Loading from "./components/Loading";
 import ScrollToTop from "./components/ScrollToTop";
@@ -61,7 +60,8 @@ class Filsa2018 extends Component {
 
   componentDidMount() {
     //General options
-    api.get("/filsa2018/v1/params/").then(res => {
+    if(window.params === undefined) {
+      api.get("/filsa2018/v1/params/").then(res => {
       this.setState({
         params: res.data,
         facebook: res.data["filsa2018_facebook"],
@@ -79,6 +79,25 @@ class Filsa2018 extends Component {
         eventos: res.data["eventos"]
       });
     });
+    } else {
+      this.setState({
+        params: window.params,
+        facebook: window.params["filsa2018_facebook"],
+        twitter: window.params["filsa2018_twitter"],
+        instagram: window.params["filsa2018_instagram"],
+        flickr: window.params["filsa2018_flickr"],
+        headerimg: window.params["filsa2018_cabecera_escritorio"],
+        mobileimg: window.params["filsa2018_cabecera_movil"],
+        menu_principal: window.params["filsa2018_menu"],
+        menu_noticias: window.params["filsa2018_menunoticias"],
+        intro: window.params["filsa2018_intro"],
+        title: window.params["filsa2018_title"],
+        filsa2018_contents: window.params["filsa2018_contents"],
+        filsa2018_noticias: window.params["filsa2018_noticias"],
+        eventos: window.params["eventos"]
+      })
+    }
+    
   }
 
   menus() {
@@ -131,6 +150,7 @@ class Filsa2018 extends Component {
                 title={item.title}
                 content={item.content}
                 component={item.component}
+                params={this.state.params}
               />
             )}
           />
@@ -144,6 +164,12 @@ class Filsa2018 extends Component {
     let newsroutes;
     if (this.state.filsa2018_noticias !== null) {
       newsroutes = this.state.filsa2018_noticias.map(item => {
+        let otrasnoticias = this.state.filsa2018_noticias.reduce((result,noticia) => {
+          if (noticia.title !== item.title) {
+            result.push(noticia);
+          }
+          return result;
+        }, []);
         return (
           <Route
             key={item.id}
@@ -156,6 +182,7 @@ class Filsa2018 extends Component {
                 content={item.content}
                 title={item.title}
                 media={item.media}
+                otras_noticias={otrasnoticias}
               />
             )}
           />
@@ -238,17 +265,6 @@ class Filsa2018 extends Component {
                   key="eventos"
                   path="/eventos/:slug/"
                   component={EventSingle}
-                />
-                <Route
-                  key="noticias"
-                  path="/noticias/"
-                  exact
-                  render={props => (
-                    <ArchiveNoticias
-                      {...props}
-                      noticias={this.state.filsa2018_noticias}
-                    />
-                  )}
                 />
               </Fragment>
               {this.state.params && <Footer />}

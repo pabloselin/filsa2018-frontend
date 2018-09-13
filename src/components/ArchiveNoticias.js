@@ -2,22 +2,13 @@ import React, { Component, Fragment } from "react";
 import { Container, Grid } from "semantic-ui-react";
 import Helmet from "react-helmet";
 import ReactGA from "react-ga";
-import styled from "styled-components";
 import Noticia from "./Noticia";
-
-const Title = styled.h1`
-	margin-top: 24px !important;
-	text-transform: uppercase;
-	@media screen and (max-width: 768px) {
-		font-size: 24px;
-	}
-`;
 
 class ArchiveNoticias extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			noticias: null
+			noticias: this.props.noticias
 		};
 	}
 
@@ -37,7 +28,7 @@ class ArchiveNoticias extends Component {
 	}
 
 	componentDidMount() {
-		this.trackPage(this.props.location.pathname);
+		//this.trackPage(this.props.location.pathname);
 	}
 
 	render() {
@@ -47,7 +38,6 @@ class ArchiveNoticias extends Component {
 					<title>Noticias FILSA 2018</title>
 				</Helmet>
 				<Container>
-					<Title>Noticias FILSA 2018</Title>
 					<Grid columns={3} divided stackable>
 						{this.state.noticias !== null ? (
 							this.props.noticias.map((noticia, key) => (

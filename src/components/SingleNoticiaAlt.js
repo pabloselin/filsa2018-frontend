@@ -1,7 +1,8 @@
 import React, { Component } from "react";
-import { Container } from "semantic-ui-react";
+import { Container, Grid } from "semantic-ui-react";
 import ReactHtmlParser from "react-html-parser";
 import SocialButtons from "./SocialButtons";
+import Noticia from "./Noticia";
 import editUrl from "../utils/editUrl";
 import ReactGA from "react-ga";
 import styled from "styled-components";
@@ -18,12 +19,16 @@ const Title = styled.h1`
 	&& {
 		margin-top: 24px;
 		color: #42413f;
-		text-transform:uppercase;
+		text-transform: uppercase;
 		@media screen and (max-width: 768px) {
 			font-size: 24px;
 		}
 	}
 `;
+
+const AsideNoticias = styled(Grid.Column)`
+	margin-top: 36px;
+`
 
 const EditLink = styled.a`
 	font-family: sans-serif;
@@ -31,6 +36,12 @@ const EditLink = styled.a`
 	display: inline-block;
 	margin-left: 6px;
 	font-weight: normal;
+`;
+
+const SideNoticia = styled.div`
+	margin-bottom: 24px;
+	padding-bottom: 24px;
+	border-bottom: 1px solid #ccc;
 `
 
 class SingleNoticiaAlt extends Component {
@@ -47,27 +58,55 @@ class SingleNoticiaAlt extends Component {
 
 	editLink() {
 		let editlink;
-		if(window.loggedin === true) {
-			editlink = <EditLink href={editUrl(this.props.id)}>[Editar]</EditLink>
+		if (window.loggedin === true) {
+			editlink = (
+				<EditLink href={editUrl(this.props.id)}>[Editar]</EditLink>
+			);
 		}
 		return editlink;
 	}
 
 	render() {
 		return (
-			<Container text>
-				<Helmet>
-					<title>{this.props.title}</title>
-				</Helmet>
-				<Title>{this.props.title}{this.editLink()}</Title>
-				<SocialButtons title={this.props.title} url={this.props.location.pathname} />
-				<TextContent>
-					<img
-						src={this.props.media.imagen_single}
-						alt={this.props.title}
-					/>
-					{ReactHtmlParser(this.props.content)}
-				</TextContent>
+			<Container>
+				<Grid>
+					<Grid.Column mobile={16} computer={10}>
+						<Helmet>
+							<title>{this.props.title}</title>
+						</Helmet>
+						<Title>
+							{this.props.title}
+							{this.editLink()}
+						</Title>
+
+						<SocialButtons
+							title={this.props.title}
+							url={this.props.location.pathname}
+						/>
+						<TextContent>
+							<img
+								src={this.props.media.imagen_single}
+								alt={this.props.title}
+							/>
+							{ReactHtmlParser(this.props.content)}
+						</TextContent>
+					</Grid.Column>
+					<AsideNoticias mobile={16} computer={6}>
+						<h3>Más noticias</h3>
+						{this.props.otras_noticias.map( (noticia, key) => (
+							<SideNoticia key={key}>
+							<Noticia
+								title={noticia.title}
+								link={"/noticias/" + noticia.slug + "/"}
+								slug={noticia.slug}
+								media={noticia.media}
+								content={noticia.content}
+								date={noticia.date}
+							/>
+							</SideNoticia>
+						))}
+					</AsideNoticias>
+				</Grid>
 			</Container>
 		);
 	}
