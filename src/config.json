@@ -6,7 +6,8 @@
 		"wpadmin_url": "https://camaradellibro.cl/wp-admin",
 		"base_path": "ferias/filsa/filsa-2018/",
 		"basename": "/ferias/filsa/filsa-2018",
-		"google_analytics_ua": "UA-29366127-1"
+		"google_analytics_ua": "UA-29366127-1",
+		"service_worker_url": "https://camaradellibro.cl"
 	},
 	"staging": {
 		"api_url": "http://localhost/wp-json",
@@ -15,7 +16,8 @@
 		"wpadmin_url": "http://localhost/wp-admin",
 		"base_path": "ferias/filsa/filsa-2018/",
 		"basename": "/ferias/filsa/filsa-2018",
-		"google_analytics_ua": "UA-29366127-1"
+		"google_analytics_ua": "UA-29366127-1",
+		"service_worker_url": "https://camaradellibro.cl"
 	},
 	"development": {
 		"api_url": "http://localhost/wp-json",
@@ -24,6 +26,7 @@
 		"wpadmin_url": "http://localhost/wp-admin",
 		"base_path": "",
 		"basename": "",
-		"google_analytics_ua": "UA-29366127-1"
+		"google_analytics_ua": "UA-29366127-1",
+		"service_worker_url": "http://localhost"
 	}
 }

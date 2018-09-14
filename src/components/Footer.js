@@ -12,6 +12,13 @@ const StyledFooter = styled.div`
 
 const StyledItem = styled(List.Item)`
 	margin-bottom: 12px;
+	font-size: 14px;
+`
+
+const StyledP = styled.p`
+	margin-top: 12px;
+	color: hsla(0,0%,100%,.7);
+	font-size: 14px;
 `
 
 class Footer extends Component {
@@ -29,7 +36,7 @@ class Footer extends Component {
 									alt="Cámara del Libro"
 								/>
 								<br />
-								<p><em>67 años trabajando por el libro y la lectura</em></p>
+								<StyledP><em>68 años trabajando por el libro y la lectura</em></StyledP>
 							</Grid.Column>
 							<Grid.Column>
 								<List inverted>

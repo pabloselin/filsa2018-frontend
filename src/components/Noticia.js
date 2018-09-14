@@ -7,7 +7,7 @@ const StyledHeader = styled.h3`
 	margin-top: 0;
 	font-size: 24px;
 	a {
-		color: #cc1011;
+		color: rgba(0,0,0,.87);
 	}
 `
 

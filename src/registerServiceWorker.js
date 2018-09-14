@@ -7,6 +7,9 @@
 
 // To learn more about the benefits of this model, read https://goo.gl/KwvDNy.
 // This link also includes instructions on opting out of this behavior.
+import config from "./config.json";
+
+const node_env = process.env.NODE_ENV;
 
 const isLocalhost = Boolean(
   window.location.hostname === 'localhost' ||
@@ -30,7 +33,8 @@ export default function register() {
     }
 
     window.addEventListener('load', () => {
-      const swUrl = `${process.env.PUBLIC_URL}/service-worker.js`;
+      const swUrl = `${config[node_env].base_url}service-workerjs`;
+      console.log(swUrl);
 
       if (isLocalhost) {
         // This is running on localhost. Lets check if a service worker still exists or not.

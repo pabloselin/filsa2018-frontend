@@ -18,8 +18,7 @@ const TextContent = styled.div`
 const Title = styled.h1`
 	&& {
 		margin-top: 24px;
-		color: #42413f;
-		text-transform: uppercase;
+		color: #cc1011;
 		@media screen and (max-width: 768px) {
 			font-size: 24px;
 		}

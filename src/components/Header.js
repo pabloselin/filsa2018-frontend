@@ -32,7 +32,7 @@ class Header extends Component {
 				<Responsive {...Responsive.onlyMobile}>
 					<HeaderImage src={this.props.mobileheaderimg} alt="" />
 				</Responsive>
-				<Responsive {...Responsive.onlyComputer}>
+				<Responsive minWidth={769}>
 				<Link to="/">
 					<HeaderImage src={this.props.headerimg} alt="" />
 				</Link>

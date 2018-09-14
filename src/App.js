@@ -19,8 +19,8 @@ import config from "./config.json";
 import WebFont from "webfontloader";
 
 WebFont.load({
-  custom: {
-    families: ["Biblioteca", "Biblioteca:n4,n7"]
+  google: {
+    families: ["Maitree", "Maitree:n4,n7"]
   }
 });
 
@@ -59,6 +59,7 @@ class Filsa2018 extends Component {
   }
 
   componentDidMount() {
+    console.log(process.env.PUBLIC_URL);
     //General options
     if(window.params === undefined) {
       api.get("/filsa2018/v1/params/").then(res => {
@@ -226,7 +227,7 @@ class Filsa2018 extends Component {
         <Router basename={config[node_env].basename}>
           <ScrollToTop top={top}>
             <Fragment>
-              <Responsive {...Responsive.onlyComputer}>
+              <Responsive minWidth={769}>
                 <PreHeader
                   twitter={this.state.twitter}
                   facebook={this.state.facebook}

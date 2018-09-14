@@ -9,20 +9,20 @@ class Event extends Component {
 				<Card.Content>
 					<Card.Header>{this.props.title}</Card.Header>
 					<Card.Meta>
-						<p>
+						<div>
 							<Icon name="clock" /> {this.props.data.startdate} -{" "}
 							{this.props.data.enddate}
-						</p>
+						</div>
 						{this.props.data.cursos &&
-						<p>
+						<div>
 							<Icon name="users" />{" "}
 							{this.props.data.cursos.map((curso, key) => (
 								<Label key={key}>{curso}</Label>
 							))}
-						</p>
+						</div>
 						}
 						{this.props.data.organizadores &&
-							<p><Icon name="flag" /> Organiza: {this.props.data.organizadores}</p>
+							<div><Icon name="flag" /> Organiza: {this.props.data.organizadores}</div>
 						}
 						
 					</Card.Meta>

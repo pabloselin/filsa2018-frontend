@@ -20,6 +20,7 @@ const DayBox = styled.span`
 		cursor: default;
 		color: #ccc;
 		background-color: #f0f0f0;
+		display: none;
 	}
 	&:last-child {
 		border-right: 1px solid #ccc;

@@ -13,7 +13,7 @@ const StyledMenu = styled(Menu)`
 class MenuTop extends Component {
 	render() {
 		return (
-			<Responsive {...Responsive.onlyComputer}>
+			<Responsive minWidth={769}>
 				<StyledMenu inverted>
 					<Container>
 						<Menu.Item key="home">

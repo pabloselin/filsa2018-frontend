@@ -14,7 +14,7 @@ import ArchivoNoticias from "./ArchiveNoticias";
 
 const Title = styled.h1`
 	margin-top: 24px !important;
-	text-transform: uppercase;
+	color: #cc1011;
 	@media screen and (max-width: 768px) {
 		font-size: 24px;
 	}
@@ -26,6 +26,15 @@ const MainContentText = styled.div`
 	img {
 		max-width: 100%;
 		height: auto;
+	}
+
+	@media screen and (max-width: 768px) {
+		h2 {
+			font-size: 1.3rem;
+		}
+		h3 {
+			font-size: 1.25rem;
+		}
 	}
 `;
 
@@ -99,7 +108,7 @@ class Default extends Component {
 	}
 
 	render() {
-		const text = this.props.component !== 'normal' ? null : 'text';
+		const text = this.props.component !== 'normal' ? false : true;
 		return (
 			<Fragment>
 				<Helmet>
