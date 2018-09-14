@@ -57,6 +57,7 @@ class VisitasGuiadas extends Component {
 							title={evento.title}
 							fullday={evento.daykey}
 							data={evento}
+							formurl={this.state.events.formurl}
 						/>
 					);
 				} else {
@@ -78,6 +79,7 @@ class VisitasGuiadas extends Component {
 							title={evento.title}
 							fullday={evento.daykey}
 							data={evento}
+							formurl={this.state.events.formurl}
 						/>
 					);
 				} else {

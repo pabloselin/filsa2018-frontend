@@ -4,7 +4,7 @@ import ReactHtmlParser from "react-html-parser";
 import SocialButtons from "./SocialButtons";
 import Noticia from "./Noticia";
 import editUrl from "../utils/editUrl";
-import ReactGA from "react-ga";
+import trackPage from "../utils/trackPage";
 import styled from "styled-components";
 import Helmet from "react-helmet";
 
@@ -44,15 +44,8 @@ const SideNoticia = styled.div`
 `
 
 class SingleNoticiaAlt extends Component {
-	trackPage(page) {
-		ReactGA.set({
-			page
-		});
-		ReactGA.pageview(page);
-	}
-
 	componentDidMount() {
-		this.trackPage(this.props.location.pathname);
+		trackPage(this.props.location.pathname);
 	}
 
 	editLink() {

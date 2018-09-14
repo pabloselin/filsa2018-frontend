@@ -3,6 +3,7 @@ import { Container } from "semantic-ui-react";
 import Loading from "./Loading";
 import SocialButtons from "./SocialButtons";
 import ReactHtmlParser from "react-html-parser";
+import trackPage from "../utils/trackPage";
 import styled from "styled-components";
 import api from "../utils/api";
 
@@ -24,6 +25,7 @@ class EventSingle extends Component {
 	}
 
 	componentDidMount() {
+		trackPage(this.props.location.pathname);
 		api.get(
 			"/tribe/events/v1/events/by-slug/" + this.props.match.params.slug
 		).then(res => {

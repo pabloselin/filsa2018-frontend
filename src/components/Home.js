@@ -3,8 +3,8 @@ import { Container, Grid } from "semantic-ui-react";
 import ReactHtmlParser from "react-html-parser";
 import Helmet from "react-helmet";
 import SocialButtons from "./SocialButtons";
+import trackPage from "../utils/trackPage";
 import styled from "styled-components";
-import ReactGA from "react-ga";
 import Noticia from "./Noticia";
 //import Programa from "./Programa";
 
@@ -44,15 +44,9 @@ class Home extends Component {
 		};
 	}
 
-	trackPage(page) {
-		ReactGA.set({
-			page
-		});
-		ReactGA.pageview(page);
-	}
 
 	componentDidMount() {
-		this.trackPage(this.props.location.pathname);
+		trackPage(this.props.location.pathname);
 	}
 
 	matchNews(postID) {

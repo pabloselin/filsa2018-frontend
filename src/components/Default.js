@@ -2,7 +2,7 @@ import React, { Component, Fragment } from "react";
 import { Container } from "semantic-ui-react";
 import ReactHtmlParser from "react-html-parser";
 import Helmet from "react-helmet";
-import ReactGA from "react-ga";
+import trackPage from "../utils/trackPage";
 import styled from "styled-components";
 import editUrl from "../utils/editUrl";
 import SocialButtons from "./SocialButtons";
@@ -54,15 +54,9 @@ class Default extends Component {
 			params: this.props.params
 		};
 	}
-	trackPage(page) {
-		ReactGA.set({
-			page
-		});
-		ReactGA.pageview(page);
-	}
 
 	componentDidMount() {
-		this.trackPage(this.props.location.pathname);
+		trackPage(this.props.location.pathname);
 	}
 
 	editLink() {
