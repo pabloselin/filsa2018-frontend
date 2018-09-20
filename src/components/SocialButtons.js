@@ -44,9 +44,9 @@ class SocialButtons extends Component {
 					<Button
 						as="a"
 						target="_blank"
-						href={`https://facebook.com/sharer.php?url=${encodeURIComponent(
-							this.state.url
-						)}`}
+						href={`https://facebook.com/sharer/sharer.php?u=
+							${this.state.url}
+						&t=${this.props.title}`}
 						labelPosition="right"
 						size="mini"
 					>
@@ -63,9 +63,9 @@ class SocialButtons extends Component {
 						color="facebook"
 						as="a"
 						target="_blank"
-						href={`https://facebook.com/sharer.php?url=${encodeURIComponent(
-							this.state.url
-						)}`}
+						href={`https://facebook.com/sharer/sharer.php?u=
+							${this.state.url}
+						&t=${this.props.title}`}
 						size="mini"
 					>
 						<Icon name="facebook f" />

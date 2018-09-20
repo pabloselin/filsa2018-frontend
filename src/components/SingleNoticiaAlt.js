@@ -45,7 +45,7 @@ const SideNoticia = styled.div`
 
 class SingleNoticiaAlt extends Component {
 	componentDidMount() {
-		trackPage(this.props.location.pathname);
+		trackPage(this.props.location.pathname, this.props.seotitle);
 	}
 
 	editLink() {
@@ -64,7 +64,7 @@ class SingleNoticiaAlt extends Component {
 				<Grid>
 					<Grid.Column mobile={16} computer={10}>
 						<Helmet>
-							<title>{this.props.title}</title>
+							<title>{this.props.seotitle}</title>
 						</Helmet>
 						<Title>
 							{this.props.title}

@@ -63,8 +63,8 @@ class Home extends Component {
 	renderNoticias() {
 		let noticias;
 		if (
-			this.props.noticias !== null &&
-			this.props.noticias_content !== null
+			this.props.noticias !== undefined &&
+			this.props.noticias_content !== undefined
 		) {
 			noticias = (
 				<Grid columns={3} divided stackable>

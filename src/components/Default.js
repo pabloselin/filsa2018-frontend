@@ -56,7 +56,7 @@ class Default extends Component {
 	}
 
 	componentDidMount() {
-		trackPage(this.props.location.pathname);
+		trackPage(this.props.location.pathname, this.props.seotitle);
 	}
 
 	editLink() {
@@ -106,7 +106,7 @@ class Default extends Component {
 		return (
 			<Fragment>
 				<Helmet>
-					<title>{this.props.title}</title>
+					<title>{this.props.seotitle}</title>
 				</Helmet>
 				<Container text={text} className="maincontent">
 					<Title>

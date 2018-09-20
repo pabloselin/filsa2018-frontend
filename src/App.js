@@ -10,7 +10,6 @@ import EventSingle from "./components/EventSingle";
 import MenuTop from "./components/MenuTop";
 import MenuMobile from "./components/MenuMobile";
 import SingleNoticiaAlt from "./components/SingleNoticiaAlt";
-import Programa from "./components/Programa";
 import Loading from "./components/Loading";
 import ScrollToTop from "./components/ScrollToTop";
 import Footer from "./components/Footer";
@@ -59,7 +58,6 @@ class Filsa2018 extends Component {
   }
 
   componentDidMount() {
-    console.log(process.env.PUBLIC_URL);
     //General options
     if(window.params === undefined) {
       api.get("/filsa2018/v1/params/").then(res => {
@@ -152,6 +150,7 @@ class Filsa2018 extends Component {
                 content={item.content}
                 component={item.component}
                 params={this.state.params}
+                seotitle={item.seotitle}
               />
             )}
           />
@@ -184,6 +183,7 @@ class Filsa2018 extends Component {
                 title={item.title}
                 media={item.media}
                 otras_noticias={otrasnoticias}
+                seotitle={item.seotitle}
               />
             )}
           />
@@ -191,29 +191,6 @@ class Filsa2018 extends Component {
       });
     }
     return newsroutes;
-  }
-
-  programa() {
-    let programa;
-    if (this.state.params !== null) {
-      programa = (
-        <Route
-          key={"programa"}
-          path="/programa/"
-          render={props => (
-            <Programa
-              title="Programa"
-              dias={this.state.params.diasvisitasguiadas}
-              {...props}
-              inicio={this.state.params.filsa2018_inicio}
-              fin={this.state.params.filsa2018_fin}
-              eventos={this.state.eventos}
-            />
-          )}
-        />
-      );
-    }
-    return programa;
   }
 
   handleOnUpdate = (e, { width }) => this.setState({ width });

@@ -7,4 +7,7 @@ import App from "./App";
 import registerServiceWorker from "./registerServiceWorker";
 
 ReactDOM.render(<App />, document.getElementById("root"));
-registerServiceWorker();
+//Register service worker only for logged in users
+if(window.loggedin !== true) {
+	registerServiceWorker();
+}
