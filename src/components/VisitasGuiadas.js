@@ -1,9 +1,22 @@
 import React, { Component } from "react";
-import { Container, Select, Tab } from "semantic-ui-react";
+import { Container, Select, Tab, Responsive } from "semantic-ui-react";
+import styled from "styled-components";
 import Loading from "./Loading";
 import Event from "./Event";
 import Dias from "./Dias";
 import api from "../utils/api";
+
+const StyledTabPane = styled(Tab.Pane)`
+	&&&& {
+		border-width: 1px 0 0 0;
+	}
+	@media screen and (max-width: 769px) {
+		&&&& {
+			border-width: 0;
+			padding: 12px 0 0 0;
+		}
+	}
+`;
 
 class VisitasGuiadas extends Component {
 	constructor(props) {
@@ -59,6 +72,7 @@ class VisitasGuiadas extends Component {
 							fullday={evento.daykey}
 							data={evento}
 							formurl={this.state.events.formurl}
+							cerrado={evento.cerrado}
 						/>
 					);
 				} else {
@@ -81,6 +95,7 @@ class VisitasGuiadas extends Component {
 							fullday={evento.daykey}
 							data={evento}
 							formurl={this.state.events.formurl}
+							cerrado={evento.cerrado}
 						/>
 					);
 				} else {
@@ -103,6 +118,7 @@ class VisitasGuiadas extends Component {
 							fullday={evento.daykey}
 							data={evento}
 							formurl={this.state.events.formurl}
+							cerrado={evento.cerrado}
 						/>
 					);
 				} else {
@@ -116,13 +132,13 @@ class VisitasGuiadas extends Component {
 	handleChange(event, curso) {
 		this.setState({
 			curcurso: curso.value
-		})
+		});
 	}
 
 	handleChangeTipo(event, tipo) {
 		this.setState({
 			curtipo: tipo.value
-		})
+		});
 	}
 
 	cursos() {
@@ -163,27 +179,58 @@ class VisitasGuiadas extends Component {
 	render() {
 		const loading = this.state.events !== null;
 		const panes = [
-			{menuItem: 'Por día', render: () => <Tab.Pane>
-						<h2>Por día</h2>
+			{
+				menuItem: "Por día",
+				render: () => (
+					<StyledTabPane>
 						{this.dias()}
 						{this.eventos()}
-						</Tab.Pane>},
-			{menuItem: 'Por curso', render: () => <Tab.Pane>
-						<h2>Por curso</h2>
+					</StyledTabPane>
+				)
+			},
+			{
+				menuItem: "Por curso",
+				render: () => (
+					<StyledTabPane>
 						{this.cursos()}
 						{this.eventosPorCurso()}
-						</Tab.Pane>},
-			{menuItem: 'Por tipo de evento', render: () => <Tab.Pane>
-						<h2>Por tipo de evento</h2>
+					</StyledTabPane>
+				)
+			},
+			{
+				menuItem: "Por tipo",
+				render: () => (
+					<StyledTabPane>
 						{this.tipos()}
 						{this.eventosPorTipo()}
-						</Tab.Pane>}
-		]
+					</StyledTabPane>
+				)
+			}
+		];
 		return (
 			<div>
 				{loading ? (
 					<Container>
-						<Tab menu={{ fluid: true, vertical: true, tabular: 'right'}} panes={panes}/>
+						<Responsive {...Responsive.onlyComputer}>
+						<Tab
+							menu={{
+								fluid: true,
+								vertical: true,
+								tabular: "right"
+							}}
+							panes={panes}
+						/>
+						</Responsive>
+						<Responsive {...Responsive.onlyMobile}>
+						<Tab
+							menu={{
+								fluid: true,
+								pointing: true,
+								borderless: true
+							}}
+							panes={panes}
+						/>
+						</Responsive>
 					</Container>
 				) : (
 					<Loading />

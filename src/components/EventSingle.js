@@ -4,11 +4,12 @@ import Loading from "./Loading";
 import SocialButtons from "./SocialButtons";
 import ReactHtmlParser from "react-html-parser";
 import trackPage from "../utils/trackPage";
+import Event from "./Event";
 import styled from "styled-components";
 import api from "../utils/api";
 
-const OtherInfo = styled.div`
-	font-size: 14px;
+const StyledContainer = styled(Container)`
+	margin-top: 32px;
 `;
 
 class EventSingle extends Component {
@@ -17,30 +18,22 @@ class EventSingle extends Component {
 
 		this.state = {
 			event: null,
-			date: null,
-			day: null,
-			start_hour: null,
-			end_hour: null
+			formurl: null
 		};
 	}
 
 	componentDidMount() {
 		trackPage(this.props.location.pathname);
-		api.get(
-			"/tribe/events/v1/events/by-slug/" + this.props.match.params.slug
-		).then(res => {
+		api.get("/filsa2018/v1/events/" + this.props.match.params.slug).then(
+			res => {
+				this.setState({
+					event: res.data
+				});
+			}
+		);
+		api.get("/filsa2018/v1/options/filsa2018_formurl").then(res => {
 			this.setState({
-				event: res.data,
-				date: new Date(res.data.start_date),
-				day: res.data.start_date_details.day,
-				start_hour:
-					res.data.start_date_details.hour +
-					":" +
-					res.data.start_date_details.minutes,
-				end_hour:
-					res.data.end_date_details.hour +
-					":" +
-					res.data.end_date_details.minutes
+				formurl: res.data
 			});
 		});
 	}
@@ -52,42 +45,30 @@ class EventSingle extends Component {
 	render() {
 		const loading = this.state.event !== null;
 		return (
-			<Container text>
+			<StyledContainer>
 				{loading ? (
 					<div>
-						<h1>{this.state.event.title}</h1>
+						<Event
+							key={this.state.event.id}
+							title={this.state.event.title}
+							fullday={this.state.event.daykey}
+							data={this.state.event}
+							cerrado={this.state.event.cerrado}
+							single={true}
+							formurl={(this.state.formurl !== null && this.state.formurl !== false)? this.state.formurl : ''}
+						/>
 						<SocialButtons
 							url={this.props.location.pathname}
 							title={this.state.event.title}
 						/>
-						<div className="timeinfo">
-							<div>
-								Fecha:{" "}
-								{this.returnDateThing(
-									this.state.date,
-									"weekday"
-								)}, {this.state.event.start_date_details.day}{" "}
-								{this.returnDateThing(this.state.date, "month")}
-							</div>
-							<div>
-								Hora: {this.state.start_hour} -{" "}
-								{this.state.end_hour}
-							</div>
+						<div>
+							{ReactHtmlParser(this.state.event.content)}
 						</div>
-						<OtherInfo>
-							Lugar: {this.state.event.venue.venue} <br/>
-							Organizadores:{" "}
-							{this.state.event.organizer.map((organize, key) => (
-								<p key={key}>{organize.organizer}</p>
-							))}
-						</OtherInfo>
-						<div>{ReactHtmlParser(this.state.event.description)}</div>
-						
 					</div>
 				) : (
 					<Loading />
 				)}
-			</Container>
+			</StyledContainer>
 		);
 	}
 }

@@ -46,7 +46,7 @@ class Event extends Component {
 								{this.props.data.lugar}
 							</InfoEvento>
 						)}
-						{this.props.data.cursos && (
+						{this.props.data.cursos.length > 0 && (
 							<InfoEvento>
 								<Icon name="users" />{" "}
 								{this.props.data.cursos.map((curso, key) => (
@@ -60,21 +60,29 @@ class Event extends Component {
 								{this.props.data.organizadores}
 							</InfoEvento>
 						)}
+						{this.props.data.cupos && (
+							<InfoEvento>
+								<Icon name="ticket" /> Cupos:{" "}
+								{this.props.data.cupos}
+							</InfoEvento>
+						)}
 					</Card.Meta>
 				</Card.Content>
 				<Card.Content extra>
 				<Grid columns={2}>
 					<Grid.Column>
 					{this.props.formurl && (
-						<Button size="tiny" as="a" color="red" href={this.props.formurl} target="_blank">
-							Inscripciones
+						<Button icon disabled={this.props.cerrado ? true : false} size="tiny" as="a" color="red" href={this.props.formurl} target="_blank">
+							<Icon name="ticket" /> Inscripciones {this.props.cerrado && 'cerradas'}
 						</Button>
 					)}
 					</Grid.Column>
 					<Grid.Column>
+					{(this.props.single !== true) &&
 					<Button floated="right" size="tiny" as={Link} to={`/eventos/${this.props.data.slug}/`}>
 						<Icon name="plus" /> Info
 					</Button>
+					}
 					</Grid.Column>
 				</Grid>
 				</Card.Content>

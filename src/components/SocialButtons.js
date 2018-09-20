@@ -32,8 +32,10 @@ class SocialButtons extends Component {
 	}
 
 	componentDidMount() {
+		let url = config[process.env.NODE_ENV].base_url_noslash + this.props.url;
 		this.setState({
-			url: config[process.env.NODE_ENV].base_url_noslash + this.props.url
+			url: url,
+			fburl: `https://facebook.com/sharer/sharer.php?u=${url}&t=${this.props.title}&display=popup`
 		});
 	}
 
@@ -44,9 +46,7 @@ class SocialButtons extends Component {
 					<Button
 						as="a"
 						target="_blank"
-						href={`https://facebook.com/sharer/sharer.php?u=
-							${this.state.url}
-						&t=${this.props.title}`}
+						href={this.state.fburl}
 						labelPosition="right"
 						size="mini"
 					>
@@ -63,9 +63,7 @@ class SocialButtons extends Component {
 						color="facebook"
 						as="a"
 						target="_blank"
-						href={`https://facebook.com/sharer/sharer.php?u=
-							${this.state.url}
-						&t=${this.props.title}`}
+						href={this.state.fburl}
 						size="mini"
 					>
 						<Icon name="facebook f" />
