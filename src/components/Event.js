@@ -73,7 +73,7 @@ class Event extends Component {
 					</Grid.Column>
 					<Grid.Column>
 					<Button floated="right" size="tiny" as={Link} to={`/eventos/${this.props.data.slug}/`}>
-						<Icon name="chain" /> Ver todo
+						<Icon name="plus" /> Info
 					</Button>
 					</Grid.Column>
 				</Grid>

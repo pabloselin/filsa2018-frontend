@@ -60,7 +60,6 @@ class EventSingle extends Component {
 							url={this.props.location.pathname}
 							title={this.state.event.title}
 						/>
-						<div>{ReactHtmlParser(this.state.event.intro)}</div>
 						<div className="timeinfo">
 							<div>
 								Fecha:{" "}
@@ -76,11 +75,14 @@ class EventSingle extends Component {
 							</div>
 						</div>
 						<OtherInfo>
+							Lugar: {this.state.event.venue.venue} <br/>
 							Organizadores:{" "}
-							{this.state.event.organizer.map(organize => (
-								<p>{organize.organizer}</p>
+							{this.state.event.organizer.map((organize, key) => (
+								<p key={key}>{organize.organizer}</p>
 							))}
 						</OtherInfo>
+						<div>{ReactHtmlParser(this.state.event.description)}</div>
+						
 					</div>
 				) : (
 					<Loading />

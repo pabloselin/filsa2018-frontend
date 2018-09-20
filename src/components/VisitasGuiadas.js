@@ -16,6 +16,7 @@ class VisitasGuiadas extends Component {
 			events: null,
 			curday: null,
 			curcurso: null,
+			curtipo: null,
 			today: `${year}-${month}-${day}`
 		};
 	}
@@ -90,9 +91,37 @@ class VisitasGuiadas extends Component {
 		return evento;
 	}
 
+	eventosPorTipo() {
+		let evento;
+		if (this.state.curtipo !== null) {
+			evento = this.state.events.eventos.map(evento => {
+				if (evento.tipo_eventos.includes(this.state.curtipo)) {
+					return (
+						<Event
+							key={evento.id}
+							title={evento.title}
+							fullday={evento.daykey}
+							data={evento}
+							formurl={this.state.events.formurl}
+						/>
+					);
+				} else {
+					return null;
+				}
+			});
+		}
+		return evento;
+	}
+
 	handleChange(event, curso) {
 		this.setState({
 			curcurso: curso.value
+		})
+	}
+
+	handleChangeTipo(event, tipo) {
+		this.setState({
+			curtipo: tipo.value
 		})
 	}
 
@@ -113,6 +142,24 @@ class VisitasGuiadas extends Component {
 		}
 	}
 
+	tipos() {
+		if (this.state.events !== null) {
+			let tiposarray = Object.values(this.state.events.tipoevento);
+			let options = tiposarray.map((tipo, key) => {
+				return { text: tipo, value: tipo };
+			});
+			const { curtipo } = this.state;
+			return (
+				<Select
+					placeholder="Escoge un tipo de evento"
+					options={options}
+					onChange={this.handleChangeTipo.bind(this)}
+					value={curtipo}
+				/>
+			);
+		}
+	}
+
 	render() {
 		const loading = this.state.events !== null;
 		const panes = [
@@ -128,7 +175,8 @@ class VisitasGuiadas extends Component {
 						</Tab.Pane>},
 			{menuItem: 'Por tipo de evento', render: () => <Tab.Pane>
 						<h2>Por tipo de evento</h2>
-						{this.cursos()}
+						{this.tipos()}
+						{this.eventosPorTipo()}
 						</Tab.Pane>}
 		]
 		return (
