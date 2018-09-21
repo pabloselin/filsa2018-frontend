@@ -35,7 +35,7 @@ class VisitasGuiadas extends Component {
 	}
 
 	componentDidMount() {
-		api.get("/filsa2018/v1/events/").then(res => {
+		api.get("/filsa2018/v1/visitas-guiadas/").then(res => {
 			this.setState({
 				events: res.data
 			});
@@ -180,7 +180,11 @@ class VisitasGuiadas extends Component {
 		const loading = this.state.events !== null;
 		const panes = [
 			{
-				menuItem: "Por día",
+				menuItem: {
+					content: "Por día",
+					icon: "calendar alternate outline",
+					key: "por-dia"
+				},
 				render: () => (
 					<StyledTabPane>
 						{this.dias()}
@@ -189,7 +193,11 @@ class VisitasGuiadas extends Component {
 				)
 			},
 			{
-				menuItem: "Por curso",
+				menuItem: {
+					content: "Por curso",
+					icon: "users",
+					key: "por-curso"
+				},
 				render: () => (
 					<StyledTabPane>
 						{this.cursos()}
@@ -198,7 +206,11 @@ class VisitasGuiadas extends Component {
 				)
 			},
 			{
-				menuItem: "Por tipo",
+				menuItem: {
+					content: "Por tipo",
+					icon: "tags",
+					key: "por-tipo"
+				},
 				render: () => (
 					<StyledTabPane>
 						{this.tipos()}
@@ -212,24 +224,25 @@ class VisitasGuiadas extends Component {
 				{loading ? (
 					<Container>
 						<Responsive {...Responsive.onlyComputer}>
-						<Tab
-							menu={{
-								fluid: true,
-								vertical: true,
-								tabular: "right"
-							}}
-							panes={panes}
-						/>
+							<Tab
+								menuPosition="left"
+								menu={{
+									fluid: true,
+									vertical: true,
+									pointing: true
+								}}
+								panes={panes}
+							/>
 						</Responsive>
 						<Responsive {...Responsive.onlyMobile}>
-						<Tab
-							menu={{
-								fluid: true,
-								pointing: true,
-								borderless: true
-							}}
-							panes={panes}
-						/>
+							<Tab
+								menu={{
+									fluid: true,
+									pointing: true,
+									borderless: true
+								}}
+								panes={panes}
+							/>
 						</Responsive>
 					</Container>
 				) : (

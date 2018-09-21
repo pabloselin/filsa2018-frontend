@@ -20,7 +20,16 @@ const InfoEvento = styled.div`
 	margin-top: 6px;
 	margin-bottom: 6px;
 	font-size: 14px;
+	color: #333;
 `;
+
+const StyledLabel = styled(Label)`
+	@media screen and (max-width: 769px) {
+		&&& {
+			margin-bottom: 6px;
+		}
+	}
+`
 
 class Event extends Component {
 	render() {
@@ -50,7 +59,7 @@ class Event extends Component {
 							<InfoEvento>
 								<Icon name="users" />{" "}
 								{this.props.data.cursos.map((curso, key) => (
-									<Label key={key}>{curso}</Label>
+									<StyledLabel key={key}>{curso}</StyledLabel>
 								))}
 							</InfoEvento>
 						)}
@@ -70,17 +79,17 @@ class Event extends Component {
 				</Card.Content>
 				<Card.Content extra>
 				<Grid columns={2}>
-					<Grid.Column>
+					<Grid.Column width={12}>
 					{this.props.formurl && (
 						<Button icon disabled={this.props.cerrado ? true : false} size="tiny" as="a" color="red" href={this.props.formurl} target="_blank">
 							<Icon name="ticket" /> Inscripciones {this.props.cerrado && 'cerradas'}
 						</Button>
 					)}
 					</Grid.Column>
-					<Grid.Column>
+					<Grid.Column width={4}>
 					{(this.props.single !== true) &&
-					<Button floated="right" size="tiny" as={Link} to={`/eventos/${this.props.data.slug}/`}>
-						<Icon name="plus" /> Info
+					<Button icon floated="right" size="tiny" as={Link} title="Enlace permanente" to={`/eventos/${this.props.data.slug}/`}>
+						<Icon name="chain" />
 					</Button>
 					}
 					</Grid.Column>
