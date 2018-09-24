@@ -45,7 +45,7 @@ class EventSingle extends Component {
 	render() {
 		const loading = this.state.event !== null;
 		return (
-			<StyledContainer>
+			<StyledContainer text>
 				{loading ? (
 					<div>
 						<Event
