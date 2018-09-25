@@ -73,6 +73,7 @@ class VisitasGuiadas extends Component {
 							data={evento}
 							formurl={this.state.events.formurl}
 							cerrado={evento.cerrado}
+							showday={false}
 						/>
 					);
 				} else {
@@ -96,6 +97,7 @@ class VisitasGuiadas extends Component {
 							data={evento}
 							formurl={this.state.events.formurl}
 							cerrado={evento.cerrado}
+							showday={true}
 						/>
 					);
 				} else {
@@ -119,6 +121,7 @@ class VisitasGuiadas extends Component {
 							data={evento}
 							formurl={this.state.events.formurl}
 							cerrado={evento.cerrado}
+							showday={true}
 						/>
 					);
 				} else {
@@ -153,6 +156,7 @@ class VisitasGuiadas extends Component {
 					options={options}
 					onChange={this.handleChange.bind(this)}
 					value={curcurso}
+					showday={true}
 				/>
 			);
 		}

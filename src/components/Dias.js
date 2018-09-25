@@ -15,6 +15,7 @@ const DaysWrap = styled.div`
 
 class Dias extends Component {
 	render() {
+		if(this.props.dias !== undefined) {
 		return (
 			<Grid>
 				<Grid.Column computer={6} mobile={16}>
@@ -53,6 +54,7 @@ class Dias extends Component {
 				</Grid.Column>
 			</Grid>
 		);
+		}
 	}
 }
 

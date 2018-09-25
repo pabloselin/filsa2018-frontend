@@ -45,6 +45,11 @@ class Event extends Component {
 						{this.props.title}
 					</Card.Header>
 					<Card.Meta>
+						{this.props.showday && (
+						<InfoEvento>
+							<Icon name="calendar" /> {this.props.data.startday}
+						</InfoEvento>
+						)}
 						<InfoEvento>
 							<Icon name="clock" /> {this.props.data.startdate} -{" "}
 							{this.props.data.enddate}
