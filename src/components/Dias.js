@@ -11,6 +11,12 @@ const MesH = styled.h2`
 
 const DaysWrap = styled.div`
 	margin-top: 12px;
+	border:1px solid #ccc;
+	border-right: 0;
+	display: inline-block;
+	@media screen and (max-width: 768px) {
+		border: 0;
+	}
 `;
 
 class Dias extends Component {

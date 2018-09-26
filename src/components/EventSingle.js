@@ -2,7 +2,6 @@ import React, { Component } from "react";
 import { Container } from "semantic-ui-react";
 import Loading from "./Loading";
 import SocialButtons from "./SocialButtons";
-import ReactHtmlParser from "react-html-parser";
 import trackPage from "../utils/trackPage";
 import Event from "./Event";
 import styled from "styled-components";
@@ -18,17 +17,27 @@ class EventSingle extends Component {
 
 		this.state = {
 			event: null,
-			formurl: null
+			formurl: null,
+			seotitle: null,
+			visitaguiada: false
 		};
 	}
 
 	componentDidMount() {
-		trackPage(this.props.location.pathname);
 		api.get("/filsa2018/v1/events/" + this.props.match.params.slug).then(
 			res => {
+				let seotitle = res.data.title + " - FILSA 2018";
+
 				this.setState({
-					event: res.data
+					event: res.data,
+					seotitle: seotitle
 				});
+				trackPage(this.props.location.pathname, seotitle);
+				if (res.data.tipo_eventos.includes("Visitas guiadas")) {
+					this.setState({
+						visitaguiada: true
+					});
+				}
 			}
 		);
 		api.get("/filsa2018/v1/options/filsa2018_formurl").then(res => {
@@ -36,10 +45,6 @@ class EventSingle extends Component {
 				formurl: res.data
 			});
 		});
-	}
-
-	returnDateThing(date, thing) {
-		return date.toLocaleDateString("es-ES", { [thing]: "long" });
 	}
 
 	render() {
@@ -50,20 +55,25 @@ class EventSingle extends Component {
 					<div>
 						<Event
 							key={this.state.event.id}
+							id={this.state.event.id}
 							title={this.state.event.title}
 							fullday={this.state.event.daykey}
 							data={this.state.event}
 							cerrado={this.state.event.cerrado}
 							single={true}
-							formurl={(this.state.formurl !== null && this.state.formurl !== false)? this.state.formurl : ''}
+							showday={true}
+							formurl={
+								this.state.formurl !== null &&
+								this.state.formurl !== false
+									? this.state.formurl
+									: ""
+							}
+							visitaguiada={this.state.visitaguiada}
 						/>
 						<SocialButtons
 							url={this.props.location.pathname}
-							title={this.state.event.title}
+							title={this.state.seotitle}
 						/>
-						<div>
-							{ReactHtmlParser(this.state.event.content)}
-						</div>
 					</div>
 				) : (
 					<Loading />

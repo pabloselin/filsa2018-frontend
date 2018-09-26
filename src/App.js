@@ -151,6 +151,7 @@ class Filsa2018 extends Component {
                 component={item.component}
                 params={this.state.params}
                 seotitle={item.seotitle}
+                extrafields={item.extrafields ? item.extrafields : null}
               />
             )}
           />

@@ -18,6 +18,14 @@ const StyledTabPane = styled(Tab.Pane)`
 	}
 `;
 
+const StyledContainer = styled(Container)`
+	&&& {
+		@media only screen and (min-width: 1213px) {
+			width: 950px;
+		}
+	}
+`;
+
 class VisitasGuiadas extends Component {
 	constructor(props) {
 		super(props);
@@ -30,7 +38,10 @@ class VisitasGuiadas extends Component {
 			curday: null,
 			curcurso: null,
 			curtipo: null,
-			today: `${year}-${month}-${day}`
+			today: `${year}-${month}-${day}`,
+			showing: 0,
+			showEvents: null,
+			curfilter: null
 		};
 	}
 
@@ -42,10 +53,19 @@ class VisitasGuiadas extends Component {
 		});
 	}
 
-	changecurDay(day) {
-		this.setState({
-			curday: day
-		});
+	componentDidUpdate(prevProps, prevState) {
+		if (this.state.events !== prevState.events) {
+			let oct = this.state.events.diasvisitasguiadas.octubre;
+			//let nov = this.state.events.diasvisitasguiadas.noviembre;
+			let curday = null;
+			for (let i = 0; i < oct.length; i++) {
+				if (oct[i][1] === "active") {
+					curday = oct[i][0].full;
+					break;
+				}
+			}
+			this.filterEvents(curday);
+		}
 	}
 
 	dias() {
@@ -60,87 +80,61 @@ class VisitasGuiadas extends Component {
 		}
 	}
 
-	eventos() {
-		let evento;
-		if (this.state.curday !== null) {
-			evento = this.state.events.eventos.map(evento => {
-				if (evento.daykey === this.state.curday) {
-					return (
-						<Event
-							key={evento.id}
-							title={evento.title}
-							fullday={evento.daykey}
-							data={evento}
-							formurl={this.state.events.formurl}
-							cerrado={evento.cerrado}
-							showday={false}
-						/>
-					);
-				} else {
-					return null;
-				}
-			});
-		}
-		return evento;
-	}
-
-	eventosPorCurso() {
-		let evento;
-		if (this.state.curcurso !== null) {
-			evento = this.state.events.eventos.map(evento => {
-				if (evento.cursos.includes(this.state.curcurso)) {
-					return (
-						<Event
-							key={evento.id}
-							title={evento.title}
-							fullday={evento.daykey}
-							data={evento}
-							formurl={this.state.events.formurl}
-							cerrado={evento.cerrado}
-							showday={true}
-						/>
-					);
-				} else {
-					return null;
-				}
-			});
-		}
-		return evento;
-	}
-
-	eventosPorTipo() {
-		let evento;
-		if (this.state.curtipo !== null) {
-			evento = this.state.events.eventos.map(evento => {
-				if (evento.tipo_eventos.includes(this.state.curtipo)) {
-					return (
-						<Event
-							key={evento.id}
-							title={evento.title}
-							fullday={evento.daykey}
-							data={evento}
-							formurl={this.state.events.formurl}
-							cerrado={evento.cerrado}
-							showday={true}
-						/>
-					);
-				} else {
-					return null;
-				}
-			});
-		}
-		return evento;
-	}
-
-	handleChange(event, curso) {
+	filterEvents(day) {
+		let eventosFiltrados = this.state.events.eventos.filter(
+			evento => evento.daykey === day
+		);
 		this.setState({
-			curcurso: curso.value
+			showEvents: eventosFiltrados,
+			showing: eventosFiltrados.length,
+			curday: day,
+			curfilter: "por-dia"
 		});
 	}
 
-	handleChangeTipo(event, tipo) {
+	filterCurso(curso) {
+		let eventosFiltrados = this.state.events.eventos.filter(evento =>
+			evento.cursos.includes(curso.value)
+		);
 		this.setState({
-			curtipo: tipo.value
+			showEvents: eventosFiltrados,
+			showing: eventosFiltrados.length,
+			curcurso: curso.value,
+			curfilter: "por-curso"
+		});
+	}
+
+	filterTipo(tipo) {
+		let eventosFiltrados = this.state.events.eventos.filter(evento =>
+			evento.tipo_eventos.includes(tipo.value)
+		);
+		this.setState({
+			showEvents: eventosFiltrados,
+			showing: eventosFiltrados.length,
+			curtipo: tipo.value,
+			curfilter: "por-tipo"
+		});
+	}
+
+	changecurDay(day) {
+		this.filterEvents(day);
+	}
+
+	handleChange(event, curso) {
+		this.filterCurso(curso);
+	}
+
+	handleChangeTipo(event, tipo) {
+		this.filterTipo(tipo);
+	}
+
+	resetEvents(event, tab) {
+		this.setState({
+			showEvents: null,
+			showing: 0,
+			curday: null,
+			curcurso: null,
+			curtipo: null
 		});
 	}
 
@@ -156,7 +150,6 @@ class VisitasGuiadas extends Component {
 					options={options}
 					onChange={this.handleChange.bind(this)}
 					value={curcurso}
-					showday={true}
 				/>
 			);
 		}
@@ -182,6 +175,23 @@ class VisitasGuiadas extends Component {
 
 	render() {
 		const loading = this.state.events !== null;
+		const showEventsTitle = <h3>{this.state.showing} visitas guiadas</h3>;
+		const showEvents = this.state.showEvents
+			? this.state.showEvents.map(evento => (
+					<Event
+						key={evento.id}
+						title={evento.title}
+						fullday={evento.daykey}
+						data={evento}
+						formurl={this.state.events.formurl}
+						cerrado={evento.cerrado}
+						showday={
+							this.state.curfilter !== "por-dia" ? true : false
+						}
+					/>
+			  ))
+			: null;
+
 		const panes = [
 			{
 				menuItem: {
@@ -192,7 +202,8 @@ class VisitasGuiadas extends Component {
 				render: () => (
 					<StyledTabPane>
 						{this.dias()}
-						{this.eventos()}
+						{showEventsTitle}
+						{showEvents}
 					</StyledTabPane>
 				)
 			},
@@ -205,7 +216,8 @@ class VisitasGuiadas extends Component {
 				render: () => (
 					<StyledTabPane>
 						{this.cursos()}
-						{this.eventosPorCurso()}
+						{showEventsTitle}
+						{showEvents}
 					</StyledTabPane>
 				)
 			},
@@ -218,7 +230,8 @@ class VisitasGuiadas extends Component {
 				render: () => (
 					<StyledTabPane>
 						{this.tipos()}
-						{this.eventosPorTipo()}
+						{showEventsTitle}
+						{showEvents}
 					</StyledTabPane>
 				)
 			}
@@ -226,9 +239,10 @@ class VisitasGuiadas extends Component {
 		return (
 			<div>
 				{loading ? (
-					<Container>
+					<StyledContainer>
 						<Responsive {...Responsive.onlyComputer}>
 							<Tab
+								onTabChange={this.resetEvents.bind(this)}
 								menuPosition="left"
 								menu={{
 									fluid: true,
@@ -240,6 +254,7 @@ class VisitasGuiadas extends Component {
 						</Responsive>
 						<Responsive {...Responsive.onlyMobile}>
 							<Tab
+								onTabChange={this.resetEvents.bind(this)}
 								menu={{
 									fluid: true,
 									pointing: true,
@@ -248,7 +263,7 @@ class VisitasGuiadas extends Component {
 								panes={panes}
 							/>
 						</Responsive>
-					</Container>
+					</StyledContainer>
 				) : (
 					<Loading />
 				)}

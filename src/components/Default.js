@@ -20,6 +20,14 @@ const Title = styled.h1`
 	}
 `;
 
+const StyledContainer = styled(Container)`
+	@media only screen and (min-width: 1213px) {
+		&&&.visitas-guiadas {
+			width: 950px;
+		}
+	}
+`;
+
 const MainContentText = styled.div`
 	margin-bottom: 36px;
 
@@ -84,7 +92,7 @@ class Default extends Component {
 				case "programa":
 					return <Programa />;
 				case "invitados":
-					return <Invitados />;
+					return <Invitados invitados={this.props.extrafields}/>;
 				case "visitas-guiadas":
 					return <VisitasGuiadas />;
 				case "buscalibros":
@@ -108,7 +116,7 @@ class Default extends Component {
 				<Helmet>
 					<title>{this.props.seotitle}</title>
 				</Helmet>
-				<Container text={text} className="maincontent">
+				<StyledContainer text={text} className={`maincontent ${this.props.component}`}>
 					<Title>
 						{this.props.title}
 						{this.editLink()}
@@ -120,7 +128,7 @@ class Default extends Component {
 					<MainContentText className="maincontent-text">
 						{ReactHtmlParser(this.props.content)}
 					</MainContentText>
-				</Container>
+				</StyledContainer>
 				{this.returnComponentOption()}
 			</Fragment>
 		);

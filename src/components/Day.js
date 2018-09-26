@@ -12,20 +12,19 @@ const DayBox = styled.span`
 	cursor: pointer;
 	padding: 4px;
 	font-size: 13px;
-	border: 1px solid #ccc;
-	border-right: 0;
 	text-align: center;
 	width: 56px;
-	&.disabled, &.disabled:hover {
+	border-right: 1px solid #ccc;
+	&.disabled,
+	&.disabled:hover {
 		cursor: default;
 		color: #ccc;
 		background-color: #f0f0f0;
 		display: none;
 	}
-	&:last-child {
-		border-right: 1px solid #ccc;
-	}
-	&:hover, &.enabled {
+
+	&:hover,
+	&.enabled {
 		background-color: #f1eada;
 		color: #cc1011;
 	}
@@ -37,10 +36,17 @@ const DayBox = styled.span`
 `;
 
 class Day extends Component {
-
 	parseWeekDay(day) {
-		let dia = new Date(day);
-		return dia.toLocaleDateString('es-ES', {weekday: 'short'});
+		let dias = {
+			Sunday: 'DOM',
+			Monday: 'LUN',
+			Tuesday: 'MAR',
+			Wednesday: 'MIÉ',
+			Thursday: 'JUE',
+			Friday: 'VIE',
+			Saturday: 'SÁB'
+		}
+		return dias[day];
 	}
 
 	render() {
@@ -49,7 +55,7 @@ class Day extends Component {
 				className={`${this.props.dia[1]} ${this.props.enabled}`}
 				onClick={() => this.props.trigger(this.props.dia[0].full)}
 			>
-				{this.parseWeekDay(this.props.dia[0].full)}
+				{this.parseWeekDay(this.props.dia[0].diasemana)}
 				<DiaNumero>{this.props.dia[0].dia}</DiaNumero>
 			</DayBox>
 		);

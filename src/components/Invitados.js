@@ -1,27 +1,22 @@
 import React, { Component } from "react";
-import api from "../utils/api";
+import { Container } from "semantic-ui-react";
+import Invitado from "./Invitado";
 
 class Invitados extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			eventos: null
+			invitado: null
 		};
 	}
 
-	componentDidMount() {
-		api.get("/filsa2018/v1/events/").then(res => {
-			this.setState({
-				events: res.data
-			});
-		});
-	}
+	componentDidMount() {}
 
 	render() {
 		return (
-			<div>
-				<h1>{this.props.title}</h1>
-			</div>
+			<Container>
+				{this.props.invitados.map(invitado => <Invitado data={invitado} />)}
+			</Container>
 		);
 	}
 }
