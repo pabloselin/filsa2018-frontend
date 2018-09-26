@@ -33,7 +33,7 @@ class EventSingle extends Component {
 					seotitle: seotitle
 				});
 				trackPage(this.props.location.pathname, seotitle);
-				if (res.data.tipo_eventos.includes("Visitas guiadas")) {
+				if (res.data.tipo_eventos.includes("Visitas de colegios")) {
 					this.setState({
 						visitaguiada: true
 					});

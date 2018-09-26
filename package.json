@@ -10,6 +10,7 @@
     "react-ga": "^2.5.3",
     "react-helmet": "^5.2.0",
     "react-html-parser": "^2.0.2",
+    "react-masonry-css": "^1.0.11",
     "react-router-dom": "^4.3.1",
     "react-scripts": "1.1.5",
     "semantic-ui-css": "^2.3.3",
