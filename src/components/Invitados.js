@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Container } from "semantic-ui-react";
+import { Container, Dimmer, Segment } from "semantic-ui-react";
 import Masonry from "react-masonry-css";
 import styled from "styled-components";
 import Invitado from "./Invitado";
@@ -14,41 +14,91 @@ const StyledMasonry = styled(Masonry)`
 	}
 `;
 
-const breakpointColumnsObj = {
-  default: 4,
-  1100: 3,
-  700: 2,
-  500: 1
-};
-
+const StyledDimmer = styled(Dimmer)`
+	&&& {
+		overflow: scroll;
+		margin: 0;
+		border-radius: 0;
+		img {
+			max-width: 100%;
+			height: auto;
+		}
+	}
+`;
 
 class Invitados extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			invitado: null
+			invitado: null,
+			breakpointColumnsObj: {
+				default: 4,
+				1100: 3,
+				700: 2,
+				500: 1
+			},
+			active: false,
+			invcontent: null
 		};
+
+		this.toggleInvitado = this.toggleInvitado.bind(this);
+		this.handleHide = this.handleHide.bind(this);
+		this.gridRef = React.createRef();
 	}
 
 	componentDidMount() {}
 
-	toggleInvitado(ev, inv) {
-		console.log(inv);
+	toggleInvitado(ev, data) {
+		this.setState({
+			invitado: this.state.invitado !== ev ? ev : null,
+			invcontent: data,
+			active: this.state.invitado !== ev ? true : false
+		});
+	}
+
+	handleHide() {
+		this.setState({
+			invitado: null,
+			invcontent: null,
+			active: false
+		});
 	}
 
 	render() {
+		const { active } = this.state;
 		return (
 			<Container>
+				{this.state.invitado !== null && (
+					<StyledDimmer
+						as={Segment}
+						blurring
+						page
+						active={active}
+						onClickOutside={this.handleHide}
+					>
+						<Container text>
+							<img
+								src={this.state.invcontent.foto}
+								alt={this.state.invcontent.nombre}
+							/>
+							<h2>{this.state.invcontent.nombre}</h2>
+							{this.state.invcontent.bio}
+						</Container>
+					</StyledDimmer>
+				)}
+
 				<StyledMasonry
-					breakpointCols={breakpointColumnsObj}
+					innerRef={this.gridRef}
+					breakpointCols={this.state.breakpointColumnsObj}
 					className="invitados-grid"
 					columnClassName="invitados-grid-column"
 				>
 					{this.props.invitados.map((invitado, key) => (
 						<Invitado
-							onClick={this.toggleInvitado.bind(this)}
+							onclick={this.toggleInvitado}
 							active={this.state.invitado === key ? true : false}
 							key={key}
+							id={key}
 							data={invitado}
 						/>
 					))}

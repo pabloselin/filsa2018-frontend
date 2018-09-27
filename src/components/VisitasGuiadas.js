@@ -175,7 +175,7 @@ class VisitasGuiadas extends Component {
 
 	render() {
 		const loading = this.state.events !== null;
-		const showEventsTitle = <h3>{this.state.showing} visitas guiadas</h3>;
+		const showEventsTitle = <h3>{this.state.showing} actividades</h3>;
 		const showEvents = this.state.showEvents
 			? this.state.showEvents.map(evento => (
 					<Event

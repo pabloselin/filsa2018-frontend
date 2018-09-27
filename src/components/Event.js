@@ -94,7 +94,7 @@ class Event extends Component {
 				as={Link}
 				to="/visitas-guiadas-colegios/"
 			>
-				<Icon name="reply" /> Volver a visitas guiadas
+				<Icon name="reply" /> Volver a visitas de colegios
 			</Button>
 		) : (
 			<Button
@@ -104,7 +104,7 @@ class Event extends Component {
 				as={Link}
 				to="/programa-cultural/"
 			>
-				<Icon name="reply" /> Volver a programa cultural
+				<Icon name="reply" /> Volver al programa cultural
 			</Button>
 		);
 		return (
