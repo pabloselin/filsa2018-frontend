@@ -8,6 +8,7 @@ import editUrl from "../utils/editUrl";
 import SocialButtons from "./SocialButtons";
 import Programa from "./Programa";
 import Invitados from "./Invitados";
+import Expositores from "./Expositores";
 import VisitasGuiadas from "./VisitasGuiadas";
 import BuscaLibros from "./BuscaLibros";
 import ArchivoNoticias from "./ArchiveNoticias";
@@ -89,6 +90,8 @@ class Default extends Component {
 		if (this.state.params !== null) {
 			const componentoption = this.props.component;
 			switch (componentoption) {
+				case "expositores":
+					return <Expositores />;
 				case "programa":
 					return <Programa />;
 				case "invitados":

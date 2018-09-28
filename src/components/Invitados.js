@@ -1,7 +1,8 @@
 import React, { Component } from "react";
-import { Container, Dimmer, Segment } from "semantic-ui-react";
+import { Container, Dimmer, Button, Icon } from "semantic-ui-react";
 import Masonry from "react-masonry-css";
 import styled from "styled-components";
+import ReactHtmlParser from "react-html-parser";
 import Invitado from "./Invitado";
 
 const StyledMasonry = styled(Masonry)`
@@ -16,13 +17,24 @@ const StyledMasonry = styled(Masonry)`
 
 const StyledDimmer = styled(Dimmer)`
 	&&& {
-		overflow: scroll;
 		margin: 0;
 		border-radius: 0;
-		img {
-			max-width: 100%;
-			height: auto;
-		}
+		overflow: scroll;
+	}
+`;
+
+const InvContent = styled(Container)`
+	text-align: left;
+	img {
+		max-width: 100%;
+		height: auto;
+	}
+`;
+const Close = styled(Button)`
+	&&& {
+		display: block;
+		text-transform: lowercase;
+		margin-top: 12px;
 	}
 `;
 
@@ -70,23 +82,24 @@ class Invitados extends Component {
 			<Container>
 				{this.state.invitado !== null && (
 					<StyledDimmer
-						as={Segment}
-						blurring
 						page
 						active={active}
 						onClickOutside={this.handleHide}
+						verticalAlign="top"
 					>
-						<Container text>
+						<InvContent text>
 							<img
 								src={this.state.invcontent.foto}
 								alt={this.state.invcontent.nombre}
 							/>
 							<h2>{this.state.invcontent.nombre}</h2>
-							{this.state.invcontent.bio}
-						</Container>
+							{ReactHtmlParser(this.state.invcontent.bio)}
+							<Close icon color="red" onClick={this.handleHide}>
+								<Icon name="close" /> Cerrar
+							</Close>
+						</InvContent>
 					</StyledDimmer>
 				)}
-
 				<StyledMasonry
 					innerRef={this.gridRef}
 					breakpointCols={this.state.breakpointColumnsObj}

@@ -27,11 +27,11 @@ const MainContentText = styled.div`
 `;
 
 const MainContainer = styled(Container)`
-  && {
-    @media only screen and (min-width: 1200px) {
-      width: 1140px;
-    }
-  }
+	&& {
+		@media only screen and (min-width: 1200px) {
+			width: 1140px;
+		}
+	}
 `;
 
 class Home extends Component {
@@ -44,20 +44,19 @@ class Home extends Component {
 		};
 	}
 
-
 	componentDidMount() {
 		trackPage(this.props.location.pathname);
 	}
 
 	matchNews(postID) {
-	let matched;
-	this.props.noticias_content.map(noticia => {
+		let matched;
+		this.props.noticias_content.map(noticia => {
 			if (noticia.id === postID) {
 				matched = noticia;
 			}
 			return matched;
 		});
-	return matched;
+		return matched;
 	}
 
 	renderNoticias() {
@@ -104,15 +103,20 @@ class Home extends Component {
 				<Helmet>
 					<title>{this.props.title}</title>
 				</Helmet>
-				<Container text className="maincontent">	
-					<Title as="h1">{this.props.title}</Title>
-					<SocialButtons url={this.props.location.pathname} title={this.props.title} />
-					<MainContentText className="maincontent-text">
-						{ReactHtmlParser(this.props.content)}
-					</MainContentText>
-				</Container>
 				<MainContainer>
-				{this.renderNoticias()}
+					{this.props.noticias_content !== undefined &&
+					this.props.noticias !== undefined ? (
+						<Grid columns={2}>
+							<Grid.Column>Imagen</Grid.Column>
+							<Grid.Column>Texto</Grid.Column>
+						</Grid>
+					) : null}
+
+					<Grid columns={3}>
+						<Grid.Column>Facebook</Grid.Column>
+						<Grid.Column>Twitter</Grid.Column>
+						<Grid.Column>Instagram</Grid.Column>
+					</Grid>
 				</MainContainer>
 			</div>
 		);

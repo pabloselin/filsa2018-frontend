@@ -29,6 +29,14 @@ const StyledLabel = styled(Label)`
 	}
 `;
 
+const BackButton = styled(Button)`
+	@media screen and (max-width: 769px) {
+		&&& {
+			margin-top: 12px;
+		}
+	}
+`
+
 const EditLink = styled.a`
 	font-family: sans-serif;
 	font-size: 13px;
@@ -86,7 +94,7 @@ class Event extends Component {
 			</Button>
 		);
 		const backLink = this.props.visitaguiada ? (
-			<Button
+			<BackButton
 				color="teal"
 				icon
 				size="tiny"
@@ -95,9 +103,9 @@ class Event extends Component {
 				to="/visitas-guiadas-colegios/"
 			>
 				<Icon name="reply" /> Volver a visitas de colegios
-			</Button>
+			</BackButton>
 		) : (
-			<Button
+			<BackButton
 				color="teal"
 				size="tiny"
 				title="Volver a programa cultural"
@@ -105,7 +113,7 @@ class Event extends Component {
 				to="/programa-cultural/"
 			>
 				<Icon name="reply" /> Volver al programa cultural
-			</Button>
+			</BackButton>
 		);
 		return (
 			<Card fluid>
