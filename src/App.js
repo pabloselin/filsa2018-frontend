@@ -231,6 +231,11 @@ class Filsa2018 extends Component {
                         noticias_content={this.state.filsa2018_noticias}
                         content={this.state.intro}
                         title={this.state.title}
+                        facebook={this.state.facebook}
+                        twitter={this.state.twitter}
+                        instagram={this.state.instagram}
+                        instagrampost={this.state.params.filsa2018_instagrampost}
+                        facebookid={this.state.params.filsa2018_facebookid}
                       />
                     )}
                   />

@@ -3,7 +3,6 @@ import { Responsive, Grid, Button, Icon } from "semantic-ui-react";
 import { FacebookProvider, Page } from "react-facebook";
 import { TwitterTimelineEmbed } from "react-twitter-embed";
 import InstagramEmbed from "react-instagram-embed";
-import { Link } from "react-router-dom";
 import styled from "styled-components";
 
 const SocialButton = styled(Button)`
@@ -17,11 +16,11 @@ class SocialHome extends Component {
 		return (
 			<Fragment>
 				<Responsive minWidth={769}>
-					<Grid columns={3} padded="vertical">
+					<Grid columns={3} padded="vertically">
 						<Grid.Column>
-							<FacebookProvider appId="1048728495191929">
+							<FacebookProvider appId={this.props.facebookid}>
 								<Page
-									href="https://www.facebook.com/filsachile"
+									href={this.props.facebook}
 									tabs="timeline"
 									height={563}
 								/>
@@ -30,13 +29,13 @@ class SocialHome extends Component {
 						<Grid.Column>
 							<TwitterTimelineEmbed
 								sourceType="profile"
-								screenName="camaradellibro"
+								screenName={this.props.twitter}
 								options={{ height: 563 }}
 							/>
 						</Grid.Column>
 						<Grid.Column>
 							<InstagramEmbed
-								url="https://www.instagram.com/p/BnmOGArl7_t/"
+								url={this.props.instagrampost}
 								hideCaption={true}
 							/>
 						</Grid.Column>
@@ -46,18 +45,9 @@ class SocialHome extends Component {
 					<SocialButton
 						target="_blank"
 						fluid
-						color="purple"
-						as={Link}
-						to="https://www.instagram.com"
-					>
-						<Icon name="instagram" /> Instagram
-					</SocialButton>
-					<SocialButton
-						target="_blank"
-						fluid
 						color="facebook"
-						as={Link}
-						to="https://www.instagram.com"
+						as="a"
+						href={`https://facebook.com/${this.props.facebook}`}
 					>
 						<Icon name="facebook" /> Facebook
 					</SocialButton>
@@ -65,10 +55,19 @@ class SocialHome extends Component {
 						target="_blank"
 						fluid
 						color="twitter"
-						as={Link}
-						to="https://www.instagram.com"
+						as="a"
+						href={`https://twitter.com/${this.props.twitter}`}
 					>
 						<Icon name="twitter" /> Twitter
+					</SocialButton>
+					<SocialButton
+						target="_blank"
+						fluid
+						color="purple"
+						as="a"
+						href={`https://instagram.com/${this.props.instagram}`}
+					>
+						<Icon name="instagram" /> Instagram
 					</SocialButton>
 				</Responsive>
 			</Fragment>

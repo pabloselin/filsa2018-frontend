@@ -51,13 +51,13 @@ class PreHeader extends Component {
 						</Brand>
 					</Grid.Column>
 					<Redes floated="right">
-						<SocialLink target="_blank" href={this.props.facebook}>
+						<SocialLink target="_blank" href={`https://facebook.com/${this.props.facebook}`}>
 							<Icon name="facebook" />
 						</SocialLink>
-						<SocialLink target="_blank" href={this.props.twitter}>
+						<SocialLink target="_blank" href={`https://twitter.com/${this.props.twitter}`}>
 							<Icon name="twitter" />
 						</SocialLink>
-						<SocialLink target="_blank" href={this.props.instagram}>
+						<SocialLink target="_blank" href={`https://instagram.com/${this.props.instagram}`}>
 							<Icon name="instagram" />
 						</SocialLink>
 						<SocialLink target="_blank" href={this.props.flickr}>

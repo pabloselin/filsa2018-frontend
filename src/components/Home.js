@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Container, Grid, Button, Icon, Responsive } from "semantic-ui-react";
+import { Container, Grid, Button, Icon } from "semantic-ui-react";
 import { Link } from "react-router-dom";
 import Helmet from "react-helmet";
 import trackPage from "../utils/trackPage";
@@ -127,22 +127,21 @@ class Home extends Component {
 				</Helmet>
 				<MainContainer>
 					{this.state.firstNoticia !== null ? (
-						<NewsGrid padded="vertical">
+						<NewsGrid padded="vertically">
 							<Grid.Row>
 								<Grid.Column computer={6} mobile={16}>
 									<Link
-											to={`/noticias/${
+										to={`/noticias/${
+											this.state.firstNoticia.content.slug
+										}/`}
+									>
+										<NewsImage
+											src={
 												this.state.firstNoticia.content
-													.slug
-											}/`}
-										>
-									<NewsImage
-										src={
-											this.state.firstNoticia.content
-												.media.medium_large
-										}
-										alt={this.state.firstNoticia.title}
-									/>
+													.media.medium_large
+											}
+											alt={this.state.firstNoticia.title}
+										/>
 									</Link>
 								</Grid.Column>
 								<Grid.Column
@@ -188,7 +187,13 @@ class Home extends Component {
 							</Grid.Row>
 						</NewsGrid>
 					) : null}
-					<SocialHome />
+					<SocialHome
+						twitter={this.props.twitter}
+						instagrampost={this.props.instagrampost}
+						instagram={this.props.instagram}
+						facebook={this.props.facebook}
+						facebookid={this.props.facebookid}
+					/>
 				</MainContainer>
 			</div>
 		);
