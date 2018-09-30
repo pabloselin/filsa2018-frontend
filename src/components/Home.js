@@ -2,10 +2,8 @@ import React, { Component } from "react";
 import { Container, Grid, Button, Icon, Responsive } from "semantic-ui-react";
 import { Link } from "react-router-dom";
 import Helmet from "react-helmet";
-import FacebookProvider, { Page } from "react-facebook";
-import { TwitterTimelineEmbed } from "react-twitter-embed";
-import InstagramEmbed from "react-instagram-embed";
 import trackPage from "../utils/trackPage";
+import SocialHome from "./SocialHome";
 import styled from "styled-components";
 import Noticia from "./Noticia";
 
@@ -37,12 +35,6 @@ const NewsGrid = styled(Grid)`
 		@media only screen and (min-width: 1200px) {
 			margin: 24px 0 24px 0;
 		}
-	}
-`;
-
-const SocialButton = styled(Button)`
-	&&& {
-		margin-bottom: 12px;
 	}
 `;
 
@@ -196,62 +188,7 @@ class Home extends Component {
 							</Grid.Row>
 						</NewsGrid>
 					) : null}
-
-					<Responsive minWidth={769}>
-						<Grid columns={3} padded="vertical">
-							<Grid.Column>
-								<FacebookProvider appId="1048728495191929">
-									<Page
-										href="https://www.facebook.com/filsachile"
-										tabs="timeline"
-										height={563}
-									/>
-								</FacebookProvider>
-							</Grid.Column>
-							<Grid.Column>
-								<TwitterTimelineEmbed
-									sourceType="profile"
-									screenName="camaradellibro"
-									options={{ height: 563 }}
-								/>
-							</Grid.Column>
-							<Grid.Column>
-								<InstagramEmbed
-									url="https://www.instagram.com/p/BnmOGArl7_t/"
-									hideCaption={true}
-								/>
-							</Grid.Column>
-						</Grid>
-					</Responsive>
-					<Responsive {...Responsive.onlyMobile}>
-						<SocialButton
-							target="_blank"
-							fluid
-							color="purple"
-							as={Link}
-							to="https://www.instagram.com"
-						>
-							<Icon name="instagram" /> Instagram
-						</SocialButton>
-						<SocialButton
-							target="_blank"
-							fluid
-							color="facebook"
-							as={Link}
-							to="https://www.instagram.com"
-						>
-							<Icon name="facebook" /> Facebook
-						</SocialButton>
-						<SocialButton
-							target="_blank"
-							fluid
-							color="twitter"
-							as={Link}
-							to="https://www.instagram.com"
-						>
-							<Icon name="twitter" /> Twitter
-						</SocialButton>
-					</Responsive>
+					<SocialHome />
 				</MainContainer>
 			</div>
 		);
