@@ -16,6 +16,7 @@ import Footer from "./components/Footer";
 import api from "./utils/api";
 import config from "./config.json";
 import WebFont from "webfontloader";
+import env from "./utils/env";
 
 WebFont.load({
   google: {
@@ -23,7 +24,7 @@ WebFont.load({
   }
 });
 
-const node_env = window.env || "development";
+const node_env = env();
 
 if (node_env === "development") {
   ReactGA.initialize(config[node_env].google_analytics_ua, {

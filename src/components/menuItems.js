@@ -3,8 +3,9 @@ import { Menu, Dropdown } from "semantic-ui-react";
 import { NavLink } from "react-router-dom";
 import styled from "styled-components";
 import config from "../config.json";
+import env from "../utils/env";
 
-const node_env = window.env || 'development';
+const node_env = env();
 
 const StyledDropdown = styled(Dropdown.Item)`
 	&&&&&&,

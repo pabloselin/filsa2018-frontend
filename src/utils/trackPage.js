@@ -1,8 +1,9 @@
 import ReactGA from "react-ga";
 import config from "../config.json";
+import env from "./env";
 
 function trackPage(path, title) {
-	let node_env = window.env || "development";
+	let node_env = env();
 	let page = config[node_env].basename + path;
 
 	ReactGA.set({

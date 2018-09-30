@@ -2,6 +2,7 @@ import React, { Component, Fragment } from "react";
 import { Button, Label, Icon, Responsive, Divider } from "semantic-ui-react";
 import axios from "axios";
 import config from "../config.json";
+import env from "../utils/env";
 
 class SocialButtons extends Component {
 	constructor(props) {
@@ -32,7 +33,7 @@ class SocialButtons extends Component {
 	}
 
 	componentDidMount() {
-		let node_env = window.env || "development";
+		let node_env = env();
 		let url = config[node_env].base_url_noslash + this.props.url;
 		this.setState({
 			url: url,

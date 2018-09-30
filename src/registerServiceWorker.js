@@ -7,9 +7,10 @@
 
 // To learn more about the benefits of this model, read https://goo.gl/KwvDNy.
 // This link also includes instructions on opting out of this behavior.
+import env from "./utils/env";
 import config from "./config.json";
 
-const node_env = window.env || "development";
+const node_env = env();
 
 const isLocalhost = Boolean(
   window.location.hostname === 'localhost' ||
