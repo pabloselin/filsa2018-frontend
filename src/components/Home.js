@@ -1,36 +1,48 @@
 import React, { Component } from "react";
-import { Container, Grid } from "semantic-ui-react";
-import ReactHtmlParser from "react-html-parser";
+import { Container, Grid, Button, Icon, Responsive } from "semantic-ui-react";
+import { Link } from "react-router-dom";
 import Helmet from "react-helmet";
-import SocialButtons from "./SocialButtons";
+import FacebookProvider, { Page } from "react-facebook";
+import { TwitterTimelineEmbed } from "react-twitter-embed";
+import InstagramEmbed from "react-instagram-embed";
 import trackPage from "../utils/trackPage";
 import styled from "styled-components";
 import Noticia from "./Noticia";
-//import Programa from "./Programa";
-
-const Title = styled.h1`
-	margin-top: 24px !important;
-	font-size: 42px;
-	color: #cc1011;
-	@media screen and (max-width: 768px) {
-		font-size: 24px;
-	}
-`;
-
-const MainContentText = styled.div`
-	margin-bottom: 36px;
-
-	img {
-		max-width: 100%;
-		height: auto;
-	}
-`;
 
 const MainContainer = styled(Container)`
 	&& {
 		@media only screen and (min-width: 1200px) {
 			width: 1140px;
+			margin-top: 32px;
 		}
+	}
+`;
+
+const NewsImage = styled.img`
+	max-width: 100%;
+`;
+
+const NewsHeading = styled.h1`
+	a {
+		color: #333;
+	}
+	@media only screen and (max-width: 768px) {
+		font-size: 24px;
+	}
+`;
+
+const NewsGrid = styled(Grid)`
+	&&& {
+		margin: 12px 0;
+		@media only screen and (min-width: 1200px) {
+			margin: 24px 0 24px 0;
+		}
+	}
+`;
+
+const SocialButton = styled(Button)`
+	&&& {
+		margin-bottom: 12px;
 	}
 `;
 
@@ -40,12 +52,14 @@ class Home extends Component {
 		this.state = {
 			content: null,
 			title: null,
-			noticias: null
+			noticias: null,
+			firstNoticia: null
 		};
 	}
 
 	componentDidMount() {
 		trackPage(this.props.location.pathname);
+		this.primeraNoticia();
 	}
 
 	matchNews(postID) {
@@ -57,6 +71,22 @@ class Home extends Component {
 			return matched;
 		});
 		return matched;
+	}
+
+	primeraNoticia() {
+		let first;
+		if (
+			this.props.noticias !== undefined &&
+			this.props.noticias_content !== undefined
+		) {
+			first = this.props.noticias[0];
+			let content = this.matchNews(parseInt(first.object_id, 10));
+			if (content !== undefined) {
+				this.setState({
+					firstNoticia: { title: first.title, content: content }
+				});
+			}
+		}
 	}
 
 	renderNoticias() {
@@ -104,19 +134,124 @@ class Home extends Component {
 					<title>{this.props.title}</title>
 				</Helmet>
 				<MainContainer>
-					{this.props.noticias_content !== undefined &&
-					this.props.noticias !== undefined ? (
-						<Grid columns={2}>
-							<Grid.Column>Imagen</Grid.Column>
-							<Grid.Column>Texto</Grid.Column>
-						</Grid>
+					{this.state.firstNoticia !== null ? (
+						<NewsGrid padded="vertical">
+							<Grid.Row>
+								<Grid.Column computer={6} mobile={16}>
+									<Link
+											to={`/noticias/${
+												this.state.firstNoticia.content
+													.slug
+											}/`}
+										>
+									<NewsImage
+										src={
+											this.state.firstNoticia.content
+												.media.medium_large
+										}
+										alt={this.state.firstNoticia.title}
+									/>
+									</Link>
+								</Grid.Column>
+								<Grid.Column
+									computer={10}
+									mobile={16}
+									floated="right"
+								>
+									<NewsHeading>
+										<Link
+											to={`/noticias/${
+												this.state.firstNoticia.content
+													.slug
+											}/`}
+										>
+											{this.state.firstNoticia.title}
+										</Link>
+									</NewsHeading>
+									<div>
+										{
+											this.state.firstNoticia.content
+												.excerpt
+										}
+									</div>
+								</Grid.Column>
+							</Grid.Row>
+							<Grid.Row>
+								<Grid.Column>
+									<Button
+										color="red"
+										animated
+										floated="right"
+										as={Link}
+										to="/noticias/"
+									>
+										<Button.Content visible>
+											<Icon name="plus" /> noticias
+										</Button.Content>
+										<Button.Content hidden>
+											<Icon name="arrow right" />
+										</Button.Content>
+									</Button>
+								</Grid.Column>
+							</Grid.Row>
+						</NewsGrid>
 					) : null}
 
-					<Grid columns={3}>
-						<Grid.Column>Facebook</Grid.Column>
-						<Grid.Column>Twitter</Grid.Column>
-						<Grid.Column>Instagram</Grid.Column>
-					</Grid>
+					<Responsive minWidth={769}>
+						<Grid columns={3} padded="vertical">
+							<Grid.Column>
+								<FacebookProvider appId="1048728495191929">
+									<Page
+										href="https://www.facebook.com/filsachile"
+										tabs="timeline"
+										height={563}
+									/>
+								</FacebookProvider>
+							</Grid.Column>
+							<Grid.Column>
+								<TwitterTimelineEmbed
+									sourceType="profile"
+									screenName="camaradellibro"
+									options={{ height: 563 }}
+								/>
+							</Grid.Column>
+							<Grid.Column>
+								<InstagramEmbed
+									url="https://www.instagram.com/p/BnmOGArl7_t/"
+									hideCaption={true}
+								/>
+							</Grid.Column>
+						</Grid>
+					</Responsive>
+					<Responsive {...Responsive.onlyMobile}>
+						<SocialButton
+							target="_blank"
+							fluid
+							color="purple"
+							as={Link}
+							to="https://www.instagram.com"
+						>
+							<Icon name="instagram" /> Instagram
+						</SocialButton>
+						<SocialButton
+							target="_blank"
+							fluid
+							color="facebook"
+							as={Link}
+							to="https://www.instagram.com"
+						>
+							<Icon name="facebook" /> Facebook
+						</SocialButton>
+						<SocialButton
+							target="_blank"
+							fluid
+							color="twitter"
+							as={Link}
+							to="https://www.instagram.com"
+						>
+							<Icon name="twitter" /> Twitter
+						</SocialButton>
+					</Responsive>
 				</MainContainer>
 			</div>
 		);
