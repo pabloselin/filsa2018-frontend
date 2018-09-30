@@ -9,7 +9,7 @@
 // This link also includes instructions on opting out of this behavior.
 import config from "./config.json";
 
-const node_env = process.env.NODE_ENV;
+const node_env = window.env || "development";
 
 const isLocalhost = Boolean(
   window.location.hostname === 'localhost' ||

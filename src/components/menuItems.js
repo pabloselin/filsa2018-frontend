@@ -4,7 +4,7 @@ import { NavLink } from "react-router-dom";
 import styled from "styled-components";
 import config from "../config.json";
 
-const node_env = process.env.NODE_ENV || 'development';
+const node_env = window.env || 'development';
 
 const StyledDropdown = styled(Dropdown.Item)`
 	&&&&&&,

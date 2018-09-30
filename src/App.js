@@ -23,7 +23,7 @@ WebFont.load({
   }
 });
 
-const node_env = process.env.NODE_ENV || "development";
+const node_env = window.env || "development";
 
 if (node_env === "development") {
   ReactGA.initialize(config[node_env].google_analytics_ua, {

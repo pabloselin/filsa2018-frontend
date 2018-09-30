@@ -32,7 +32,8 @@ class SocialButtons extends Component {
 	}
 
 	componentDidMount() {
-		let url = config[process.env.NODE_ENV].base_url_noslash + this.props.url;
+		let node_env = window.env || "development";
+		let url = config[node_env].base_url_noslash + this.props.url;
 		this.setState({
 			url: url,
 			fburl: `https://facebook.com/sharer/sharer.php?u=${url}&t=${this.props.title}&display=popup`
