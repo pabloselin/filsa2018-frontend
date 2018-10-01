@@ -21,6 +21,12 @@ const InfoEvento = styled.div`
 	color: #333;
 `;
 
+const DescEvento = styled(Card.Content)`
+	&&& {
+		font-size: 16px;
+	}
+`;
+
 const StyledLabel = styled(Label)`
 	@media screen and (max-width: 769px) {
 		&&& {
@@ -171,14 +177,14 @@ class Event extends Component {
 					</Card.Meta>
 				</Card.Content>
 				{this.state.showDesc && (
-					<Card.Content>
+					<DescEvento>
 						{ReactHtmlParser(this.props.data.content)}
-					</Card.Content>
+					</DescEvento>
 				)}
 				{this.props.single && (
-					<Card.Content>
+					<DescEvento>
 						{ReactHtmlParser(this.props.data.content)}
-					</Card.Content>
+					</DescEvento>
 				)}
 
 				<Card.Content extra>

@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { Container, Input, Segment } from "semantic-ui-react";
 import api from "../utils/api";
-import _ from "lodash";
+import { filter, escapeRegExp } from "lodash";
 import Loading from "./Loading";
 import Expositor from "./Expositor";
 
@@ -24,9 +24,9 @@ class Expositores extends Component {
 	}
 
 	handleSearch(ev, data) {
-		const re = new RegExp(_.escapeRegExp(data.value), "i");
+		const re = new RegExp(escapeRegExp(data.value), "i");
 		const isMatch = result => re.test(result.title);
-		const match = _.filter(this.state.expositores, isMatch);
+		const match = filter(this.state.expositores, isMatch);
 		this.setState({
 			searchfield: data.value,
 			filteredexpositores: match
@@ -40,11 +40,11 @@ class Expositores extends Component {
 				{this.state.expositores !== null ? (
 					<Container>
 						<Segment padded secondary>
-						<Input
-							onChange={this.handleSearch.bind(this)}
-							icon="search"
-							placeholder="Buscar expositor..."
-						/>
+							<Input
+								onChange={this.handleSearch.bind(this)}
+								icon="search"
+								placeholder="Buscar expositor..."
+							/>
 						</Segment>
 						{this.state.filteredexpositores !== null
 							? this.state.filteredexpositores.map(

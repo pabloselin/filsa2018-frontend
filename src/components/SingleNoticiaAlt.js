@@ -10,10 +10,15 @@ import Helmet from "react-helmet";
 
 const TextContent = styled.div`
 	margin-bottom: 48px;
+	font-size: 16px;
 	img {
 		max-width: 100%;
 	}
 `;
+
+const MainImg = styled.img`
+	margin-bottom: 24px;
+`
 
 const Title = styled.h1`
 	&& {
@@ -76,7 +81,7 @@ class SingleNoticiaAlt extends Component {
 							url={this.props.location.pathname}
 						/>
 						<TextContent>
-							<img
+							<MainImg
 								src={this.props.media.imagen_single}
 								alt={this.props.title}
 							/>

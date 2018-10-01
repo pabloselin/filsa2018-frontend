@@ -31,10 +31,17 @@ const NewsHeading = styled.h1`
 
 const NewsGrid = styled(Grid)`
 	&&& {
-		margin: 12px 0;
+		margin: 12px 0 24px 0;		
 		@media only screen and (min-width: 1200px) {
 			margin: 24px 0 24px 0;
+			border: 1px solid #ccc;
 		}
+	}
+`;
+
+const SimpleRow = styled(Grid.Row)`
+	&&& {
+		padding: 0 0 12px 0;
 	}
 `;
 
@@ -129,7 +136,7 @@ class Home extends Component {
 					{this.state.firstNoticia !== null ? (
 						<NewsGrid padded="vertically">
 							<Grid.Row>
-								<Grid.Column computer={6} mobile={16}>
+								<Grid.Column computer={8} mobile={16}>
 									<Link
 										to={`/noticias/${
 											this.state.firstNoticia.content.slug
@@ -145,7 +152,7 @@ class Home extends Component {
 									</Link>
 								</Grid.Column>
 								<Grid.Column
-									computer={10}
+									computer={8}
 									mobile={16}
 									floated="right"
 								>
@@ -158,23 +165,37 @@ class Home extends Component {
 										>
 											{this.state.firstNoticia.title}
 										</Link>
-									</NewsHeading>
-									<div>
-										{
-											this.state.firstNoticia.content
-												.excerpt
-										}
-									</div>
-								</Grid.Column>
-							</Grid.Row>
-							<Grid.Row>
-								<Grid.Column>
-									<Button
+										<p><Button
+										basic
 										color="red"
 										animated
 										floated="right"
 										as={Link}
-										to="/noticias/"
+										to={`/noticias/${
+												this.state.firstNoticia.content
+													.slug
+											}/`}
+									>
+										<Button.Content visible>
+											<Icon name="plus" /> seguir leyendo
+										</Button.Content>
+										<Button.Content hidden>
+											<Icon name="arrow right" />
+										</Button.Content>
+									</Button>
+									</p>
+									</NewsHeading>
+								</Grid.Column>
+							</Grid.Row>
+							<SimpleRow>
+								<Grid.Column>
+									<Button
+										basic
+										color="blue"
+										animated
+										floated="right"
+										as={Link}
+										to={`/noticias/`}
 									>
 										<Button.Content visible>
 											<Icon name="plus" /> noticias
@@ -184,7 +205,7 @@ class Home extends Component {
 										</Button.Content>
 									</Button>
 								</Grid.Column>
-							</Grid.Row>
+							</SimpleRow>
 						</NewsGrid>
 					) : null}
 					<SocialHome

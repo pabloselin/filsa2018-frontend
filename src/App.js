@@ -23,7 +23,7 @@ WebFont.load({
     families: ["Maitree", "Maitree:n4,n7"]
   }
 });
-
+//Global env thing
 const node_env = env();
 
 if (node_env === "development") {
