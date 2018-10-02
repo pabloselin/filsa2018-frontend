@@ -7,10 +7,10 @@ import { menuItems } from "./menuItems";
 const Toggler = styled(Button)`
 	&& {
 		position: absolute;
-		top: 0;
+		top: 32px;
 		left: 0;
 		color: white;
-		border-radius: 0;
+		border-radius: 0 5px 5px 0;
 		font-size: 24px;
 		padding: 12px;
 		i {

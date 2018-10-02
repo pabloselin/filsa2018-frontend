@@ -7,7 +7,7 @@ const StyledFooter = styled.div`
 	background-color: #555555;
 	color: white;
 	padding: 32px 0;
-	margin-top: 36px;
+	margin-top: 0;
 `;
 
 const StyledItem = styled(List.Item)`

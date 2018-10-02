@@ -1,5 +1,5 @@
 import React, { Component, Fragment } from "react";
-import { Container, Grid, Button, Icon } from "semantic-ui-react";
+import { Container, Grid, Button, Icon, Divider } from "semantic-ui-react";
 import { Link } from "react-router-dom";
 import Helmet from "react-helmet";
 import trackPage from "../utils/trackPage";
@@ -21,20 +21,23 @@ const NewsImage = styled.img`
 `;
 
 const NewsHeading = styled.h1`
-	color: #333;
-	padding: 24px 24px 0 12px;
-	font-size: 34px;
-	@media only screen and (max-width: 768px) {
-		font-size: 24px;
+	&&&& {
+		color: #333;
+		padding: 24px 24px 0 12px;
+		font-size: 34px;
+		@media only screen and (max-width: 768px) {
+			font-size: 24px;
+			padding: 12px 0 12px 0;
+		}
 	}
 `;
 
 const NewsGrid = styled(Grid)`
 	&&& {
 		margin: 12px 0 24px 0;
+		border: 1px solid #ccc;
 		@media only screen and (min-width: 1200px) {
 			margin: 24px 0 24px 0;
-			border: 1px solid #ccc;
 		}
 	}
 `;
@@ -42,7 +45,7 @@ const NewsGrid = styled(Grid)`
 const SimpleRow = styled(Grid.Row)`
 	&&& {
 		padding: 12px 0 12px 0;
-		text-align:center;
+		text-align: center;
 	}
 `;
 
@@ -53,10 +56,16 @@ const NewsRow = styled(Grid.Row)`
 `;
 
 const ImageColumn = styled(Grid.Column)`
-&&&&& {
-	padding: 0;
-	line-height: 0;
-}`
+	&&&&& {
+		padding: 0;
+		line-height: 0;
+	}
+`;
+
+const StyledSocialSection = styled.div`
+	background-color: #f0f0f0;
+	padding: 24px 0;
+`
 
 class Home extends Component {
 	constructor(props) {
@@ -148,54 +157,58 @@ class Home extends Component {
 				<MainContainer>
 					{this.state.firstNoticia !== null ? (
 						<Fragment>
-						<NewsGrid padded="vertically">
-							<NewsRow
-								as={Link}
-								to={`/noticias/${
-									this.state.firstNoticia.content.slug
-								}/`}
-							>
-								<ImageColumn computer={6} mobile={16}>
-									<NewsImage
-										src={
-											this.state.firstNoticia.content
-												.media.medium_large
-										}
-										alt={this.state.firstNoticia.title}
-									/>
-								</ImageColumn>
-								<Grid.Column
-									computer={10}
-									mobile={16}
-									floated="right"
+							<NewsGrid padded="vertically">
+								<NewsRow
+									as={Link}
+									to={`/noticias/${
+										this.state.firstNoticia.content.slug
+									}/`}
 								>
-									<NewsHeading>
-										{this.state.firstNoticia.title}
-									</NewsHeading>
-								</Grid.Column>
-							</NewsRow>
-						</NewsGrid>
-						<Grid padded="vertically">
-							<SimpleRow>
-								<Grid.Column>
-									<Button
-										color="red"
-										animated
-										as={Link}
-										to={`/noticias/`}
+									<ImageColumn computer={6} mobile={16}>
+										<NewsImage
+											src={
+												this.state.firstNoticia.content
+													.media.medium_large
+											}
+											alt={this.state.firstNoticia.title}
+										/>
+									</ImageColumn>
+									<Grid.Column
+										computer={10}
+										mobile={16}
+										floated="right"
 									>
-										<Button.Content visible>
-											<Icon name="plus" /> noticias
-										</Button.Content>
-										<Button.Content hidden>
-											<Icon name="arrow right" />
-										</Button.Content>
-									</Button>
-								</Grid.Column>
-							</SimpleRow>
-						</Grid>
+										<NewsHeading>
+											{this.state.firstNoticia.title}
+										</NewsHeading>
+									</Grid.Column>
+								</NewsRow>
+							</NewsGrid>
+							<Grid padded="vertically">
+								<SimpleRow>
+									<Grid.Column>
+										<Button
+											color="red"
+											animated
+											as={Link}
+											to={`/noticias/`}
+										>
+											<Button.Content visible>
+												<Icon name="plus" /> noticias
+											</Button.Content>
+											<Button.Content hidden>
+												<Icon name="arrow right" />
+											</Button.Content>
+										</Button>
+									</Grid.Column>
+								</SimpleRow>
+							</Grid>
 						</Fragment>
 					) : null}
+				</MainContainer>
+				<Divider hidden />
+				<StyledSocialSection>
+				<Container>
 					<SocialHome
 						twitter={this.props.twitter}
 						instagrampost={this.props.instagrampost}
@@ -203,7 +216,8 @@ class Home extends Component {
 						facebook={this.props.facebook}
 						facebookid={this.props.facebookid}
 					/>
-				</MainContainer>
+				</Container>
+				</StyledSocialSection>
 			</div>
 		);
 	}
