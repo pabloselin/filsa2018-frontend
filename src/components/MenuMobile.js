@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { Button, Menu, Transition, Responsive, Icon } from "semantic-ui-react";
-import { NavLink, withRouter } from "react-router-dom";
+import { withRouter } from "react-router-dom";
 import styled from "styled-components";
 import { menuItems } from "./menuItems";
 
@@ -60,11 +60,6 @@ class MenuMobile extends Component {
 				<Transition.Group animation="slide down" duration={500}>
 					{visible && (
 						<StyledMenu inverted vertical fluid animation="overlay">
-							<Menu.Item key="home">
-								<NavLink to="/">
-									<Icon name="home" /> Inicio
-								</NavLink>
-							</Menu.Item>
 							{menuItems(this.props.menuitems)}
 						</StyledMenu>
 					)}

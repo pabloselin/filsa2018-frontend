@@ -31,7 +31,7 @@ const StyledContainer = styled(Container)`
 
 const MainContentText = styled.div`
 	margin-bottom: 36px;
-	font-size: 16px;
+	font-size: 18px;
 	img {
 		max-width: 100%;
 		height: auto;
@@ -44,6 +44,7 @@ const MainContentText = styled.div`
 		h3 {
 			font-size: 1.25rem;
 		}
+		font-size: 16px;
 	}
 `;
 

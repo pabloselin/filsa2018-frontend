@@ -1,5 +1,5 @@
 import React, { Component, Fragment } from "react";
-import { Container, Grid } from "semantic-ui-react";
+import { Container, Grid, Divider } from "semantic-ui-react";
 import Helmet from "react-helmet";
 import ReactGA from "react-ga";
 import Noticia from "./Noticia";
@@ -57,6 +57,7 @@ class ArchiveNoticias extends Component {
 						)}
 					</Grid>
 				</Container>
+				<Divider hidden />
 			</Fragment>
 		);
 	}

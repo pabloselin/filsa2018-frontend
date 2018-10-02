@@ -10,9 +10,12 @@ import Helmet from "react-helmet";
 
 const TextContent = styled.div`
 	margin-bottom: 48px;
-	font-size: 16px;
+	font-size: 18px;
 	img {
 		max-width: 100%;
+	}
+	@media screen and (max-width: 768px) {
+		font-size: 16px;
 	}
 `;
 

@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Container, Select, Tab, Responsive } from "semantic-ui-react";
+import { Container, Select, Tab, Responsive, Divider } from "semantic-ui-react";
 import styled from "styled-components";
 import Loading from "./Loading";
 import Event from "./Event";
@@ -263,6 +263,7 @@ class VisitasGuiadas extends Component {
 								panes={panes}
 							/>
 						</Responsive>
+						<Divider hidden />
 					</StyledContainer>
 				) : (
 					<Loading />
