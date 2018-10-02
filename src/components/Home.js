@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { Component, Fragment } from "react";
 import { Container, Grid, Button, Icon } from "semantic-ui-react";
 import { Link } from "react-router-dom";
 import Helmet from "react-helmet";
@@ -21,9 +21,9 @@ const NewsImage = styled.img`
 `;
 
 const NewsHeading = styled.h1`
-	a {
-		color: #333;
-	}
+	color: #333;
+	padding: 24px 24px 0 12px;
+	font-size: 34px;
 	@media only screen and (max-width: 768px) {
 		font-size: 24px;
 	}
@@ -31,7 +31,7 @@ const NewsHeading = styled.h1`
 
 const NewsGrid = styled(Grid)`
 	&&& {
-		margin: 12px 0 24px 0;		
+		margin: 12px 0 24px 0;
 		@media only screen and (min-width: 1200px) {
 			margin: 24px 0 24px 0;
 			border: 1px solid #ccc;
@@ -41,9 +41,22 @@ const NewsGrid = styled(Grid)`
 
 const SimpleRow = styled(Grid.Row)`
 	&&& {
-		padding: 0 0 12px 0;
+		padding: 12px 0 12px 0;
+		text-align:center;
 	}
 `;
+
+const NewsRow = styled(Grid.Row)`
+	&&& {
+		padding: 0;
+	}
+`;
+
+const ImageColumn = styled(Grid.Column)`
+&&&&& {
+	padding: 0;
+	line-height: 0;
+}`
 
 class Home extends Component {
 	constructor(props) {
@@ -134,66 +147,40 @@ class Home extends Component {
 				</Helmet>
 				<MainContainer>
 					{this.state.firstNoticia !== null ? (
+						<Fragment>
 						<NewsGrid padded="vertically">
-							<Grid.Row>
-								<Grid.Column computer={8} mobile={16}>
-									<Link
-										to={`/noticias/${
-											this.state.firstNoticia.content.slug
-										}/`}
-									>
-										<NewsImage
-											src={
-												this.state.firstNoticia.content
-													.media.medium_large
-											}
-											alt={this.state.firstNoticia.title}
-										/>
-									</Link>
-								</Grid.Column>
+							<NewsRow
+								as={Link}
+								to={`/noticias/${
+									this.state.firstNoticia.content.slug
+								}/`}
+							>
+								<ImageColumn computer={6} mobile={16}>
+									<NewsImage
+										src={
+											this.state.firstNoticia.content
+												.media.medium_large
+										}
+										alt={this.state.firstNoticia.title}
+									/>
+								</ImageColumn>
 								<Grid.Column
-									computer={8}
+									computer={10}
 									mobile={16}
 									floated="right"
 								>
 									<NewsHeading>
-										<Link
-											to={`/noticias/${
-												this.state.firstNoticia.content
-													.slug
-											}/`}
-										>
-											{this.state.firstNoticia.title}
-										</Link>
-										<p><Button
-										basic
-										color="red"
-										animated
-										floated="right"
-										as={Link}
-										to={`/noticias/${
-												this.state.firstNoticia.content
-													.slug
-											}/`}
-									>
-										<Button.Content visible>
-											<Icon name="plus" /> seguir leyendo
-										</Button.Content>
-										<Button.Content hidden>
-											<Icon name="arrow right" />
-										</Button.Content>
-									</Button>
-									</p>
+										{this.state.firstNoticia.title}
 									</NewsHeading>
 								</Grid.Column>
-							</Grid.Row>
+							</NewsRow>
+						</NewsGrid>
+						<Grid padded="vertically">
 							<SimpleRow>
 								<Grid.Column>
 									<Button
-										basic
-										color="blue"
+										color="red"
 										animated
-										floated="right"
 										as={Link}
 										to={`/noticias/`}
 									>
@@ -206,7 +193,8 @@ class Home extends Component {
 									</Button>
 								</Grid.Column>
 							</SimpleRow>
-						</NewsGrid>
+						</Grid>
+						</Fragment>
 					) : null}
 					<SocialHome
 						twitter={this.props.twitter}
