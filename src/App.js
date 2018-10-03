@@ -26,6 +26,7 @@ WebFont.load({
 //Global env thing
 const node_env = env();
 
+
 if (node_env === "development") {
   ReactGA.initialize(config[node_env].google_analytics_ua, {
     testMode: true,
@@ -72,6 +73,7 @@ class Filsa2018 extends Component {
         mobileimg: res.data["filsa2018_cabecera_movil"],
         menu_principal: res.data["filsa2018_menu"],
         menu_noticias: res.data["filsa2018_menunoticias"],
+        menu_dos: res.data["filsa2018_menu_dos"],
         intro: res.data["filsa2018_intro"],
         title: res.data["filsa2018_title"],
         filsa2018_contents: res.data["filsa2018_contents"],
@@ -89,6 +91,7 @@ class Filsa2018 extends Component {
         headerimg: window.params["filsa2018_cabecera_escritorio"],
         mobileimg: window.params["filsa2018_cabecera_movil"],
         menu_principal: window.params["filsa2018_menu"],
+        menu_dos: window.params["filsa2018_menu_dos"],
         menu_noticias: window.params["filsa2018_menunoticias"],
         intro: window.params["filsa2018_intro"],
         title: window.params["filsa2018_title"],
@@ -103,7 +106,7 @@ class Filsa2018 extends Component {
   menus() {
     let menuitems;
     if (this.state.menu_principal !== null) {
-      menuitems = <MenuTop menuitems={this.state.menu_principal} />;
+      menuitems = <MenuTop menuitems={this.state.menu_principal} secondmenuitems={this.state.menu_dos} />;
     }
     return menuitems;
   }
@@ -111,7 +114,7 @@ class Filsa2018 extends Component {
   mobilemenu() {
     let menumobileitems;
     if (this.state.menu_principal !== null) {
-      menumobileitems = <MenuMobile menuitems={this.state.menu_principal} />;
+      menumobileitems = <MenuMobile menuitems={this.state.menu_principal} secondmenuitems={this.state.menu_dos} />;
     }
     return menumobileitems;
   }

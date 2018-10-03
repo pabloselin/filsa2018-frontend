@@ -20,6 +20,7 @@ const StyledDropdownItem = styled(Dropdown.Item)`
 		background-color: #000 !important;
 		color: white !important;
 		font-weight: bold;
+		font-size: 13px;
 	}
 `;
 
@@ -27,6 +28,7 @@ const NavMenuItem = styled(Menu.Item)`
 	&&&&&& {
 		color: white;
 		font-weight: bold;
+		border-right: 1px solid #555;
 		&.active {
 			font-weight: bold;
 			background-color: #cc1011;
@@ -35,20 +37,18 @@ const NavMenuItem = styled(Menu.Item)`
 `;
 
 function refineURL(url) {
-		return (
-			"/" +
-			url.substring(config[node_env].base_url.length)
+	return "/" + url.substring(config[node_env].base_url.length);
+}
+
+export function menuItems(menuitems, with_home) {
+	let buttons = [];
+	if (with_home === true) {
+		buttons.push(
+			<NavMenuItem as={Link} key="home" to="/">
+				<Icon name="home" /> Inicio
+			</NavMenuItem>
 		);
 	}
-
-export function menuItems(menuitems) {
-
-	let buttons = [];
-	buttons.push(
-		<NavMenuItem as={Link} key="home" to="/">
-			<Icon name="home" /> Inicio
-		</NavMenuItem>
-	);
 	for (let item in menuitems) {
 		let current = menuitems[item];
 		if (current.wpse_children !== undefined) {

@@ -1,5 +1,5 @@
 import React, { Component, Fragment } from "react";
-import { Container, Grid, Button, Icon, Divider } from "semantic-ui-react";
+import { Container, Grid, Button, Icon, Divider, Responsive } from "semantic-ui-react";
 import { Link } from "react-router-dom";
 import Helmet from "react-helmet";
 import trackPage from "../utils/trackPage";
@@ -157,6 +157,7 @@ class Home extends Component {
 				<MainContainer>
 					{this.state.firstNoticia !== null ? (
 						<Fragment>
+						<Responsive as={Divider} hidden {...Responsive.OnlyMobile}/>
 							<NewsGrid padded="vertically">
 								<NewsRow
 									as={Link}
@@ -187,6 +188,7 @@ class Home extends Component {
 							<Grid padded="vertically">
 								<SimpleRow>
 									<Grid.Column>
+										<Responsive as={Divider} hidden {...Responsive.OnlyComputer}/>
 										<Button
 											color="red"
 											animated

@@ -73,11 +73,13 @@ class MobileMenuItems extends Component {
 	buildMenu() {
 		let buttons = [];
 		let menuitems = this.props.menuitems;
+		if(this.props.nohome !== true) {
 		buttons.push(
 			<NavMenuItem as={Link} key="home" to="/">
 				<Icon name="home" /> Inicio
 			</NavMenuItem>
 		);
+		}
 		for (let item in menuitems) {
 			let current = menuitems[item];
 			if (current.wpse_children !== undefined) {
