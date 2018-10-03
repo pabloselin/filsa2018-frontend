@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { Button, Menu, Transition, Responsive, Icon } from "semantic-ui-react";
 import { withRouter } from "react-router-dom";
 import styled from "styled-components";
-import { menuItems } from "./menuItems";
+import MobileMenuItems from "./MobileMenuItems";
 
 const Toggler = styled(Button)`
 	&& {
@@ -24,9 +24,6 @@ const StyledMenu = styled(Menu)`
 		border-radius: 0;
 		position: absolute;
 		z-index: 10;
-		a {
-			text-transform: uppercase;
-		}
 	}
 `;
 
@@ -60,7 +57,8 @@ class MenuMobile extends Component {
 				<Transition.Group animation="slide down" duration={500}>
 					{visible && (
 						<StyledMenu inverted vertical fluid animation="overlay">
-							{menuItems(this.props.menuitems)}
+							<MobileMenuItems menuitems={this.props.menuitems} />
+							<MobileMenuItems menuitems={this.props.secondmenuitems} nohome />
 						</StyledMenu>
 					)}
 				</Transition.Group>

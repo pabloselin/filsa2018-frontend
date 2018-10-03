@@ -1,5 +1,12 @@
 import React, { Component, Fragment } from "react";
-import { Container, Grid, Button, Icon, Divider, Responsive } from "semantic-ui-react";
+import {
+	Container,
+	Grid,
+	Button,
+	Icon,
+	Divider,
+	Responsive
+} from "semantic-ui-react";
 import { Link } from "react-router-dom";
 import Helmet from "react-helmet";
 import trackPage from "../utils/trackPage";
@@ -27,7 +34,7 @@ const NewsHeading = styled.h1`
 		font-size: 34px;
 		@media only screen and (max-width: 768px) {
 			font-size: 24px;
-			padding: 12px 0 12px 0;
+			padding: 12px;
 		}
 	}
 `;
@@ -37,7 +44,12 @@ const NewsGrid = styled(Grid)`
 		margin: 12px 0 24px 0;
 		border: 1px solid #ccc;
 		@media only screen and (min-width: 1200px) {
-			margin: 24px 0 24px 0;
+			margin: 24px auto 24px auto;
+			max-width: 900px;
+			img {
+				width: 100%;
+				height: auto;
+			}
 		}
 	}
 `;
@@ -65,7 +77,7 @@ const ImageColumn = styled(Grid.Column)`
 const StyledSocialSection = styled.div`
 	background-color: #f0f0f0;
 	padding: 24px 0;
-`
+`;
 
 class Home extends Component {
 	constructor(props) {
@@ -157,15 +169,22 @@ class Home extends Component {
 				<MainContainer>
 					{this.state.firstNoticia !== null ? (
 						<Fragment>
-						<Responsive as={Divider} hidden {...Responsive.onlyMobile} />
-							<NewsGrid padded="vertically">
+							<Responsive
+								as={Divider}
+								hidden
+								{...Responsive.OnlyMobile}
+							/>
+							<NewsGrid padded="vertically" columns={1}>
 								<NewsRow
 									as={Link}
 									to={`/noticias/${
 										this.state.firstNoticia.content.slug
 									}/`}
 								>
-									<ImageColumn computer={6} mobile={16}>
+									<ImageColumn>
+										<NewsHeading>
+											{this.state.firstNoticia.title}
+										</NewsHeading>
 										<NewsImage
 											src={
 												this.state.firstNoticia.content
@@ -174,20 +193,16 @@ class Home extends Component {
 											alt={this.state.firstNoticia.title}
 										/>
 									</ImageColumn>
-									<Grid.Column
-										computer={10}
-										mobile={16}
-										floated="right"
-									>
-										<NewsHeading>
-											{this.state.firstNoticia.title}
-										</NewsHeading>
-									</Grid.Column>
 								</NewsRow>
 							</NewsGrid>
 							<Grid padded="vertically">
 								<SimpleRow>
 									<Grid.Column>
+										<Responsive
+											as={Divider}
+											hidden
+											{...Responsive.OnlyComputer}
+										/>
 										<Button
 											color="red"
 											animated
@@ -209,15 +224,15 @@ class Home extends Component {
 				</MainContainer>
 				<Divider hidden />
 				<StyledSocialSection>
-				<Container>
-					<SocialHome
-						twitter={this.props.twitter}
-						instagrampost={this.props.instagrampost}
-						instagram={this.props.instagram}
-						facebook={this.props.facebook}
-						facebookid={this.props.facebookid}
-					/>
-				</Container>
+					<Container>
+						<SocialHome
+							twitter={this.props.twitter}
+							instagrampost={this.props.instagrampost}
+							instagram={this.props.instagram}
+							facebook={this.props.facebook}
+							facebookid={this.props.facebookid}
+						/>
+					</Container>
 				</StyledSocialSection>
 			</div>
 		);
