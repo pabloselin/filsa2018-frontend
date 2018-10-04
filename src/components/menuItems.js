@@ -16,7 +16,9 @@ const StyledDropdown = styled(Dropdown)`
 
 const StyledDropdownItem = styled(Dropdown.Item)`
 	&&&&&&,
-	&&&&&&:hover {
+	&&&&&&:hover,
+	&&&&&.active.item
+	 {
 		background-color: #000 !important;
 		color: white !important;
 		font-weight: bold;

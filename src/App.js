@@ -7,6 +7,7 @@ import PreHeader from "./components/PreHeader";
 import Home from "./components/Home";
 import Default from "./components/Default";
 import EventSingle from "./components/EventSingle";
+import FastLinks from "./components/FastLinks";
 import MenuTop from "./components/MenuTop";
 import MenuMobile from "./components/MenuMobile";
 import SingleNoticiaAlt from "./components/SingleNoticiaAlt";
@@ -25,7 +26,6 @@ WebFont.load({
 });
 //Global env thing
 const node_env = env();
-
 
 if (node_env === "development") {
   ReactGA.initialize(config[node_env].google_analytics_ua, {
@@ -61,26 +61,27 @@ class Filsa2018 extends Component {
 
   componentDidMount() {
     //General options
-    if(window.params === undefined) {
+    if (window.params === undefined) {
       api.get("/filsa2018/v1/params/").then(res => {
-      this.setState({
-        params: res.data,
-        facebook: res.data["filsa2018_facebook"],
-        twitter: res.data["filsa2018_twitter"],
-        instagram: res.data["filsa2018_instagram"],
-        flickr: res.data["filsa2018_flickr"],
-        headerimg: res.data["filsa2018_cabecera_escritorio"],
-        mobileimg: res.data["filsa2018_cabecera_movil"],
-        menu_principal: res.data["filsa2018_menu"],
-        menu_noticias: res.data["filsa2018_menunoticias"],
-        menu_dos: res.data["filsa2018_menu_dos"],
-        intro: res.data["filsa2018_intro"],
-        title: res.data["filsa2018_title"],
-        filsa2018_contents: res.data["filsa2018_contents"],
-        filsa2018_noticias: res.data["filsa2018_noticias"],
-        eventos: res.data["eventos"]
+        this.setState({
+          params: res.data,
+          facebook: res.data["filsa2018_facebook"],
+          twitter: res.data["filsa2018_twitter"],
+          instagram: res.data["filsa2018_instagram"],
+          flickr: res.data["filsa2018_flickr"],
+          headerimg: res.data["filsa2018_cabecera_escritorio"],
+          mobileimg: res.data["filsa2018_cabecera_movil"],
+          menu_principal: res.data["filsa2018_menu"],
+          menu_noticias: res.data["filsa2018_menunoticias"],
+          fastlinks: res.data["filsa2018_fastlinks"],
+          menu_dos: res.data["filsa2018_menu_dos"],
+          intro: res.data["filsa2018_intro"],
+          title: res.data["filsa2018_title"],
+          filsa2018_contents: res.data["filsa2018_contents"],
+          filsa2018_noticias: res.data["filsa2018_noticias"],
+          eventos: res.data["eventos"]
+        });
       });
-    });
     } else {
       this.setState({
         params: window.params,
@@ -93,20 +94,25 @@ class Filsa2018 extends Component {
         menu_principal: window.params["filsa2018_menu"],
         menu_dos: window.params["filsa2018_menu_dos"],
         menu_noticias: window.params["filsa2018_menunoticias"],
+        fastlinks: window.params["filsa2018_fastlinks"],
         intro: window.params["filsa2018_intro"],
         title: window.params["filsa2018_title"],
         filsa2018_contents: window.params["filsa2018_contents"],
         filsa2018_noticias: window.params["filsa2018_noticias"],
         eventos: window.params["eventos"]
-      })
+      });
     }
-    
   }
 
   menus() {
     let menuitems;
     if (this.state.menu_principal !== null) {
-      menuitems = <MenuTop menuitems={this.state.menu_principal} secondmenuitems={this.state.menu_dos} />;
+      menuitems = (
+        <MenuTop
+          menuitems={this.state.menu_principal}
+          secondmenuitems={this.state.menu_dos}
+        />
+      );
     }
     return menuitems;
   }
@@ -114,7 +120,12 @@ class Filsa2018 extends Component {
   mobilemenu() {
     let menumobileitems;
     if (this.state.menu_principal !== null) {
-      menumobileitems = <MenuMobile menuitems={this.state.menu_principal} secondmenuitems={this.state.menu_dos} />;
+      menumobileitems = (
+        <MenuMobile
+          menuitems={this.state.menu_principal}
+          secondmenuitems={this.state.menu_dos}
+        />
+      );
     }
     return menumobileitems;
   }
@@ -169,12 +180,15 @@ class Filsa2018 extends Component {
     let newsroutes;
     if (this.state.filsa2018_noticias !== null) {
       newsroutes = this.state.filsa2018_noticias.map(item => {
-        let otrasnoticias = this.state.filsa2018_noticias.reduce((result,noticia) => {
-          if (noticia.title !== item.title) {
-            result.push(noticia);
-          }
-          return result;
-        }, []);
+        let otrasnoticias = this.state.filsa2018_noticias.reduce(
+          (result, noticia) => {
+            if (noticia.title !== item.title) {
+              result.push(noticia);
+            }
+            return result;
+          },
+          []
+        );
         return (
           <Route
             key={item.id}
@@ -221,6 +235,10 @@ class Filsa2018 extends Component {
                 headerimg={this.state.headerimg}
                 mobileheaderimg={this.state.mobileimg}
               />
+              {this.state.fastlinks && (
+                <FastLinks menuitems={this.state.fastlinks} />
+              )}
+
               {this.mobilemenu()}
               <Fragment>
                 {this.menus()}
@@ -237,8 +255,11 @@ class Filsa2018 extends Component {
                         title={this.state.title}
                         facebook={this.state.facebook}
                         twitter={this.state.twitter}
+                        flickr={this.state.flickr}
                         instagram={this.state.instagram}
-                        instagrampost={this.state.params.filsa2018_instagrampost}
+                        instagrampost={
+                          this.state.params.filsa2018_instagrampost
+                        }
                         facebookid={this.state.params.filsa2018_facebookid}
                       />
                     )}
