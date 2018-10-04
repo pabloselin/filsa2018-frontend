@@ -1,11 +1,5 @@
 import React, { Component } from "react";
-import {
-	Menu,
-	Responsive,
-	Container,
-	Icon,
-	Transition
-} from "semantic-ui-react";
+import { Menu, Responsive, Container } from "semantic-ui-react";
 import styled from "styled-components";
 import { menuItems } from "./menuItems";
 
@@ -14,8 +8,8 @@ const StyledMenu = styled(Menu)`
 		border-radius: 0;
 		margin-bottom: 0;
 		margin-top: 0;
-		> container {
-			flex-wrap: wrap;
+		> .container {
+			border-left: 1px solid #555;
 		}
 	}
 `;
@@ -26,18 +20,18 @@ const StyledSecondMenu = styled(Menu)`
 		margin-bottom: 0;
 		margin-top: 0;
 		border-top: 1px solid #555;
-		> container {
-			flex-wrap: wrap;
+		background-color: #2e3134;
+		> .container {
+			border-left: 1px solid #555;
 		}
 	}
 `;
 
-const PlusMenu = styled(Menu.Item)`
-	&&&&&&& {
-		background-color: #db2828;
-		color: white;
+const StyledContainer = styled(Container)`
+	&&&&& {
+		width: 1140px;
 	}
-`;
+`
 
 class MenuTop extends Component {
 	constructor(props) {
@@ -57,29 +51,24 @@ class MenuTop extends Component {
 	render() {
 		return (
 			<Responsive minWidth={769}>
-				<StyledMenu inverted>
-					<Container>
+				<StyledMenu
+					inverted
+					fluid
+					widths={Object.keys(this.props.menuitems).length + 1}
+				>
+					<StyledContainer>
 						{menuItems(this.props.menuitems, true)}
-						<Menu.Menu position="right">
-							<PlusMenu onClick={this.toggleSecondary}>
-								{this.state.toggleSecondary === true ? (
-									<Icon name="close" />
-								) : (
-									<Icon name="plus" />
-								)}
-							</PlusMenu>
-						</Menu.Menu>
-					</Container>
+					</StyledContainer>
 				</StyledMenu>
-				<Transition.Group animation="fade down" duration={500}>
-					{this.state.toggleSecondary && (
-						<StyledSecondMenu inverted animation="overlay">
-							<Container>
-								{menuItems(this.props.secondmenuitems, false)}
-							</Container>
-						</StyledSecondMenu>
-					)}
-				</Transition.Group>
+				<StyledSecondMenu
+					inverted
+					fluid
+					widths={Object.keys(this.props.secondmenuitems).length}
+				>
+					<StyledContainer>
+						{menuItems(this.props.secondmenuitems, false)}
+					</StyledContainer>
+				</StyledSecondMenu>
 			</Responsive>
 		);
 	}

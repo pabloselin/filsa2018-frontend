@@ -31,7 +31,7 @@ class FastLinks extends Component {
 	}
 
 	refineURL(url) {
-	return "/" + url.substring(config[node_env].base_url.length);
+		return "/" + url.substring(config[node_env].base_url.length);
 	}
 
 	buildFastLinks() {
@@ -57,7 +57,7 @@ class FastLinks extends Component {
 	render() {
 		return(
 			<ContainerFastLinks>
-			<FastMenu fluid widths={Object.keys(this.props.menuitems).length} icon="labeled">{this.buildFastLinks()}</FastMenu>
+				<FastMenu fluid widths={Object.keys(this.props.menuitems).length} icon="labeled">{this.buildFastLinks()}</FastMenu>
 			</ContainerFastLinks>
 			)
 	}

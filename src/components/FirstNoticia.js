@@ -125,7 +125,7 @@ class FirstNoticia extends Component {
 								to={`/noticias/`}
 							>
 								<Button.Content visible>
-									<Icon name="plus" /> noticias
+									<Icon name="plus" /> Noticias
 								</Button.Content>
 								<Button.Content hidden>
 									<Icon name="arrow right" />
