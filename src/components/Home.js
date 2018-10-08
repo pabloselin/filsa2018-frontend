@@ -8,7 +8,6 @@ import Helmet from "react-helmet";
 import trackPage from "../utils/trackPage";
 import SocialHome from "./SocialHome";
 import FirstNoticia from "./FirstNoticia";
-import MenuRedes from "./MenuRedes";
 import styled from "styled-components";
 import Noticia from "./Noticia";
 
@@ -113,12 +112,6 @@ class Home extends Component {
 				<Helmet>
 					<title>{this.props.title}</title>
 				</Helmet>
-				<MenuRedes
-					twitter={this.props.twitter}
-					facebook={this.props.facebook}
-					instagram={this.props.instagram}
-					flickr={this.props.flickr}
-				/>
 				<MainContainer>
 					{this.state.firstNoticia !== null ? (
 						<FirstNoticia noticia={this.state.firstNoticia} />

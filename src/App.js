@@ -79,7 +79,8 @@ class Filsa2018 extends Component {
           title: res.data["filsa2018_title"],
           filsa2018_contents: res.data["filsa2018_contents"],
           filsa2018_noticias: res.data["filsa2018_noticias"],
-          eventos: res.data["eventos"]
+          eventos: res.data["eventos"],
+          youtube: res.data["filsa2018_youtube"]
         });
       });
     } else {
@@ -99,7 +100,8 @@ class Filsa2018 extends Component {
         title: window.params["filsa2018_title"],
         filsa2018_contents: window.params["filsa2018_contents"],
         filsa2018_noticias: window.params["filsa2018_noticias"],
-        eventos: window.params["eventos"]
+        eventos: window.params["eventos"],
+        youtube: window.params["filsa2018_youtube"]
       });
     }
   }
@@ -124,6 +126,11 @@ class Filsa2018 extends Component {
         <MenuMobile
           menuitems={this.state.menu_principal}
           secondmenuitems={this.state.menu_dos}
+          twitter={this.state.twitter}
+          facebook={this.state.facebook}
+          instagram={this.state.instagram}
+          flickr={this.state.flickr}
+          youtube={this.state.youtube}
         />
       );
     }
@@ -224,16 +231,16 @@ class Filsa2018 extends Component {
           <ScrollToTop top={top}>
             <Fragment>
               <Responsive minWidth={769}>
-                <PreHeader
-                  twitter={this.state.twitter}
-                  facebook={this.state.facebook}
-                  instagram={this.state.instagram}
-                  flickr={this.state.flickr}
-                />
+                <PreHeader />
               </Responsive>
               <Header
                 headerimg={this.state.headerimg}
                 mobileheaderimg={this.state.mobileimg}
+                twitter={this.state.twitter}
+                facebook={this.state.facebook}
+                instagram={this.state.instagram}
+                flickr={this.state.flickr}
+                youtube={this.state.youtube}
               />
               {this.state.fastlinks && (
                 <FastLinks menuitems={this.state.fastlinks} />
@@ -256,6 +263,7 @@ class Filsa2018 extends Component {
                         facebook={this.state.facebook}
                         twitter={this.state.twitter}
                         flickr={this.state.flickr}
+                        youtube={this.state.params.filsa2018_youtube}
                         instagram={this.state.instagram}
                         instagrampost={
                           this.state.params.filsa2018_instagrampost

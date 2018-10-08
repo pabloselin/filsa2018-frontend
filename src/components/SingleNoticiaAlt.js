@@ -17,6 +17,9 @@ const TextContent = styled.div`
 	@media screen and (max-width: 768px) {
 		font-size: 16px;
 	}
+	ul li {
+		line-height: 1.35em;
+	}
 `;
 
 const MainImg = styled.img`

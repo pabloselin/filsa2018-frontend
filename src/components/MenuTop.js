@@ -20,7 +20,7 @@ const StyledSecondMenu = styled(Menu)`
 		margin-bottom: 0;
 		margin-top: 0;
 		border-top: 1px solid #555;
-		background-color: #2e3134;
+		background-color: #393d41;
 		> .container {
 			border-left: 1px solid #555;
 		}

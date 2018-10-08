@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { Container, Responsive } from "semantic-ui-react";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
+import MenuRedes from "./MenuRedes";
 
 const HeaderStyle = styled.div`
 	@media (max-width: 768px) {
@@ -12,6 +13,7 @@ const HeaderStyle = styled.div`
 
 const ContainerHeader = styled(Container)`
 	&& {
+		line-height: 0;
 		@media only screen and (min-width: 1200px) {
 			width: 1140px;
 		}
@@ -31,6 +33,13 @@ class Header extends Component {
 	render() {
 		return (
 			<div>
+				<MenuRedes
+					twitter={this.props.twitter}
+					facebook={this.props.facebook}
+					instagram={this.props.instagram}
+					flickr={this.props.flickr}
+					youtube={this.props.youtube}
+				/>
 				<ContainerHeader>
 					<HeaderStyle>
 						<Responsive {...Responsive.onlyMobile}>
