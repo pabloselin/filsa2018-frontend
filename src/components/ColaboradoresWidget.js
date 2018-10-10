@@ -7,13 +7,9 @@ import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 
 const StyledLogo = styled(Image)`
-	height: auto;
 	max-width: 100%;
-	max-height: 300px;
-	display: inline-block;
-	vertical-align: middle;
-	margin: 0 6px 12px 0;
-	padding: 12px;
+	height: auto;
+	align-self: center;
 `;
 
 const ColabHeader = styled.h2`
@@ -22,6 +18,12 @@ const ColabHeader = styled.h2`
 		color: #555;
 		margin-top: 24px;
 	}
+`;
+
+const LogoBox = styled.div`
+	display: flex;
+	align-items: center;
+	height: 100%;
 `;
 
 class ColaboradoresWidget extends Component {
@@ -55,6 +57,7 @@ class ColaboradoresWidget extends Component {
 						{mainorgs.map(org => (
 
 							<Grid.Column>
+							<LogoBox>
 							<StyledLogo
 								key={org.nombre}
 								src={org.logo[0]}
@@ -62,6 +65,7 @@ class ColaboradoresWidget extends Component {
 								height={org.logo[2]}
 								alt={org.nombre}
 							/>
+							</LogoBox>
 							</Grid.Column>
 						))}
 						</Grid>
@@ -70,6 +74,7 @@ class ColaboradoresWidget extends Component {
 						<ColabHeader>FILSA agradece a...</ColabHeader>
 						<Slider {...settings}>
 							{orgs.map(org => (
+								<LogoBox>
 								<StyledLogo
 									key={org.nombre}
 									src={org.logo[0]}
@@ -77,6 +82,7 @@ class ColaboradoresWidget extends Component {
 									height={org.logo[2]}
 									alt={org.nombre}
 								/>
+								</LogoBox>
 							))}
 						</Slider>
 					</Grid.Column>
