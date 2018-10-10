@@ -89,7 +89,7 @@ class Invitados extends Component {
 					>
 						<InvContent text>
 							<img
-								src={this.state.invcontent.foto}
+								src={this.state.invcontent.foto_grande}
 								alt={this.state.invcontent.nombre}
 							/>
 							<h2>{this.state.invcontent.nombre}</h2>
@@ -106,15 +106,21 @@ class Invitados extends Component {
 					className="invitados-grid"
 					columnClassName="invitados-grid-column"
 				>
-					{this.props.invitados.map((invitado, key) => (
-						<Invitado
-							onclick={this.toggleInvitado}
-							active={this.state.invitado === key ? true : false}
-							key={key}
-							id={key}
-							data={invitado}
-						/>
-					))}
+					{this.props.invitados !== null
+						? this.props.invitados.map((invitado, key) => (
+								<Invitado
+									onclick={this.toggleInvitado}
+									active={
+										this.state.invitado === key
+											? true
+											: false
+									}
+									key={key}
+									id={key}
+									data={invitado}
+								/>
+						  ))
+						: null}
 				</StyledMasonry>
 			</Container>
 		);

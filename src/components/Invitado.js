@@ -16,6 +16,7 @@ const InvitadoBox = styled.div`
 		left: 12px;
 		color: white;
 		transition: all ease-in 0.2s;
+		text-shadow: 1px 1px 5px #333;
 	}
 	&:hover {		
 		h2 {
@@ -32,7 +33,7 @@ class Invitado extends Component {
 	render() {
 		return (
 			<InvitadoBox onClick={() => this.props.onclick(this.props.id, this.props.data)} className={this.props.active ? 'active' : 'standby'}>
-				<img src={this.props.data.foto} alt={this.props.data.nombre} />
+				<img src={this.props.data.foto_grande} alt={this.props.data.nombre} />
 				<h2>{this.props.data.nombre}</h2>
 			</InvitadoBox>
 		);

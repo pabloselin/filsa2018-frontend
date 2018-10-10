@@ -11,6 +11,13 @@ const StyledDropdown = styled(Dropdown)`
 	&&&& {
 		font-weight: bold;
 		color: white;
+		i.dropdown.icon {
+			font-size: 18px;
+			margin-left: 7px;
+		}
+		.menu {
+			border: 0;
+		}
 	}
 `;
 
@@ -21,8 +28,9 @@ const StyledDropdownItem = styled(Dropdown.Item)`
 	 {
 		background-color: #000 !important;
 		color: white !important;
-		font-weight: bold;
+		font-weight: bold !important;
 		font-size: 13px;
+		padding: 6px 0;
 	}
 `;
 

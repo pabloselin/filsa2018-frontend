@@ -2,6 +2,7 @@ import React, { Component, Fragment } from "react";
 import { BrowserRouter as Router, Route } from "react-router-dom";
 import { Responsive } from "semantic-ui-react";
 import ReactGA from "react-ga";
+import IosPwa from "./components/IosPwa";
 import Header from "./components/Header";
 import PreHeader from "./components/PreHeader";
 import Home from "./components/Home";
@@ -227,6 +228,7 @@ class Filsa2018 extends Component {
     const top = width >= Responsive.onlyComputer.minWidth ? 360 : 0;
     return (
       <Responsive fireOnMount onUpdate={this.handleOnUpdate}>
+        <IosPwa />
         <Router basename={config[node_env].basename}>
           <ScrollToTop top={top}>
             <Fragment>
