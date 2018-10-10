@@ -19,6 +19,9 @@ const StyledMasonry = styled(Masonry)`
 
 const InvHeader = styled.div`
 	text-align: center;
+	h2 {
+		margin-bottom: 24px;
+	}
 `;
 
 const StyledDimmer = styled(Dimmer)`

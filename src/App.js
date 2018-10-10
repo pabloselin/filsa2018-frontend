@@ -138,6 +138,15 @@ class Filsa2018 extends Component {
     return menumobileitems;
   }
 
+  matchColab(postID) {
+    let colab;
+    let itemsfilsa = this.state.filsa2018_contents;
+    colab = itemsfilsa.filter(item => item.id === postID);
+    if(colab.length >= 1) {
+      return colab[0].extrafields;  
+    }
+  }
+
   matchParent(postID) {
     let matched;
     let itemsfilsa = this.state.filsa2018_contents;
@@ -270,6 +279,7 @@ class Filsa2018 extends Component {
                           this.state.params.filsa2018_instagrampost
                         }
                         facebookid={this.state.params.filsa2018_facebookid}
+                        colaboradores={this.matchColab(parseInt(this.state.params.filsa2018_colabpage,0))}
                       />
                     )}
                   />
