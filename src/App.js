@@ -232,6 +232,7 @@ class Filsa2018 extends Component {
         <Router basename={config[node_env].basename}>
           <ScrollToTop top={top}>
             <Fragment>
+            {this.mobilemenu()}
               <Responsive minWidth={769}>
                 <PreHeader />
               </Responsive>
@@ -247,8 +248,6 @@ class Filsa2018 extends Component {
               {this.state.fastlinks && (
                 <FastLinks menuitems={this.state.fastlinks} />
               )}
-
-              {this.mobilemenu()}
               <Fragment>
                 {this.menus()}
                 {loading ? (

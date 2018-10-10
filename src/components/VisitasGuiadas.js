@@ -46,11 +46,13 @@ class VisitasGuiadas extends Component {
 	}
 
 	componentDidMount() {
-		api.get("/filsa2018/v1/visitas-guiadas/").then(res => {
-			this.setState({
-				events: res.data
-			});
-		});
+		api.get("/filsa2018/v1/visitas-guiadas/")
+			.then(res => {
+				this.setState({
+					events: res.data
+				});
+			})
+			.catch(error => console.log(error));
 	}
 
 	componentDidUpdate(prevProps, prevState) {

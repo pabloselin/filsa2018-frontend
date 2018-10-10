@@ -1,9 +1,11 @@
 import React, { Component } from "react";
 import { Container, Dimmer, Button, Icon } from "semantic-ui-react";
 import Masonry from "react-masonry-css";
+import Image from "react-graceful-image";
 import styled from "styled-components";
 import ReactHtmlParser from "react-html-parser";
 import Invitado from "./Invitado";
+
 
 const StyledMasonry = styled(Masonry)`
 	display: flex;
@@ -15,6 +17,10 @@ const StyledMasonry = styled(Masonry)`
 	}
 `;
 
+const InvHeader = styled.div`
+	text-align: center;
+`;
+
 const StyledDimmer = styled(Dimmer)`
 	&&& {
 		margin: 0;
@@ -24,11 +30,11 @@ const StyledDimmer = styled(Dimmer)`
 `;
 
 const InvContent = styled(Container)`
-	text-align: left;
 	img {
 		max-width: 100%;
 		height: auto;
 	}
+	text-align: left;
 `;
 const Close = styled(Button)`
 	&&& {
@@ -88,11 +94,16 @@ class Invitados extends Component {
 						verticalAlign="top"
 					>
 						<InvContent text>
-							<img
-								src={this.state.invcontent.foto_grande}
+							<InvHeader>
+							<Image
+								src={this.state.invcontent.foto[0]}
 								alt={this.state.invcontent.nombre}
+								width={this.state.invcontent.foto[1]}
+								height={this.state.invcontent.foto[2]}
 							/>
+
 							<h2>{this.state.invcontent.nombre}</h2>
+							</InvHeader>
 							{ReactHtmlParser(this.state.invcontent.bio)}
 							<Close icon color="red" onClick={this.handleHide}>
 								<Icon name="close" /> Cerrar

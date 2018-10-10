@@ -10,6 +10,7 @@
     "react-dom": "^16.4.2",
     "react-facebook": "^5.0.3",
     "react-ga": "^2.5.3",
+    "react-graceful-image": "^1.2.9",
     "react-helmet": "^5.2.0",
     "react-html-parser": "^2.0.2",
     "react-instagram-embed": "^1.4.0",

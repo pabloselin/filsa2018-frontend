@@ -63,7 +63,7 @@ class MenuMobile extends Component {
 		return (
 			<Responsive {...Responsive.onlyMobile}>
 				<Toggler color="black" onClick={this.handleVisibility}>
-					<Icon name="bars" />
+					{visible ? <Icon name="x" /> : <Icon name="bars" />}
 				</Toggler>
 				<Transition.Group animation="slide down" duration={500}>
 					{visible && (

@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import styled from "styled-components";
+import Image from "react-graceful-image";
 
 const InvitadoBox = styled.div`
 	position: relative;
@@ -33,7 +34,7 @@ class Invitado extends Component {
 	render() {
 		return (
 			<InvitadoBox onClick={() => this.props.onclick(this.props.id, this.props.data)} className={this.props.active ? 'active' : 'standby'}>
-				<img src={this.props.data.foto_grande} alt={this.props.data.nombre} />
+				<Image src={this.props.data.foto[0]} alt={this.props.data.nombre} width={this.props.data.foto[1]} height={this.props.data.foto[2]}/>
 				<h2>{this.props.data.nombre}</h2>
 			</InvitadoBox>
 		);

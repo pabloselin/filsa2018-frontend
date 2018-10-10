@@ -12,6 +12,7 @@ import Expositores from "./Expositores";
 import VisitasGuiadas from "./VisitasGuiadas";
 import BuscaLibros from "./BuscaLibros";
 import ArchivoNoticias from "./ArchiveNoticias";
+import Colaboradores from "./Colaboradores";
 
 const Title = styled.h1`
 	margin-top: 24px !important;
@@ -101,6 +102,8 @@ class Default extends Component {
 					return <VisitasGuiadas />;
 				case "buscalibros":
 					return <BuscaLibros />;
+				case "colaboradores":
+					return <Colaboradores colaboradores={this.props.extrafields}/>;
 				case "archivonoticias":
 					return (
 						<ArchivoNoticias

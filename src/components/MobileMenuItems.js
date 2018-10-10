@@ -12,6 +12,7 @@ const StyledDropdown = styled(Dropdown.Item)`
 	&&&&&&:hover {
 		background-color: #000 !important;
 		color: white !important;
+		padding-left: 12px;
 	}
 `;
 
@@ -27,7 +28,7 @@ const NavMenuItem = styled(Menu.Item)`
 `;
 
 const MenuAccordion = styled(Accordion)`
-	&&& {
+	&&&&&& {
 		color: white;
 		font-weight: bold;
 		.title {
@@ -38,6 +39,9 @@ const MenuAccordion = styled(Accordion)`
 		}
 		.content {
 			padding-top: 0;
+			&.active {
+				padding-top: 0;
+			}
 		}
 		.item {
 			font-weight: bold;
@@ -89,7 +93,7 @@ class MobileMenuItems extends Component {
 					dropdown_items.push(
 						<StyledDropdown key={sub}>
 							<NavLink to={refineURL(child[sub].url)}>
-								{child[sub].title}
+								<Icon name="angle right" /> {child[sub].title}
 							</NavLink>
 						</StyledDropdown>
 					);
