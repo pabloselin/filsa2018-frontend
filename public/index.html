@@ -1,33 +1,36 @@
 <!DOCTYPE html>
 <html lang="es-ES">
-  <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta name="theme-color" content="#f1e9d9">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="theme-color" content="#f1e9d9">
     <!--
       manifest.json provides metadata used when your web app is added to the
       homescreen on Android. See https://developers.google.com/web/fundamentals/engage-and-retain/web-app-manifest/
     -->
     <link rel="manifest" href="%PUBLIC_URL%/manifest.json">
     <link rel="shortcut icon" href="%PUBLIC_URL%/favicon.ico">
-    <link rel="apple-touch-icon-precomposed" sizes="57x57" href="%PUBLIC_URL%/images/ios/apple-touch-icon-57x57.png">
-    <link rel="apple-touch-icon-precomposed" sizes="114x114" href="%PUBLIC_URL%/images/ios/apple-touch-icon-114x114.png">
-    <link rel="apple-touch-icon-precomposed" sizes="72x72" href="%PUBLIC_URL%/images/ios/apple-touch-icon-72x72.png">
-    <link rel="apple-touch-icon-precomposed" sizes="144x144" href="%PUBLIC_URL%/images/ios/apple-touch-icon-144x144.png">
-    <link rel="apple-touch-icon-precomposed" sizes="60x60" href="%PUBLIC_URL%/images/ios/apple-touch-icon-60x60.png">
-    <link rel="apple-touch-icon-precomposed" sizes="120x120" href="%PUBLIC_URL%/images/ios/apple-touch-icon-120x120.png">
-    <link rel="apple-touch-icon-precomposed" sizes="76x76" href="%PUBLIC_URL%/images/ios/apple-touch-icon-76x76.png">
-    <link rel="apple-touch-icon-precomposed" sizes="152x152" href="%PUBLIC_URL%/images/ios/apple-touch-icon-152x152.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="%PUBLIC_URL%/icons/apple-touch-icon.png?v=2">
+    <link rel="icon" type="image/png" sizes="32x32" href="%PUBLIC_URL%/icons/favicon-32x32.png?v=2">
+    <link rel="icon" type="image/png" sizes="16x16" href="%PUBLIC_URL%/icons/favicon-16x16.png?v=2">
+    <link rel="manifest" href="%PUBLIC_URL%/icons/site.webmanifest?v=2">
+    <link rel="mask-icon" href="%PUBLIC_URL%/icons/safari-pinned-tab.svg?v=2" color="#5bbad5">
+    <meta name="apple-mobile-web-app-title" content="FILSA 2018">
+    <meta name="application-name" content="FILSA 2018">
+    <meta name="msapplication-TileColor" content="#da532c">
+    <meta name="msapplication-TileImage" content="%PUBLIC_URL%/icons/mstile-144x144.png?v=2">
+    <meta name="msapplication-config" content="%PUBLIC_URL%/icons/browserconfig.xml?v=2">
+    <meta name="theme-color" content="#ffffff">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-title" content="FILSA 2018">
     <meta name="apple-mobile-web-app-status-bar-style" content="#f1e9d9">
-    <link href="%PUBLIC_URL%/images/ios/apple_splash_2048.png" sizes="2048x2732" rel="apple-touch-startup-image">
-    <link href="%PUBLIC_URL%/images/ios/apple_splash_1668.png" sizes="1668x2224" rel="apple-touch-startup-image">
-    <link href="%PUBLIC_URL%/images/ios/apple_splash_1536.png" sizes="1536x2048" rel="apple-touch-startup-image">
-    <link href="%PUBLIC_URL%/images/ios/apple_splash_1125.png" sizes="1125x2436" rel="apple-touch-startup-image">
-    <link href="%PUBLIC_URL%/images/ios/apple_splash_1242.png" sizes="1242x2208" rel="apple-touch-startup-image">
-    <link href="%PUBLIC_URL%/images/ios/apple_splash_750.png" sizes="750x1334" rel="apple-touch-startup-image">
-    <link href="%PUBLIC_URL%/images/ios/apple_splash_640.png" sizes="640x1136" rel="apple-touch-startup-image">
+    <link href="%PUBLIC_URL%/images/ios/apple_splash_2048.jpg" sizes="2048x2732" rel="apple-touch-startup-image">
+    <link href="%PUBLIC_URL%/images/ios/apple_splash_1668.jpg" sizes="1668x2224" rel="apple-touch-startup-image">
+    <link href="%PUBLIC_URL%/images/ios/apple_splash_1536.jpg" sizes="1536x2048" rel="apple-touch-startup-image">
+    <link href="%PUBLIC_URL%/images/ios/apple_splash_1125.jpg" sizes="1125x2436" rel="apple-touch-startup-image">
+    <link href="%PUBLIC_URL%/images/ios/apple_splash_1242.jpg" sizes="1242x2208" rel="apple-touch-startup-image">
+    <link href="%PUBLIC_URL%/images/ios/apple_splash_750.jpg" sizes="750x1334" rel="apple-touch-startup-image">
+    <link href="%PUBLIC_URL%/images/ios/apple_splash_640.jpg" sizes="640x1136" rel="apple-touch-startup-image">
     <!--
       Notice the use of %PUBLIC_URL% in the tags above.
       It will be replaced with the URL of the `public` folder during the build.
@@ -37,9 +40,9 @@
       work correctly both with client-side routing and a non-root public URL.
       Learn how to configure a non-root public URL by running `npm run build`.
     -->
-      <?php 
-      do_action('filsa2018_head');
-      ?>
+    <?php 
+    do_action('filsa2018_head');
+    ?>
   </head>
   <body>
     <noscript>
@@ -64,4 +67,4 @@
       To create a production bundle, use `npm run build` or `yarn build`.
     -->
   </body>
-</html>
+  </html>
