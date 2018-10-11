@@ -34,7 +34,7 @@ const StyledDimmer = styled(Dimmer)`
 
 const InvContent = styled(Container)`
 	img {
-		max-width: 100%;
+		max-width: 400px;
 		height: auto;
 	}
 	text-align: left;
