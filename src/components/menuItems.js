@@ -10,7 +10,9 @@ const node_env = env();
 const StyledDropdown = styled(Dropdown)`
 	&&&& {
 		font-weight: bold;
+		font-family: 'Maitree', serif;
 		color: white;
+		flex-grow: 1;
 		i.dropdown.icon {
 			font-size: 18px;
 			margin-left: 7px;
@@ -38,10 +40,13 @@ const NavMenuItem = styled(Menu.Item)`
 	&&&&&& {
 		color: white;
 		font-weight: bold;
-		border-right: 1px solid #555;
+		flex-grow: 1;
+		border-right: 1px solid rgba(34,36,38,.1);
+		font-family: 'Maitree', serif;
 		&.active {
 			font-weight: bold;
-			background-color: #cc1011;
+			background-color: #f1e9d9;
+			color: #cc1011 !important;
 		}
 	}
 `;

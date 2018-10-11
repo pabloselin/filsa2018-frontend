@@ -20,6 +20,7 @@ const NavMenuItem = styled(Menu.Item)`
 	&&&&&& {
 		color: white;
 		font-weight: bold;
+		font-family: 'Maitree', serif;
 		&.active {
 			font-weight: bold;
 			background-color: #cc1011;
@@ -45,6 +46,7 @@ const MenuAccordion = styled(Accordion)`
 		}
 		.item {
 			font-weight: bold;
+			font-family: 'Maitree', serif;
 		}
 	}
 `;

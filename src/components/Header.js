@@ -11,6 +11,10 @@ const HeaderStyle = styled.div`
 	}
 `;
 
+const MainHeader = styled.div`
+	background-color:  #f1e9d9;
+`;
+
 const ContainerHeader = styled(Container)`
 	&& {
 		line-height: 0;
@@ -32,7 +36,7 @@ const HeaderImage = styled.img`
 class Header extends Component {
 	render() {
 		return (
-			<div>
+			<MainHeader>
 				<MenuRedes
 					twitter={this.props.twitter}
 					facebook={this.props.facebook}
@@ -58,7 +62,7 @@ class Header extends Component {
 						</Responsive>
 					</HeaderStyle>
 				</ContainerHeader>
-			</div>
+			</MainHeader>
 		);
 	}
 }
