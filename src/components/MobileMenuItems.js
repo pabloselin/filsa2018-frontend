@@ -1,6 +1,6 @@
 import React, { Component, Fragment } from "react";
 import { Menu, Dropdown, Accordion, Icon } from "semantic-ui-react";
-import { NavLink, Link } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 import styled from "styled-components";
 import config from "../config.json";
 import env from "../utils/env";
@@ -81,7 +81,7 @@ class MobileMenuItems extends Component {
 		let menuitems = this.props.menuitems;
 		if(this.props.nohome !== true) {
 		buttons.push(
-			<NavMenuItem as={Link} key="home" to="/">
+			<NavMenuItem as={NavLink} key="home" to="/" exact>
 				<Icon name="home" /> Inicio
 			</NavMenuItem>
 		);

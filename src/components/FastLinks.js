@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { Menu, Icon, Container, Responsive, Dropdown } from "semantic-ui-react";
-import { Link } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 import styled from "styled-components";
 import config from "../config.json";
 import env from "../utils/env";
@@ -49,17 +49,15 @@ const FastMenuMobile = styled(Menu)`
 const FastMenuItem = styled(Menu.Item)`
 	&&&& {
 		flex-grow: 1;
-		padding: 14px 0 0 0;
+		padding: 14px 0 6px 0;
 		font-family: 'Maitree', serif;
 		background-color: #cc1012;
 		color: #f1e9d9;
 		font-weight: bold;
-		&:hover {
-			background-color: #f1e9d9;
-			color: #cc1012;
-			&:before {
-				background-color: #f1e9d9;
-			}
+		border-radius: 0;
+		&:hover, &.active {
+			background-color: #990C0E;
+			color: #f1e9d9;
 		}
 		&:before {
 				background-color: #960b0e;
@@ -82,14 +80,9 @@ const FastMenuParent = styled(Dropdown)`
 		&:before {
 			border-right: 1px solid #960b0e;
 		}
-		&:hover, &:hover .item {
-			background-color: #f1e9d9;
-			color: #cc1012;
-		}
-		&:hover {
-			&:before {
-				border-right: 1px solid #f1e9d9;
-			}
+		&:hover, &:hover .item, &.active, &.active .item {
+			background-color: #990C0E;
+			color: #f1e9d9;
 		}
 		.dropdown.icon {
 			position: absolute;
@@ -141,7 +134,7 @@ class FastLinks extends Component {
 					dropdown_items.push(
 						<Dropdown.Item
 							key={sub}
-							as={Link}
+							as={NavLink}
 							to={this.refineURL(child[sub].url)}
 						>
 							{child[sub].title}
@@ -157,7 +150,7 @@ class FastLinks extends Component {
 				buttons.push(
 					<FastMenuItem
 						key={item}
-						as={Link}
+						as={NavLink}
 						to={this.refineURL(menuitems[item].url)}
 						name={icon_class}
 					>

@@ -1,6 +1,6 @@
 import React from "react";
 import { Menu, Dropdown, Icon } from "semantic-ui-react";
-import { Link, NavLink } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 import styled from "styled-components";
 import config from "../config.json";
 import env from "../utils/env";
@@ -59,7 +59,7 @@ export function menuItems(menuitems, with_home) {
 	let buttons = [];
 	if (with_home === true) {
 		buttons.push(
-			<NavMenuItem as={Link} key="home" to="/">
+			<NavMenuItem as={NavLink} key="home" to="/" exact>
 				<Icon name="home" /> Inicio
 			</NavMenuItem>
 		);

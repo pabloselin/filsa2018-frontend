@@ -104,9 +104,9 @@ class Event extends Component {
 				color="teal"
 				icon
 				size="tiny"
-				title="Volver a visitas guiadas"
+				title="Volver a visitas de colegios a filsa"
 				as={Link}
-				to="/visitas-guiadas-colegios/"
+				to="/visitas-de-colegios-a-filsa/"
 			>
 				<Icon name="reply" /> Volver a visitas de colegios
 			</BackButton>

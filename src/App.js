@@ -1,16 +1,18 @@
 import React, { Component, Fragment } from "react";
-import { BrowserRouter as Router, Route } from "react-router-dom";
+import {
+  BrowserRouter as Router,
+  Route,
+  Redirect,
+  Switch
+} from "react-router-dom";
 import { Responsive } from "semantic-ui-react";
 import ReactGA from "react-ga";
 import IosPwa from "./components/IosPwa";
 import Header from "./components/Header";
-import PreHeader from "./components/PreHeader";
 import Home from "./components/Home";
 import Default from "./components/Default";
+import NotFound from "./components/NotFound";
 import EventSingle from "./components/EventSingle";
-import FastLinks from "./components/FastLinks";
-import MenuTop from "./components/MenuTop";
-import MenuMobile from "./components/MenuMobile";
 import SingleNoticiaAlt from "./components/SingleNoticiaAlt";
 import Loading from "./components/Loading";
 import ScrollToTop from "./components/ScrollToTop";
@@ -81,7 +83,8 @@ class Filsa2018 extends Component {
           filsa2018_contents: res.data["filsa2018_contents"],
           filsa2018_noticias: res.data["filsa2018_noticias"],
           eventos: res.data["eventos"],
-          youtube: res.data["filsa2018_youtube"]
+          youtube: res.data["filsa2018_youtube"],
+          isContentLoaded: true
         });
       });
     } else {
@@ -102,48 +105,18 @@ class Filsa2018 extends Component {
         filsa2018_contents: window.params["filsa2018_contents"],
         filsa2018_noticias: window.params["filsa2018_noticias"],
         eventos: window.params["eventos"],
-        youtube: window.params["filsa2018_youtube"]
+        youtube: window.params["filsa2018_youtube"],
+        isContentLoaded: true
       });
     }
-  }
-
-  menus() {
-    let menuitems;
-    if (this.state.menu_principal !== null) {
-      menuitems = (
-        <MenuTop
-          menuitems={this.state.menu_principal}
-          secondmenuitems={this.state.menu_dos}
-        />
-      );
-    }
-    return menuitems;
-  }
-
-  mobilemenu() {
-    let menumobileitems;
-    if (this.state.menu_principal !== null) {
-      menumobileitems = (
-        <MenuMobile
-          menuitems={this.state.menu_principal}
-          secondmenuitems={this.state.menu_dos}
-          twitter={this.state.twitter}
-          facebook={this.state.facebook}
-          instagram={this.state.instagram}
-          flickr={this.state.flickr}
-          youtube={this.state.youtube}
-        />
-      );
-    }
-    return menumobileitems;
   }
 
   matchColab(postID) {
     let colab;
     let itemsfilsa = this.state.filsa2018_contents;
     colab = itemsfilsa.filter(item => item.id === postID);
-    if(colab.length >= 1) {
-      return colab[0].extrafields;  
+    if (colab.length >= 1) {
+      return colab[0].extrafields;
     }
   }
 
@@ -161,142 +134,144 @@ class Filsa2018 extends Component {
 
   routes() {
     let routeitems;
-    if (this.state.filsa2018_contents !== null) {
-      let itemsfilsa = this.state.filsa2018_contents;
-      routeitems = itemsfilsa.map(item => {
-        let path =
-          this.matchParent(item.parent) !== undefined
-            ? `/${this.matchParent(item.parent)}/${item.slug}/`
-            : `/${item.slug}/`;
-        return (
-          <Route
-            key={item.id}
-            path={path}
-            exact
-            render={props => (
-              <Default
-                {...props}
-                type={item.object}
-                id={item.id}
-                title={item.title}
-                content={item.content}
-                component={item.component}
-                params={this.state.params}
-                seotitle={item.seotitle}
-                extrafields={item.extrafields ? item.extrafields : null}
-              />
-            )}
-          />
-        );
-      });
-    }
+    let itemsfilsa = this.state.filsa2018_contents;
+    routeitems = itemsfilsa.map(item => {
+      let path =
+        this.matchParent(item.parent) !== undefined
+          ? `/${this.matchParent(item.parent)}/${item.slug}/`
+          : `/${item.slug}/`;
+      return (
+        <Route
+          key={item.id}
+          path={path}
+          exact
+          render={props => (
+            <Default
+              {...props}
+              type={item.object}
+              id={item.id}
+              title={item.title}
+              content={item.content}
+              component={item.component}
+              params={this.state.params}
+              seotitle={item.seotitle}
+              extrafields={item.extrafields ? item.extrafields : null}
+            />
+          )}
+        />
+      );
+    });
     return routeitems;
   }
 
   newsroutes() {
     let newsroutes;
-    if (this.state.filsa2018_noticias !== null) {
-      newsroutes = this.state.filsa2018_noticias.map(item => {
-        let otrasnoticias = this.state.filsa2018_noticias.reduce(
-          (result, noticia) => {
-            if (noticia.title !== item.title) {
-              result.push(noticia);
-            }
-            return result;
-          },
-          []
-        );
-        return (
-          <Route
-            key={item.id}
-            path={"/noticias/" + item.slug + "/"}
-            render={props => (
-              <SingleNoticiaAlt
-                {...props}
-                type={item.object}
-                id={item.id}
-                content={item.content}
-                title={item.title}
-                media={item.media}
-                otras_noticias={otrasnoticias}
-                seotitle={item.seotitle}
-              />
-            )}
-          />
-        );
-      });
-    }
+    newsroutes = this.state.filsa2018_noticias.map(item => {
+      let otrasnoticias = this.state.filsa2018_noticias.reduce(
+        (result, noticia) => {
+          if (noticia.title !== item.title) {
+            result.push(noticia);
+          }
+          return result;
+        },
+        []
+      );
+      return (
+        <Route
+          key={item.id}
+          path={"/noticias/" + item.slug + "/"}
+          render={props => (
+            <SingleNoticiaAlt
+              {...props}
+              type={item.object}
+              id={item.id}
+              content={item.content}
+              title={item.title}
+              media={item.media}
+              otras_noticias={otrasnoticias}
+              seotitle={item.seotitle}
+            />
+          )}
+        />
+      );
+    });
     return newsroutes;
   }
 
   handleOnUpdate = (e, { width }) => this.setState({ width });
 
   render() {
-    const loading = this.state.menu_noticias !== null;
     const { width } = this.state;
     const top = width >= Responsive.onlyComputer.minWidth ? 360 : 0;
+    const loaded = this.state.isContentLoaded;
     return (
       <Responsive fireOnMount onUpdate={this.handleOnUpdate}>
         <IosPwa />
         <Router basename={config[node_env].basename}>
           <ScrollToTop top={top}>
-            <Fragment>
-            {this.mobilemenu()}
-              <Responsive minWidth={769}>
-                <PreHeader />
-              </Responsive>
-              <Header
-                headerimg={this.state.headerimg}
-                mobileheaderimg={this.state.mobileimg}
-                twitter={this.state.twitter}
-                facebook={this.state.facebook}
-                instagram={this.state.instagram}
-                flickr={this.state.flickr}
-                youtube={this.state.youtube}
-              />
-              {this.state.fastlinks && (
-                <FastLinks menuitems={this.state.fastlinks} />
-              )}
-              <Fragment>
-                {this.menus()}
-                {loading ? (
-                  <Route
-                    exact
-                    path="/"
-                    render={props => (
-                      <Home
-                        {...props}
-                        noticias={this.state.menu_noticias}
-                        noticias_content={this.state.filsa2018_noticias}
-                        content={this.state.intro}
-                        title={this.state.title}
-                        facebook={this.state.facebook}
-                        twitter={this.state.twitter}
-                        flickr={this.state.flickr}
-                        youtube={this.state.params.filsa2018_youtube}
-                        instagram={this.state.instagram}
-                        instagrampost={
-                          this.state.params.filsa2018_instagrampost
-                        }
-                        facebookid={this.state.params.filsa2018_facebookid}
-                        colaboradores={this.matchColab(parseInt(this.state.params.filsa2018_colabpage,0))}
-                      />
-                    )}
+              {loaded ? (
+                <Fragment>
+                  <Header
+                    headerimg={this.state.headerimg}
+                    mobileheaderimg={this.state.mobileimg}
+                    twitter={this.state.twitter}
+                    facebook={this.state.facebook}
+                    instagram={this.state.instagram}
+                    flickr={this.state.flickr}
+                    youtube={this.state.youtube}
+                    fastlinks={this.state.fastlinks}
+                    menu={this.state.menu_principal}
+                    menu_dos={this.state.menu_dos}
+                    mp4={this.state.params.filsa2018_cabecera_mp4}
+                    webm={this.state.params.filsa2018_cabecera_webm}
                   />
-                ) : (
-                  <Loading />
-                )}
-
-                {this.routes()}
-                {this.newsroutes()}
-                <Route
-                  key="eventos"
-                  path="/eventos/:slug/"
-                  component={EventSingle}
-                />
-              </Fragment>
-              {this.state.params && <Footer />}
-            </Fragment>
+                  <Switch>
+                    <Route
+                      exact
+                      path="/"
+                      render={props => (
+                        <Home
+                          {...props}
+                          noticias={this.state.menu_noticias}
+                          noticias_content={this.state.filsa2018_noticias}
+                          content={this.state.intro}
+                          title={this.state.title}
+                          facebook={this.state.facebook}
+                          twitter={this.state.twitter}
+                          flickr={this.state.flickr}
+                          youtube={this.state.params.filsa2018_youtube}
+                          instagram={this.state.instagram}
+                          instagrampost={
+                            this.state.params.filsa2018_instagrampost
+                          }
+                          facebookid={this.state.params.filsa2018_facebookid}
+                          colaboradores={this.matchColab(
+                            parseInt(this.state.params.filsa2018_colabpage, 0)
+                          )}
+                        />
+                      )}
+                    />
+                    {this.routes()}
+                    {this.newsroutes()}
+                    <Route
+                      key="eventos"
+                      path="/eventos/:slug/"
+                      component={EventSingle}
+                    />
+                    <Route
+                      key="visitas-old"
+                      path="/visitas-guiadas-colegios/"
+                      render={props => (
+                        <Redirect to="/visitas-de-colegios-a-filsa/" />
+                      )}
+                    />
+                    <Route key="notfound" component={NotFound} />
+                  </Switch>
+                  <Footer />
+                </Fragment>
+              ) : (
+                <Loading />
+              )}
           </ScrollToTop>
         </Router>
       </Responsive>
