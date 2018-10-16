@@ -3,6 +3,7 @@ import { Icon, Responsive, Popup } from "semantic-ui-react";
 import Slider from "react-slick";
 import styled from "styled-components";
 
+
 const GalImage = styled.img`
 	max-width: 100%;
 	height: auto;
@@ -31,6 +32,12 @@ const StyledSlider = styled(Slider)`
 	}
 	img {
 		margin: 0 auto;
+	}
+	.slick-track {
+		display: flex;
+	}
+	.slick-slide {
+		align-self: center;
 	}
 `;
 
@@ -81,7 +88,7 @@ class Carousel extends Component {
 	}
 	render() {
 		const settings = {
-			dots: true,
+			dots: false,
 			infinite: true,
 			speed: 500,
 			slidesToShow: 1,
@@ -100,7 +107,6 @@ class Carousel extends Component {
 			afterChange: index => this.setState({ current: index })
 		};
 		const imagenes = Object.values(this.props.imagenes);
-		console.log(imagenes);
 		return (
 			<CarouselContainer>
 				<GalHeader>
