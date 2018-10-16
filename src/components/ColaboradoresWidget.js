@@ -3,8 +3,6 @@ import { Container, Grid } from "semantic-ui-react";
 import styled from "styled-components";
 import Image from "react-graceful-image";
 import Slider from "react-slick";
-import "slick-carousel/slick/slick.css";
-import "slick-carousel/slick/slick-theme.css";
 
 const StyledLogo = styled(Image)`
 	max-width: 100%;
