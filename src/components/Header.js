@@ -121,7 +121,7 @@ class Header extends Component {
 										<img src={FilsaLogo} alt="FILSA 2018 - Cámara Chilena del Libro"/>
 										</StyledGridColumn>
 										<StyledVideoColumn width={14}>
-											<video muted loop="true" autoplay="true" poster={this.props.headerimg}>
+											<video muted loop="true" autoPlay="true" poster={this.props.headerimg}>
 												<source src={this.props.mp4} type="video/mp4" />
 												<source src={this.props.mp4} type="video/webm" />
 												<img src={this.props.headerimg} alt="FILSA 2018 - Cámara Chilena del Libro"/>

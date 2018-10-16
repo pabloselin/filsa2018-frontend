@@ -13,6 +13,7 @@ import VisitasGuiadas from "./VisitasGuiadas";
 import BuscaLibros from "./BuscaLibros";
 import ArchivoNoticias from "./ArchiveNoticias";
 import Colaboradores from "./Colaboradores";
+import Galeria from "./Galeria";
 
 const Title = styled.h1`
 	margin-top: 24px !important;
@@ -110,6 +111,10 @@ class Default extends Component {
 							noticias={this.props.params.filsa2018_noticias}
 						/>
 					);
+				case "galeria":
+					return(
+						<Galeria items={this.props.extrafields} />
+						);
 				default:
 					return null;
 			}
