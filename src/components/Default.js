@@ -6,6 +6,7 @@ import trackPage from "../utils/trackPage";
 import styled from "styled-components";
 import editUrl from "../utils/editUrl";
 import SocialButtons from "./SocialButtons";
+import SocialHome from "./SocialHome";
 import Programa from "./Programa";
 import Invitados from "./Invitados";
 import Expositores from "./Expositores";
@@ -98,23 +99,43 @@ class Default extends Component {
 				case "programa":
 					return <Programa />;
 				case "invitados":
-					return <Invitados invitados={this.props.extrafields}/>;
+					return <Invitados invitados={this.props.extrafields} />;
 				case "visitas-guiadas":
 					return <VisitasGuiadas />;
 				case "buscalibros":
 					return <BuscaLibros />;
 				case "colaboradores":
-					return <Colaboradores colaboradores={this.props.extrafields}/>;
+					return (
+						<Colaboradores colaboradores={this.props.extrafields} />
+					);
 				case "archivonoticias":
 					return (
 						<ArchivoNoticias
 							noticias={this.props.params.filsa2018_noticias}
 						/>
 					);
+				case "redes":
+					return (
+						<Container>
+							<SocialHome
+								twitter={this.props.params.filsa2018_twitter}
+								instagrampost={
+									this.props.params.filsa2018_instagrampost
+								}
+								instagram={
+									this.props.params.filsa2018_instagram
+								}
+								facebook={this.props.params.filsa2018_facebook}
+								facebookid={
+									this.props.params.filsa2018_facebookid
+								}
+								youtube={this.props.params.filsa2018_youtube}
+								flickr={this.props.params.filsa2018_flickr}
+							/>
+						</Container>
+					);
 				case "galeria":
-					return(
-						<Galeria items={this.props.extrafields} />
-						);
+					return <Galeria items={this.props.extrafields} />;
 				default:
 					return null;
 			}
@@ -122,13 +143,16 @@ class Default extends Component {
 	}
 
 	render() {
-		const text = this.props.component !== 'normal' ? false : true;
+		const text = this.props.component !== "normal" ? false : true;
 		return (
 			<Fragment>
 				<Helmet>
 					<title>{this.props.seotitle}</title>
 				</Helmet>
-				<StyledContainer text={text} className={`maincontent ${this.props.component}`}>
+				<StyledContainer
+					text={text}
+					className={`maincontent ${this.props.component}`}
+				>
 					<Title>
 						{this.props.title}
 						{this.editLink()}

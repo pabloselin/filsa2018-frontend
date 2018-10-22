@@ -127,6 +127,8 @@ class Home extends Component {
 							instagram={this.props.instagram}
 							facebook={this.props.facebook}
 							facebookid={this.props.facebookid}
+							youtube={this.props.youtube}
+							flickr={this.props.flickr}
 						/>
 					</Container>
 				</StyledSocialSection>

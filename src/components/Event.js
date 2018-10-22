@@ -1,17 +1,30 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
-import { Card, Icon, Label, Grid, Button } from "semantic-ui-react";
+import {
+	Card,
+	Icon,
+	Label,
+	Grid,
+	Button,
+	Flag
+} from "semantic-ui-react";
 import editUrl from "../utils/editUrl";
 import ReactHtmlParser from "react-html-parser";
 
-const EventType = styled("span")`
+const EventType = styled.span`
 	text-transform: uppercase;
 	font-family: sans-serif;
 	font-size: 13px;
 	display: block;
 	font-weight: normal;
 	color: #ada89c;
+`;
+
+const StyledFlag = styled(Flag)`
+	position: absolute;
+	right: 0;
+	top: 16px;
 `;
 
 const InfoEvento = styled.div`
@@ -145,6 +158,9 @@ class Event extends Component {
 								{this.props.title}{" "}
 							</StyledLink>
 						)}
+						{this.props.data.organizaperu && (
+							<StyledFlag name="pe" />
+						)}
 					</Card.Header>
 					<Card.Meta>
 						{this.props.showday && (
@@ -216,6 +232,18 @@ class Event extends Component {
 									</Button>
 								)}
 							{this.props.single !== true && showDesc}
+							{this.props.data.invitacion && (
+								<Button
+									icon
+									size="tiny"
+									as="a"
+									color="red"
+									target="_blank"
+									href={this.props.data.invitacion}
+								>
+									<Icon name="ticket" /> Descargar invitación
+								</Button>
+							)}
 							{this.props.single === true && backLink}
 						</Grid.Column>
 						<Grid.Column width={4}>
