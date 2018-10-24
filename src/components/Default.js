@@ -3,7 +3,8 @@ import { Container } from "semantic-ui-react";
 import ReactHtmlParser from "react-html-parser";
 import Helmet from "react-helmet";
 import trackPage from "../utils/trackPage";
-import scrollToElement from 'scroll-to-element';
+import { Redirect } from "react-router-dom";
+import scrollToElement from "scroll-to-element";
 import styled from "styled-components";
 import editUrl from "../utils/editUrl";
 import SocialButtons from "./SocialButtons";
@@ -73,15 +74,28 @@ class Default extends Component {
 	componentDidMount() {
 		trackPage(this.props.location.pathname, this.props.seotitle);
 		this.jumpToHash();
+		console.log(this.props.location);
 	}
 
-	 jumpToHash = () => {
-    const hash = this.props.location.hash;
-    if (hash) {
-      scrollToElement(hash, { offset: 0 });
-    	}
-  }
+	jumpToHash = () => {
+		const hash = this.props.location.hash;
+		if (hash) {
+			scrollToElement(hash, { offset: 0 });
+		}
+	};
 
+	uglyRedirects() {
+		let newurls;
+		if (this.props.location.pathname === "/programa-cultural/") {
+			newurls = <Redirect to="/programa-cultural/programacion" />;
+		} else if (
+			this.props.location.pathname === "/entradas-y-abono-filsa/"
+		) {
+			newurls = <Redirect to="/informacion-general/" />;
+		}
+
+		return newurls;
+	}
 
 	editLink() {
 		let editlink;
@@ -163,6 +177,7 @@ class Default extends Component {
 				<Helmet>
 					<title>{this.props.seotitle}</title>
 				</Helmet>
+				{this.uglyRedirects()}
 				<StyledContainer
 					text={text}
 					className={`maincontent ${this.props.component}`}

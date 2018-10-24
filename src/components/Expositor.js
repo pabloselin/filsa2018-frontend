@@ -129,7 +129,7 @@ class Expositor extends Component {
 									<List.Item>
 										<List.Icon name="mail" />{" "}
 										<List.Content>
-											<a href="mailto:{this.props.hit.CORREO}">
+											<a target="_blank" rel="noopener noreferrer" href="mailto:{this.props.hit.CORREO}">
 												{this.props.hit.CORREO}
 											</a>
 										</List.Content>
