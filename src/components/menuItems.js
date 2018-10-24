@@ -13,6 +13,7 @@ const StyledDropdown = styled(Dropdown)`
 		font-family: 'Maitree', serif;
 		color: white;
 		flex-grow: 1;
+		padding: .9375em 0.525em;
 		i.dropdown.icon {
 			font-size: 18px;
 			margin-left: 7px;

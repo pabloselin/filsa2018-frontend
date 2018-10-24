@@ -1,10 +1,9 @@
 import React, { Component } from "react";
 import { Container, Grid } from "semantic-ui-react";
 import styled from "styled-components";
-import Image from "react-graceful-image";
 import Slider from "react-slick";
 
-const StyledLogo = styled(Image)`
+const StyledLogo = styled.img`
 	max-width: 100%;
 	height: auto;
 	align-self: center;
@@ -54,7 +53,7 @@ class ColaboradoresWidget extends Component {
 		return (
 			<Container>
 				<Grid>
-					<Grid.Column width={5}>
+					<Grid.Column computer={5} mobile={16}>
 						<ColabHeader>Organizan</ColabHeader>
 						<Grid columns={2}>
 						{firstorgs.map((org, key) => (
@@ -73,7 +72,7 @@ class ColaboradoresWidget extends Component {
 						))}
 						</Grid>
 					</Grid.Column>
-					<Grid.Column width={11}>
+					<Grid.Column computer={11} mobile={16}>
 						<ColabHeader>FILSA agradece a...</ColabHeader>
 						<ColabSlider {...settings}>
 							{otherorgs.map((org,key) => (

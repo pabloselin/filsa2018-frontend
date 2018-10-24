@@ -3,6 +3,7 @@ import { Container } from "semantic-ui-react";
 import ReactHtmlParser from "react-html-parser";
 import Helmet from "react-helmet";
 import trackPage from "../utils/trackPage";
+import scrollToElement from 'scroll-to-element';
 import styled from "styled-components";
 import editUrl from "../utils/editUrl";
 import SocialButtons from "./SocialButtons";
@@ -14,6 +15,7 @@ import VisitasGuiadas from "./VisitasGuiadas";
 import BuscaLibros from "./BuscaLibros";
 import ArchivoNoticias from "./ArchiveNoticias";
 import Colaboradores from "./Colaboradores";
+import Jornadas from "./Jornadas";
 import Galeria from "./Galeria";
 
 const Title = styled.h1`
@@ -70,7 +72,16 @@ class Default extends Component {
 
 	componentDidMount() {
 		trackPage(this.props.location.pathname, this.props.seotitle);
+		this.jumpToHash();
 	}
+
+	 jumpToHash = () => {
+    const hash = this.props.location.hash;
+    if (hash) {
+      scrollToElement(hash, { offset: 0 });
+    	}
+  }
+
 
 	editLink() {
 		let editlink;
@@ -88,6 +99,7 @@ class Default extends Component {
 				params: this.props.params
 			});
 		}
+		this.jumpToHash();
 	}
 
 	returnComponentOption() {
@@ -98,6 +110,8 @@ class Default extends Component {
 					return <Expositores />;
 				case "programa":
 					return <Programa />;
+				case "jornadas":
+					return <Jornadas />;
 				case "invitados":
 					return <Invitados invitados={this.props.extrafields} />;
 				case "visitas-guiadas":

@@ -1,14 +1,7 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
-import {
-	Card,
-	Icon,
-	Label,
-	Grid,
-	Button,
-	Flag
-} from "semantic-ui-react";
+import { Card, Icon, Label, Grid, Button, Flag } from "semantic-ui-react";
 import editUrl from "../utils/editUrl";
 import ReactHtmlParser from "react-html-parser";
 
@@ -85,6 +78,7 @@ class Event extends Component {
 		}
 		return editlink;
 	}
+
 
 	showDesc() {
 		this.setState({

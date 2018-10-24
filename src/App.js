@@ -209,69 +209,69 @@ class Filsa2018 extends Component {
         <IosPwa />
         <Router basename={config[node_env].basename}>
           <ScrollToTop top={top}>
-              {loaded ? (
-                <Fragment>
-                  <Header
-                    headerimg={this.state.headerimg}
-                    mobileheaderimg={this.state.mobileimg}
-                    twitter={this.state.twitter}
-                    facebook={this.state.facebook}
-                    instagram={this.state.instagram}
-                    flickr={this.state.flickr}
-                    youtube={this.state.youtube}
-                    fastlinks={this.state.fastlinks}
-                    menu={this.state.menu_principal}
-                    menu_dos={this.state.menu_dos}
-                    mp4={this.state.params.filsa2018_cabecera_mp4}
-                    webm={this.state.params.filsa2018_cabecera_webm}
+            {loaded ? (
+              <Fragment>
+                <Header
+                  headerimg={this.state.headerimg}
+                  mobileheaderimg={this.state.mobileimg}
+                  twitter={this.state.twitter}
+                  facebook={this.state.facebook}
+                  instagram={this.state.instagram}
+                  flickr={this.state.flickr}
+                  youtube={this.state.youtube}
+                  fastlinks={this.state.fastlinks}
+                  menu={this.state.menu_principal}
+                  menu_dos={this.state.menu_dos}
+                  mp4={this.state.params.filsa2018_cabecera_mp4}
+                  webm={this.state.params.filsa2018_cabecera_webm}
+                />
+                <Switch>
+                  <Route
+                    exact
+                    path="/"
+                    render={props => (
+                      <Home
+                        {...props}
+                        noticias={this.state.menu_noticias}
+                        noticias_content={this.state.filsa2018_noticias}
+                        content={this.state.intro}
+                        title={this.state.title}
+                        facebook={this.state.facebook}
+                        twitter={this.state.twitter}
+                        flickr={this.state.flickr}
+                        youtube={this.state.params.filsa2018_youtube}
+                        instagram={this.state.instagram}
+                        instagrampost={
+                          this.state.params.filsa2018_instagrampost
+                        }
+                        facebookid={this.state.params.filsa2018_facebookid}
+                        colaboradores={this.matchColab(
+                          parseInt(this.state.params.filsa2018_colabpage, 0)
+                        )}
+                      />
+                    )}
                   />
-                  <Switch>
-                    <Route
-                      exact
-                      path="/"
-                      render={props => (
-                        <Home
-                          {...props}
-                          noticias={this.state.menu_noticias}
-                          noticias_content={this.state.filsa2018_noticias}
-                          content={this.state.intro}
-                          title={this.state.title}
-                          facebook={this.state.facebook}
-                          twitter={this.state.twitter}
-                          flickr={this.state.flickr}
-                          youtube={this.state.params.filsa2018_youtube}
-                          instagram={this.state.instagram}
-                          instagrampost={
-                            this.state.params.filsa2018_instagrampost
-                          }
-                          facebookid={this.state.params.filsa2018_facebookid}
-                          colaboradores={this.matchColab(
-                            parseInt(this.state.params.filsa2018_colabpage, 0)
-                          )}
-                        />
-                      )}
-                    />
-                    {this.routes()}
-                    {this.newsroutes()}
-                    <Route
-                      key="eventos"
-                      path="/eventos/:slug/"
-                      component={EventSingle}
-                    />
-                    <Route
-                      key="visitas-old"
-                      path="/visitas-guiadas-colegios/"
-                      render={props => (
-                        <Redirect to="/visitas-de-colegios-a-filsa/" />
-                      )}
-                    />
-                    <Route key="notfound" component={NotFound} />
-                  </Switch>
-                  <Footer />
-                </Fragment>
-              ) : (
-                <Loading />
-              )}
+                  {this.routes()}
+                  {this.newsroutes()}
+                  <Route
+                    key="eventos"
+                    path="/eventos/:slug/"
+                    component={EventSingle}
+                  />
+                  <Route
+                    key="visitas-old"
+                    path="/visitas-guiadas-colegios/"
+                    render={props => (
+                      <Redirect to="/visitas-de-colegios-a-filsa/" />
+                    )}
+                  />
+                  <Route key="notfound" component={NotFound} />
+                </Switch>
+                <Footer />
+              </Fragment>
+            ) : (
+              <Loading />
+            )}
           </ScrollToTop>
         </Router>
       </Responsive>

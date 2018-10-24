@@ -3,6 +3,7 @@ import { Container, Select, Tab, Responsive, Divider } from "semantic-ui-react";
 import styled from "styled-components";
 import Loading from "./Loading";
 import Event from "./Event";
+import SearchEvents from "./SearchEvents";
 import Dias from "./Dias";
 import api from "../utils/api";
 
@@ -219,6 +220,19 @@ class Programa extends Component {
 						{this.tipos()}
 						{showEventsTitle}
 						{showEvents}
+					</StyledTabPane>
+				)
+			},
+			{
+				menuItem: {
+					content: "Buscar evento",
+					icon: "zoom",
+					key: "buscar"
+				},
+				render: () => (
+					<StyledTabPane>
+						<h2>Busca tu evento</h2>
+						<SearchEvents events={this.state.events} />
 					</StyledTabPane>
 				)
 			}
