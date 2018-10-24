@@ -10,7 +10,7 @@ import SocialButtons from "./SocialButtons";
 import SocialHome from "./SocialHome";
 import Programa from "./Programa";
 import Invitados from "./Invitados";
-import Expositores from "./Expositores";
+import BuscaExpositores from "./BuscaExpositores";
 import VisitasGuiadas from "./VisitasGuiadas";
 import BuscaLibros from "./BuscaLibros";
 import ArchivoNoticias from "./ArchiveNoticias";
@@ -107,7 +107,7 @@ class Default extends Component {
 			const componentoption = this.props.component;
 			switch (componentoption) {
 				case "expositores":
-					return <Expositores />;
+					return <BuscaExpositores />;
 				case "programa":
 					return <Programa />;
 				case "jornadas":
