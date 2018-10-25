@@ -5,19 +5,61 @@ import Helmet from "react-helmet";
 import trackPage from "../utils/trackPage";
 import { Redirect } from "react-router-dom";
 import scrollToElement from "scroll-to-element";
+import Loadable from "react-loadable";
+import Loading from "./Loading";
 import styled from "styled-components";
 import editUrl from "../utils/editUrl";
 import SocialButtons from "./SocialButtons";
-import SocialHome from "./SocialHome";
-import Programa from "./Programa";
-import Invitados from "./Invitados";
-import BuscaExpositores from "./BuscaExpositores";
-import VisitasGuiadas from "./VisitasGuiadas";
-import BuscaLibros from "./BuscaLibros";
-import ArchivoNoticias from "./ArchiveNoticias";
-import Colaboradores from "./Colaboradores";
-import Jornadas from "./Jornadas";
-import Galeria from "./Galeria";
+
+const SocialHome = Loadable({
+  loader: () => import("./SocialHome"),
+  loading: Loading
+});
+
+const Programa = Loadable({
+  loader: () => import("./Programa"),
+  loading: Loading
+});
+
+const Invitados = Loadable({
+  loader: () => import("./Invitados"),
+  loading: Loading
+});
+
+const BuscaExpositores = Loadable({
+  loader: () => import("./BuscaExpositores"),
+  loading: Loading
+});
+
+const BuscaLibros = Loadable({
+  loader: () => import("./BuscaLibros"),
+  loading: Loading
+});
+
+const ArchivoNoticias = Loadable({
+  loader: () => import("./ArchiveNoticias"),
+  loading: Loading
+});
+
+const Colaboradores = Loadable({
+  loader: () => import("./Colaboradores"),
+  loading: Loading
+});
+
+const Jornadas = Loadable({
+  loader: () => import("./Jornadas"),
+  loading: Loading
+});
+
+const Galeria = Loadable({
+  loader: () => import("./Galeria"),
+  loading: Loading
+});
+
+const VisitasGuiadas = Loadable({
+  loader: () => import("./VisitasGuiadas"),
+  loading: Loading
+});
 
 const Title = styled.h1`
 	margin-top: 24px !important;

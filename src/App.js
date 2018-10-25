@@ -9,17 +9,18 @@ import { Responsive } from "semantic-ui-react";
 import ReactGA from "react-ga";
 import IosPwa from "./components/IosPwa";
 import Header from "./components/Header";
-import Home from "./components/Home";
-import Default from "./components/Default";
+//import Home from "./components/Home";
+//import Default from "./components/Default";
 import NotFound from "./components/NotFound";
-import EventSingle from "./components/EventSingle";
-import SingleNoticiaAlt from "./components/SingleNoticiaAlt";
+//import EventSingle from "./components/EventSingle";
+//import SingleNoticiaAlt from "./components/SingleNoticiaAlt";
 import Loading from "./components/Loading";
 import ScrollToTop from "./components/ScrollToTop";
 import Footer from "./components/Footer";
 import api from "./utils/api";
 import config from "./config.json";
 import WebFont from "webfontloader";
+import Loadable from "react-loadable";
 import env from "./utils/env";
 
 WebFont.load({
@@ -38,6 +39,26 @@ if (node_env === "development") {
 } else {
   ReactGA.initialize(config[node_env].google_analytics_ua);
 }
+
+const Home = Loadable({
+  loader: () => import("./components/Home"),
+  loading: Loading
+});
+
+const Default = Loadable({
+  loader: () => import("./components/Default"),
+  loading: Loading
+});
+
+const EventSingle = Loadable({
+  loader: () => import("./components/EventSingle"),
+  loading: Loading
+});
+
+const SingleNoticiaAlt = Loadable({
+  loader: () => import("./components/SingleNoticiaAlt"),
+  loading: Loading
+});
 
 class Filsa2018 extends Component {
   constructor(props) {
