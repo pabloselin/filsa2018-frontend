@@ -17,7 +17,7 @@ import {
 	connectStateResults
 } from "react-instantsearch-dom";
 import styled from "styled-components";
-import Libro from "./Libro";
+import LibroMini from "./LibroMini";
 
 const searchBoxTranslations = {
 	submitTitle: "Buscar",
@@ -88,7 +88,7 @@ class BuscaLibrosMini extends Component {
 								/>
 							</Segment>
 							<StyledHits
-								hitComponent={Libro}
+								hitComponent={LibroMini}
 								translations={{ loadMore: "Cargar más" }}
 							/>
 						</Fragment>

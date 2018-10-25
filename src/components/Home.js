@@ -121,6 +121,7 @@ class Home extends Component {
 				</Helmet>
 				<MainContainer>
 					<HomeEventos eventos={this.props.eventos} />
+					<Divider hidden />
 					{this.state.firstNoticia !== null ? (
 						<FirstNoticia noticia={this.state.firstNoticia} />
 					) : null}
