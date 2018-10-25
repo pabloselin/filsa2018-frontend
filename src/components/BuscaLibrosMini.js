@@ -31,6 +31,7 @@ const StyledSearchBox = styled(SearchBox)`
 		border: 1px solid #ccc;
 		border-radius: 12px;
 		margin-right: 12px;
+		margin-bottom: 12px;
 		&:focus {
 			outline: 0;
 			box-shadow: 0 0 4px #9dd6f4;

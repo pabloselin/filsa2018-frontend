@@ -9,6 +9,7 @@
 // This link also includes instructions on opting out of this behavior.
 import env from "./utils/env";
 import config from "./config.json";
+import trackEvent from "./utils/trackEvent";
 
 const node_env = env();
 
@@ -67,6 +68,7 @@ function installer() {
       e.userChoice.then(function(choiceResult) {
         console.log(choiceResult.outcome);
 
+        trackEvent(choiceResult.outcome);
         if (choiceResult.outcome === "dismissed") {
           console.log("User cancelled home screen install");
         } else {

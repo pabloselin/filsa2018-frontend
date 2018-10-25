@@ -36,6 +36,9 @@ const InvContent = styled(Container)`
 	img {
 		max-width: 400px;
 		height: auto;
+		@media screen and (max-width:768px) {
+			max-width: 100%;
+		}
 	}
 	text-align: left;
 `;
