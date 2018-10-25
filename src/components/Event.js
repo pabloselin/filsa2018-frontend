@@ -1,17 +1,23 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
-import { Card, Icon, Label, Grid, Button } from "semantic-ui-react";
+import { Card, Icon, Label, Grid, Button, Flag } from "semantic-ui-react";
 import editUrl from "../utils/editUrl";
 import ReactHtmlParser from "react-html-parser";
 
-const EventType = styled("span")`
+const EventType = styled.span`
 	text-transform: uppercase;
 	font-family: sans-serif;
 	font-size: 13px;
 	display: block;
 	font-weight: normal;
 	color: #ada89c;
+`;
+
+const StyledFlag = styled(Flag)`
+	position: absolute;
+	right: 0;
+	top: 16px;
 `;
 
 const InfoEvento = styled.div`
@@ -41,7 +47,7 @@ const BackButton = styled(Button)`
 			margin-top: 12px;
 		}
 	}
-`
+`;
 
 const EditLink = styled.a`
 	font-family: sans-serif;
@@ -53,7 +59,7 @@ const EditLink = styled.a`
 
 const StyledLink = styled(Link)`
 	color: #333;
-`
+`;
 
 class Event extends Component {
 	constructor(props) {
@@ -72,6 +78,7 @@ class Event extends Component {
 		}
 		return editlink;
 	}
+
 
 	showDesc() {
 		this.setState({
@@ -104,9 +111,9 @@ class Event extends Component {
 				color="teal"
 				icon
 				size="tiny"
-				title="Volver a visitas guiadas"
+				title="Volver a visitas de colegios a filsa"
 				as={Link}
-				to="/visitas-guiadas-colegios/"
+				to="/visitas-de-colegios-a-filsa/"
 			>
 				<Icon name="reply" /> Volver a visitas de colegios
 			</BackButton>
@@ -121,6 +128,11 @@ class Event extends Component {
 				<Icon name="reply" /> Volver al programa cultural
 			</BackButton>
 		);
+
+		const timeLapse =
+			this.props.data.startdate !== this.props.data.enddate
+				? `${this.props.data.startdate}-${this.props.data.enddate}`
+				: `${this.props.data.startdate}`;
 		return (
 			<Card fluid>
 				<Card.Content>
@@ -129,12 +141,19 @@ class Event extends Component {
 							{this.props.data.tipo_eventos.join(" - ")}
 						</EventType>
 						{this.props.single ? (
-							<span>{this.props.title} {this.editLink()}</span>
+							<span>
+								{this.props.title} {this.editLink()}
+							</span>
 						) : (
-							<StyledLink to={`/eventos/${this.props.data.slug}/`}>
+							<StyledLink
+								to={`/eventos/${this.props.data.slug}/`}
+							>
 								{" "}
 								{this.props.title}{" "}
 							</StyledLink>
+						)}
+						{this.props.data.organizaperu && (
+							<StyledFlag name="pe" />
 						)}
 					</Card.Header>
 					<Card.Meta>
@@ -145,8 +164,7 @@ class Event extends Component {
 							</InfoEvento>
 						)}
 						<InfoEvento>
-							<Icon name="clock" /> {this.props.data.startdate} -{" "}
-							{this.props.data.enddate}
+							<Icon name="clock" /> {timeLapse}
 						</InfoEvento>
 						{this.props.data.lugar && (
 							<InfoEvento>
@@ -190,21 +208,36 @@ class Event extends Component {
 				<Card.Content extra>
 					<Grid columns={2}>
 						<Grid.Column width={12}>
-							{this.props.formurl && (
+							{this.props.formurl &&
+								this.props.visitaguiada === true && (
+									<Button
+										icon
+										disabled={
+											this.props.cerrado ? true : false
+										}
+										size="tiny"
+										as="a"
+										color="red"
+										href={this.props.formurl}
+										target="_blank"
+									>
+										<Icon name="ticket" /> Inscripciones{" "}
+										{this.props.cerrado && "cerradas"}
+									</Button>
+								)}
+							{this.props.single !== true && showDesc}
+							{this.props.data.invitacion && (
 								<Button
 									icon
-									disabled={this.props.cerrado ? true : false}
 									size="tiny"
 									as="a"
 									color="red"
-									href={this.props.formurl}
 									target="_blank"
+									href={this.props.data.invitacion}
 								>
-									<Icon name="ticket" /> Inscripciones{" "}
-									{this.props.cerrado && "cerradas"}
+									<Icon name="ticket" /> Descargar invitación
 								</Button>
 							)}
-							{this.props.single !== true && showDesc}
 							{this.props.single === true && backLink}
 						</Grid.Column>
 						<Grid.Column width={4}>

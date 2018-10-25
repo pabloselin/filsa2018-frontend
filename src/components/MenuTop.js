@@ -8,8 +8,10 @@ const StyledMenu = styled(Menu)`
 		border-radius: 0;
 		margin-bottom: 0;
 		margin-top: 0;
+		background-color: #636363;
 		> .container {
-			border-left: 1px solid #555;
+			border-left: 0;
+			background-color: #333;
 		}
 	}
 `;
@@ -19,10 +21,11 @@ const StyledSecondMenu = styled(Menu)`
 		border-radius: 0;
 		margin-bottom: 0;
 		margin-top: 0;
-		border-top: 1px solid #555;
-		background-color: #393d41;
+		background-color: #636363;
 		> .container {
-			border-left: 1px solid #555;
+			border-top: 0;
+			background-color: #393d41;
+			border-left: 0;
 		}
 	}
 `;
@@ -54,7 +57,6 @@ class MenuTop extends Component {
 				<StyledMenu
 					inverted
 					fluid
-					widths={Object.keys(this.props.menuitems).length + 1}
 				>
 					<StyledContainer>
 						{menuItems(this.props.menuitems, true)}

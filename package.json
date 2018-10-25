@@ -6,6 +6,7 @@
   "dependencies": {
     "axios": "^0.18.0",
     "lodash": "^4.17.11",
+    "prop-types": "^15.6.2",
     "react": "^16.4.2",
     "react-dom": "^16.4.2",
     "react-facebook": "^5.0.3",
@@ -20,6 +21,7 @@
     "react-scripts": "1.1.5",
     "react-slick": "^0.23.1",
     "react-twitter-embed": "^1.2.0",
+    "scroll-to-element": "^2.0.2",
     "semantic-ui-css": "^2.3.3",
     "semantic-ui-react": "^0.82.3",
     "slick-carousel": "^1.8.1",

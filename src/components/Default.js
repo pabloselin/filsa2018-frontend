@@ -3,16 +3,21 @@ import { Container } from "semantic-ui-react";
 import ReactHtmlParser from "react-html-parser";
 import Helmet from "react-helmet";
 import trackPage from "../utils/trackPage";
+import { Redirect } from "react-router-dom";
+import scrollToElement from "scroll-to-element";
 import styled from "styled-components";
 import editUrl from "../utils/editUrl";
 import SocialButtons from "./SocialButtons";
+import SocialHome from "./SocialHome";
 import Programa from "./Programa";
 import Invitados from "./Invitados";
-import Expositores from "./Expositores";
+import BuscaExpositores from "./BuscaExpositores";
 import VisitasGuiadas from "./VisitasGuiadas";
 import BuscaLibros from "./BuscaLibros";
 import ArchivoNoticias from "./ArchiveNoticias";
 import Colaboradores from "./Colaboradores";
+import Jornadas from "./Jornadas";
+import Galeria from "./Galeria";
 
 const Title = styled.h1`
 	margin-top: 24px !important;
@@ -68,6 +73,27 @@ class Default extends Component {
 
 	componentDidMount() {
 		trackPage(this.props.location.pathname, this.props.seotitle);
+		this.jumpToHash();
+	}
+
+	jumpToHash = () => {
+		const hash = this.props.location.hash;
+		if (hash) {
+			scrollToElement(hash, { offset: 0 });
+		}
+	};
+
+	uglyRedirects() {
+		let newurls;
+		if (this.props.location.pathname === "/programa-cultural/") {
+			newurls = <Redirect to="/programa-cultural/programacion" />;
+		} else if (
+			this.props.location.pathname === "/entradas-y-abono-filsa/"
+		) {
+			newurls = <Redirect to="/informacion-general/" />;
+		}
+
+		return newurls;
 	}
 
 	editLink() {
@@ -86,6 +112,7 @@ class Default extends Component {
 				params: this.props.params
 			});
 		}
+		this.jumpToHash();
 	}
 
 	returnComponentOption() {
@@ -93,23 +120,49 @@ class Default extends Component {
 			const componentoption = this.props.component;
 			switch (componentoption) {
 				case "expositores":
-					return <Expositores />;
+					return <BuscaExpositores />;
 				case "programa":
 					return <Programa />;
+				case "jornadas":
+					return <Jornadas />;
 				case "invitados":
-					return <Invitados invitados={this.props.extrafields}/>;
+					return <Invitados invitados={this.props.extrafields} />;
 				case "visitas-guiadas":
 					return <VisitasGuiadas />;
 				case "buscalibros":
 					return <BuscaLibros />;
 				case "colaboradores":
-					return <Colaboradores colaboradores={this.props.extrafields}/>;
+					return (
+						<Colaboradores colaboradores={this.props.extrafields} />
+					);
 				case "archivonoticias":
 					return (
 						<ArchivoNoticias
 							noticias={this.props.params.filsa2018_noticias}
 						/>
 					);
+				case "redes":
+					return (
+						<Container>
+							<SocialHome
+								twitter={this.props.params.filsa2018_twitter}
+								instagrampost={
+									this.props.params.filsa2018_instagrampost
+								}
+								instagram={
+									this.props.params.filsa2018_instagram
+								}
+								facebook={this.props.params.filsa2018_facebook}
+								facebookid={
+									this.props.params.filsa2018_facebookid
+								}
+								youtube={this.props.params.filsa2018_youtube}
+								flickr={this.props.params.filsa2018_flickr}
+							/>
+						</Container>
+					);
+				case "galeria":
+					return <Galeria items={this.props.extrafields} />;
 				default:
 					return null;
 			}
@@ -117,13 +170,17 @@ class Default extends Component {
 	}
 
 	render() {
-		const text = this.props.component !== 'normal' ? false : true;
+		const text = this.props.component !== "normal" ? false : true;
 		return (
 			<Fragment>
 				<Helmet>
 					<title>{this.props.seotitle}</title>
 				</Helmet>
-				<StyledContainer text={text} className={`maincontent ${this.props.component}`}>
+				{this.uglyRedirects()}
+				<StyledContainer
+					text={text}
+					className={`maincontent ${this.props.component}`}
+				>
 					<Title>
 						{this.props.title}
 						{this.editLink()}

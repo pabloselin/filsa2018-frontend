@@ -1,12 +1,9 @@
 import React, { Component } from "react";
 import { Container, Grid } from "semantic-ui-react";
 import styled from "styled-components";
-import Image from "react-graceful-image";
 import Slider from "react-slick";
-import "slick-carousel/slick/slick.css";
-import "slick-carousel/slick/slick-theme.css";
 
-const StyledLogo = styled(Image)`
+const StyledLogo = styled.img`
 	max-width: 100%;
 	height: auto;
 	align-self: center;
@@ -17,6 +14,15 @@ const ColabHeader = styled.h2`
 		font-size: 16px;
 		color: #555;
 		margin-top: 24px;
+	}
+`;
+
+const ColabSlider = styled(Slider)`
+	.slick-track {
+		display: flex;
+	}
+	.slick-slide {
+		align-self: center;
 	}
 `;
 
@@ -36,27 +42,23 @@ class ColaboradoresWidget extends Component {
 			slidesToShow: 6,
 			speed: 500,
 			slideToScroll: 1,
-			autoplay: true
+			autoplay: true,
+			pauseOnHover: false
 		};
 
-		const orgs = [
-			...this.props.colaboradores.apoya,
-			...this.props.colaboradores.auspicia,
-			...this.props.colaboradores.colaboran,
-			...this.props.colaboradores.medios,
-			...this.props.colaboradores.participa,
-			...this.props.colaboradores.patrocina
-		];
 		const mainorgs = [...this.props.colaboradores.organiza];
+		const firstorgs = mainorgs.slice(0,2);
+		const otherorgs = mainorgs.slice(2);
+
 		return (
 			<Container>
 				<Grid>
-					<Grid.Column width={5}>
+					<Grid.Column computer={5} mobile={16}>
 						<ColabHeader>Organizan</ColabHeader>
 						<Grid columns={2}>
-						{mainorgs.map(org => (
+						{firstorgs.map((org, key) => (
 
-							<Grid.Column>
+							<Grid.Column key={key}>
 							<LogoBox>
 							<StyledLogo
 								key={org.nombre}
@@ -70,11 +72,11 @@ class ColaboradoresWidget extends Component {
 						))}
 						</Grid>
 					</Grid.Column>
-					<Grid.Column width={11}>
+					<Grid.Column computer={11} mobile={16}>
 						<ColabHeader>FILSA agradece a...</ColabHeader>
-						<Slider {...settings}>
-							{orgs.map(org => (
-								<LogoBox>
+						<ColabSlider {...settings}>
+							{otherorgs.map((org,key) => (
+								<LogoBox key={key}>
 								<StyledLogo
 									key={org.nombre}
 									src={org.logo[0]}
@@ -84,7 +86,7 @@ class ColaboradoresWidget extends Component {
 								/>
 								</LogoBox>
 							))}
-						</Slider>
+						</ColabSlider>
 					</Grid.Column>
 				</Grid>
 			</Container>

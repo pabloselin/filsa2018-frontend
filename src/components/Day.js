@@ -15,6 +15,9 @@ const DayBox = styled.span`
 	text-align: center;
 	width: 56px;
 	border-right: 1px solid #ccc;
+	border-top: 1px solid #ccc;
+	border-bottom: 1px solid #ccc;
+	flex-shrink: 1;
 	&.disabled,
 	&.disabled:hover {
 		cursor: default;
