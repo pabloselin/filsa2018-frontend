@@ -6,7 +6,8 @@ import {
 	SearchBox,
 	RefinementList,
 	Stats,
-	Configure
+	Configure,
+	connectStateResults
 } from "react-instantsearch-dom";
 import styled from "styled-components";
 import Libro from "./Libro";
@@ -78,7 +79,8 @@ class BuscaLibros extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			eventos: null
+			eventos: null,
+			query: null
 		};
 	}
 
@@ -92,6 +94,20 @@ class BuscaLibros extends Component {
 	}
 
 	render() {
+		const SearchContent = connectStateResults(
+			({ searchState, searchResults }) => {
+				if (searchState.query !== undefined) {
+					return (
+						<StyledHits
+							hitComponent={Libro}
+							translations={{ loadMore: "Cargar más" }}
+						/>
+					);
+				} else {
+					return <Segment>Busca un libro por título, autor, editorial o materia...</Segment>;
+				}
+			}
+		);
 		return (
 			<Container>
 				<InstantSearch
@@ -126,10 +142,7 @@ class BuscaLibros extends Component {
 								/>
 							</Segment>
 
-							<StyledHits
-								hitComponent={Libro}
-								translations={{ loadMore: "Cargar más" }}
-							/>
+							<SearchContent />
 						</Grid.Column>
 						<Grid.Column computer={6} mobile={16}>
 							<h3>

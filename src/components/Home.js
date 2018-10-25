@@ -8,6 +8,7 @@ import Helmet from "react-helmet";
 import trackPage from "../utils/trackPage";
 import SocialHome from "./SocialHome";
 import FirstNoticia from "./FirstNoticia";
+import HomeEventos from "./HomeEventos";
 import ColaboradoresWidget from "./ColaboradoresWidget";
 import styled from "styled-components";
 import Noticia from "./Noticia";
@@ -114,6 +115,7 @@ class Home extends Component {
 					<title>{this.props.title}</title>
 				</Helmet>
 				<MainContainer>
+					<HomeEventos eventos={this.props.eventos}/>
 					{this.state.firstNoticia !== null ? (
 						<FirstNoticia noticia={this.state.firstNoticia} />
 					) : null}

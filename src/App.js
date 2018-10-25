@@ -248,6 +248,7 @@ class Filsa2018 extends Component {
                         colaboradores={this.matchColab(
                           parseInt(this.state.params.filsa2018_colabpage, 0)
                         )}
+                        eventos={this.state.params.filsa2018_eventosrapidos}
                       />
                     )}
                   />

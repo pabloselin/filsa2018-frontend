@@ -74,7 +74,6 @@ class Default extends Component {
 	componentDidMount() {
 		trackPage(this.props.location.pathname, this.props.seotitle);
 		this.jumpToHash();
-		console.log(this.props.location);
 	}
 
 	jumpToHash = () => {
