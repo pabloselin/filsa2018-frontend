@@ -1,5 +1,14 @@
 import React, { Component, Fragment } from "react";
-import { Tab } from "semantic-ui-react";
+import {
+	Tab,
+	Menu,
+	Label,
+	Responsive,
+	Button,
+	Icon,
+	Divider
+} from "semantic-ui-react";
+import { Link } from "react-router-dom";
 import Slider from "react-slick";
 import styled from "styled-components";
 import EventMini from "./EventMini";
@@ -99,7 +108,14 @@ class HomeEventos extends Component {
 
 		const panes = [
 			{
-				menuItem: "Hoy en FILSA",
+				menuItem: (
+					<Menu.Item key="today">
+						Hoy en FILSA{" "}
+						<Label>
+							{this.props.eventos[this.state.today].length}
+						</Label>
+					</Menu.Item>
+				),
 				render: () => (
 					<Tab.Pane>
 						{this.props.eventos[this.state.today].length > 3 ? (
@@ -113,7 +129,14 @@ class HomeEventos extends Component {
 				)
 			},
 			{
-				menuItem: "Mañana en FILSA",
+				menuItem: (
+					<Menu.Item key="tomorrow">
+						Mañana en FILSA{" "}
+						<Label>
+							{this.props.eventos[this.state.tomorrow].length}
+						</Label>
+					</Menu.Item>
+				),
 				render: () => (
 					<Tab.Pane>
 						{this.props.eventos[this.state.tomorrow].length > 3 ? (
@@ -125,9 +148,42 @@ class HomeEventos extends Component {
 						)}
 					</Tab.Pane>
 				)
+			},
+			{
+				menuItem: (
+					<Fragment key="programcomputer">
+						<Responsive {...Responsive.onlyComputer}>
+							<Menu.Item
+								key="program"
+								as={Link}
+								to="/programa-cultural/programacion/"
+							>
+								<Icon name="calendar" /> Programación
+							</Menu.Item>
+						</Responsive>
+					</Fragment>
+				),
+				render: () => ""
 			}
 		];
-		return <Tab menu={{ pointing: true }} panes={panes} />;
+		return (
+			<Fragment>
+				<Tab menu={{ pointing: true }} panes={panes} />
+				<Responsive {...Responsive.onlyMobile}>
+					<Divider hidden />
+					<Button
+						as={Link}
+						to="/programa-cultural/programacion/"
+						basic
+						fluid
+						color="red"
+						icon
+					>
+						<Icon name="arrow right" /> Ir a Programación
+					</Button>
+				</Responsive>
+			</Fragment>
+		);
 	}
 }
 

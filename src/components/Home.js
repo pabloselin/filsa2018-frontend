@@ -1,15 +1,13 @@
 import React, { Component } from "react";
-import {
-	Container,
-	Grid,
-	Divider
-} from "semantic-ui-react";
+import { Container, Grid, Divider, Responsive } from "semantic-ui-react";
 import Helmet from "react-helmet";
 import trackPage from "../utils/trackPage";
 import SocialHome from "./SocialHome";
 import FirstNoticia from "./FirstNoticia";
 import HomeEventos from "./HomeEventos";
 import ColaboradoresWidget from "./ColaboradoresWidget";
+import BuscaLibrosMini from "./BuscaLibrosMini";
+import BuscaExpositoresMini from "./BuscaExpositoresMini";
 import styled from "styled-components";
 import Noticia from "./Noticia";
 
@@ -25,6 +23,13 @@ const MainContainer = styled(Container)`
 const StyledSocialSection = styled.div`
 	background-color: #f0f0f0;
 	padding: 24px 0;
+`;
+
+const StyledSearchSection = styled.div`
+	background-color: #fafafa;
+	padding: 24px 0;
+	border-bottom: 1px solid #d9d2c4;
+	border-top: 1px solid #d9d2c4;
 `;
 
 class Home extends Component {
@@ -115,12 +120,24 @@ class Home extends Component {
 					<title>{this.props.title}</title>
 				</Helmet>
 				<MainContainer>
-					<HomeEventos eventos={this.props.eventos}/>
+					<HomeEventos eventos={this.props.eventos} />
 					{this.state.firstNoticia !== null ? (
 						<FirstNoticia noticia={this.state.firstNoticia} />
 					) : null}
 				</MainContainer>
 				<Divider hidden />
+				<StyledSearchSection>
+				<Container>
+					<Grid doubling columns={2}>
+						<Grid.Column>
+							<BuscaLibrosMini />
+						</Grid.Column>
+						<Grid.Column>
+							<BuscaExpositoresMini />
+						</Grid.Column>
+					</Grid>
+				</Container>
+				</StyledSearchSection>
 				<StyledSocialSection>
 					<Container>
 						<SocialHome
@@ -134,7 +151,13 @@ class Home extends Component {
 						/>
 					</Container>
 				</StyledSocialSection>
-				{this.props.colaboradores && <ColaboradoresWidget colaboradores={this.props.colaboradores} />}
+				<Responsive {...Responsive.onlyComputer}>
+					{this.props.colaboradores && (
+						<ColaboradoresWidget
+							colaboradores={this.props.colaboradores}
+						/>
+					)}
+				</Responsive>
 			</div>
 		);
 	}
