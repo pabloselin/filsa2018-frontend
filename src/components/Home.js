@@ -120,24 +120,25 @@ class Home extends Component {
 					<title>{this.props.title}</title>
 				</Helmet>
 				<MainContainer>
-					<HomeEventos eventos={this.props.eventos} />
-					<Divider hidden />
 					{this.state.firstNoticia !== null ? (
 						<FirstNoticia noticia={this.state.firstNoticia} />
 					) : null}
+					<Divider hidden />
+					<HomeEventos eventos={this.props.eventos} />
+					<Divider hidden />
 				</MainContainer>
 				<Divider hidden />
 				<StyledSearchSection>
-				<Container>
-					<Grid doubling columns={2}>
-						<Grid.Column>
-							<BuscaLibrosMini />
-						</Grid.Column>
-						<Grid.Column>
-							<BuscaExpositoresMini />
-						</Grid.Column>
-					</Grid>
-				</Container>
+					<Container>
+						<Grid doubling columns={2}>
+							<Grid.Column>
+								<BuscaLibrosMini />
+							</Grid.Column>
+							<Grid.Column>
+								<BuscaExpositoresMini />
+							</Grid.Column>
+						</Grid>
+					</Container>
 				</StyledSearchSection>
 				<StyledSocialSection>
 					<Container>

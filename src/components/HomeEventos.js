@@ -112,7 +112,11 @@ class HomeEventos extends Component {
 			{
 				menuItem: (
 					<Menu.Item key="today">
-						Hoy <Responsive {...Responsive.onlyComputer}>en FILSA{" "}</Responsive>
+						<span>Hoy</span>
+						<Responsive {...Responsive.onlyComputer}>
+							&nbsp;
+							en FILSA
+						</Responsive>
 						<Label>
 							{this.props.eventos[this.state.today].length}
 						</Label>
@@ -133,7 +137,11 @@ class HomeEventos extends Component {
 			{
 				menuItem: (
 					<Menu.Item key="tomorrow">
-						Mañana <Responsive {...Responsive.onlyComputer}>en FILSA{" "}</Responsive>
+						<span>Mañana</span>
+						<Responsive {...Responsive.onlyComputer}>
+							&nbsp;
+							en FILSA
+						</Responsive>
 						<Label>
 							{this.props.eventos[this.state.tomorrow].length}
 						</Label>
