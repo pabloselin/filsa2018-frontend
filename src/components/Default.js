@@ -10,6 +10,7 @@ import Loading from "./Loading";
 import styled from "styled-components";
 import editUrl from "../utils/editUrl";
 import SocialButtons from "./SocialButtons";
+import Galeria from "./Galeria";
 
 const SocialHome = Loadable({
   loader: () => import("./SocialHome"),
@@ -48,11 +49,6 @@ const Colaboradores = Loadable({
 
 const Jornadas = Loadable({
   loader: () => import("./Jornadas"),
-  loading: Loading
-});
-
-const Galeria = Loadable({
-  loader: () => import("./Galeria"),
   loading: Loading
 });
 
