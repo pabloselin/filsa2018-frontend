@@ -2,7 +2,8 @@ import React, { Component, Fragment } from "react";
 import { Responsive, Grid, Button, Icon } from "semantic-ui-react";
 import { FacebookProvider, Page } from "react-facebook";
 import { TwitterTimelineEmbed } from "react-twitter-embed";
-import InstagramEmbed from "react-instagram-embed";
+import YouTube from "react-youtube";
+import Helmet from "react-helmet";
 import styled from "styled-components";
 
 const SocialButton = styled(Button)`
@@ -11,8 +12,25 @@ const SocialButton = styled(Button)`
 	}
 `;
 
+const StyledInstagram = styled.div`
+	width: 100%;
+	iframe {
+		width: 100% !important;
+	}
+`;
+
 class SocialHome extends Component {
 	render() {
+		const opts = {
+			height: "360",
+			width: "100%",
+			playerVars: {
+				// https://developers.google.com/youtube/player_parameters
+				autoplay: 0,
+				rel: 0,
+				playlist: this.props.ytextra ? this.props.ytextra : null
+			}
+		};
 		return (
 			<Fragment>
 				<Responsive minWidth={769}>
@@ -34,11 +52,53 @@ class SocialHome extends Component {
 							/>
 						</Grid.Column>
 						<Grid.Column>
-							<InstagramEmbed
-								url={this.props.instagrampost}
-								hideCaption={true}
-							/>
+							<Helmet>
+								<script
+									async
+									src="https://www.instagram.com/embed.js"
+								/>
+							</Helmet>
+							<StyledInstagram>
+								<blockquote className="instagram-media">
+									<a
+										href={this.props.instagrampost}
+										target="_blank"
+									>
+										Instagram
+									</a>
+								</blockquote>
+							</StyledInstagram>
 						</Grid.Column>
+						{this.props.extra &&
+							this.props.flickralbum && (
+								<Fragment>
+									<Grid.Column width={8}>
+										<Helmet>
+											<script
+												async
+												src="//embedr.flickr.com/assets/client-code.js"
+												charset="utf-8"
+											/>
+										</Helmet>
+										<a
+											data-flickr-embed="true"
+											href={this.props.flickralbum}
+										>
+											<img
+												src="https://farm2.staticflickr.com/1906/44833839604_643c1d8e0c_z.jpg"
+												width="100%"
+												alt="Inauguración FILSA 2018"
+											/>
+										</a>
+									</Grid.Column>
+									<Grid.Column width={8}>
+										<YouTube
+											videoId={this.props.ytmain}
+											opts={opts}
+										/>
+									</Grid.Column>
+								</Fragment>
+							)}
 					</Grid>
 				</Responsive>
 				<Responsive {...Responsive.onlyMobile}>

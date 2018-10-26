@@ -204,6 +204,10 @@ class Default extends Component {
 								}
 								youtube={this.props.params.filsa2018_youtube}
 								flickr={this.props.params.filsa2018_flickr}
+								flickralbum={this.props.params.filsa2018_flickralbum}
+								ytmain={this.props.params.filsa2018_ytmain}
+								ytextra={this.props.params.filsa2018_ytextra}
+								extra={true}
 							/>
 						</Container>
 					);
