@@ -180,9 +180,10 @@ class Programa extends Component {
 		const loading = this.state.events !== null;
 		const showEventsTitle = <h3>{this.state.showing} actividades</h3>;
 		const showEvents = this.state.showEvents
-			? this.state.showEvents.map(evento => (
+			? this.state.showEvents.map((evento, key) => (
 					<Event
-						key={evento.id}
+						key={key}
+						id={evento.id}
 						title={evento.title}
 						fullday={evento.daykey}
 						data={evento}

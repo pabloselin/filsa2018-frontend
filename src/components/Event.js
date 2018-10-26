@@ -226,7 +226,7 @@ class Event extends Component {
 									</Button>
 								)}
 							{this.props.single !== true && showDesc}
-							{this.props.data.invitacion && (
+							{(this.props.data.invitacion && this.props.visitaguiada !== true) && (
 								<Button
 									icon
 									size="tiny"

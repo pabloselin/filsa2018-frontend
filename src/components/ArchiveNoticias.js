@@ -1,7 +1,6 @@
 import React, { Component, Fragment } from "react";
 import { Container, Grid, Divider } from "semantic-ui-react";
 import Helmet from "react-helmet";
-import ReactGA from "react-ga";
 import Noticia from "./Noticia";
 
 class ArchiveNoticias extends Component {
@@ -18,13 +17,6 @@ class ArchiveNoticias extends Component {
 				noticias: this.props.noticias
 			});
 		}
-	}
-
-	trackPage(page) {
-		ReactGA.set({
-			page
-		});
-		ReactGA.pageview(page);
 	}
 
 	componentDidMount() {

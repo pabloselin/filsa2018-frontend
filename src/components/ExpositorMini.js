@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Card, Label, Icon, List, Button, Grid } from "semantic-ui-react";
+import { Card, Label, Icon, List, Button } from "semantic-ui-react";
 import Image from "react-graceful-image";
 import styled from "styled-components";
 import config from "../config.json";
@@ -23,26 +23,24 @@ const ExtraExpositor = styled(Card.Content)`
 
 const ExpoHeader = styled(Card.Header)`
 	&&&&&& {
-		h2 {
-			color: #cc1012;
-			font-weight: 700;
-			font-size: 18px;
-			font-family: "Maitree", serif;
-			margin-bottom: 12px;
-		}
+		color: #cc1012;
+		margin-bottom: 12px;
 	}
 `;
 
 const ExpoCard = styled(Card)`
 	&&&& {
 		margin-bottom: 12px;
+		min-height: 160px;
 	}
 `;
 
 const LazyImage = styled(Image)`
-	max-width: 130px;
+	max-width: 100px;
 	height: auto;
-	float: right;
+	position: absolute;
+	right: 12px;
+	top: 12px;
 	@media screen and (max-width:768px) {
 		max-width: 60px;
 	}
@@ -118,9 +116,9 @@ class Expositor extends Component {
 		const expositorlogo = name => {
 			name = name.toLowerCase();
 			name = name.replace(/\s+/g, "-");
-			name = name.replace(/&+/g, "");
 			name = name.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
 			name = rutalogos + name + ".png";
+			console.log(name);
 			return name;
 		};
 
@@ -139,22 +137,17 @@ class Expositor extends Component {
 		return (
 			<ExpoCard fluid>
 				<Card.Content>
-					<Grid>
-						<Grid.Column as={ExpoHeader} width={10}>
-							<h2>{this.props.hit.EXPOSITOR}</h2>
-							<List>
-								<Icon name="map outline" /> Stand(s):{" "}
-								{this.handleStand(this.props.hit.STAND)}
-							</List>
-						</Grid.Column>
-						<Grid.Column width={6}>
-							<LazyImage
-								placeholderColor="transparent"
-								src={expositorlogo(this.props.hit.EXPOSITOR)}
-								noRetry={true}
-							/>
-						</Grid.Column>
-					</Grid>
+					<ExpoHeader>{this.props.hit.EXPOSITOR}</ExpoHeader>
+					<LazyImage
+						placeholderColor="transparent"
+						src={expositorlogo(this.props.hit.EXPOSITOR)}
+					/>
+					<Card.Content>
+						<List>
+							<Icon name="map outline" /> Stand(s):{" "}
+							{this.handleStand(this.props.hit.STAND)}
+						</List>
+					</Card.Content>
 					{this.state.showDesc && (
 						<ExtraExpositor>
 							<List>
@@ -198,6 +191,7 @@ class Expositor extends Component {
 										</List.Content>
 									</List.Item>
 								)}
+
 								{this.props.hit.DIRECCION && (
 									<List.Item>
 										<List.Icon name="map marker" />

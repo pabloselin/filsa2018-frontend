@@ -105,7 +105,7 @@ class BuscaExpositoresMini extends Component {
 		return (
 			<Container>
 				<ExpositoresHeader>
-					<Icon name="map outline" /> ¡Encuentra tu expositor en FILSA
+					<Icon name="home" /> ¡Encuentra tu expositor en FILSA
 					2018!
 				</ExpositoresHeader>
 				<InstantSearch

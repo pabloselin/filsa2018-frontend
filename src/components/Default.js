@@ -76,6 +76,7 @@ const StyledContainer = styled(Container)`
 const MainContentText = styled.div`
 	margin-bottom: 36px;
 	font-size: 18px;
+	overflow: hidden;
 	img {
 		max-width: 100%;
 		height: auto;

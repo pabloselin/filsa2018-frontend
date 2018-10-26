@@ -44,7 +44,7 @@ class Home extends Component {
 	}
 
 	componentDidMount() {
-		trackPage(this.props.location.pathname);
+		trackPage(this.props.location.pathname, this.props.title);
 		this.primeraNoticia();
 	}
 
@@ -124,12 +124,12 @@ class Home extends Component {
 						<FirstNoticia noticia={this.state.firstNoticia} />
 					) : null}
 					<Divider hidden />
-					<HomeEventos eventos={this.props.eventos} />
-					<Divider hidden />
 				</MainContainer>
 				<Divider hidden />
 				<StyledSearchSection>
 					<Container>
+						<HomeEventos eventos={this.props.eventos} />
+						<Divider hidden />
 						<Grid doubling columns={2}>
 							<Grid.Column>
 								<BuscaLibrosMini />

@@ -168,7 +168,7 @@ class HomeEventos extends Component {
 								as={Link}
 								to="/programa-cultural/programacion/"
 							>
-								<Icon name="calendar" /> Programación
+								<Icon name="calendar" /> Ver toda la Programación
 							</Menu.Item>
 						</Responsive>
 					</Fragment>

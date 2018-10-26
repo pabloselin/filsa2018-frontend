@@ -62,7 +62,7 @@ class Libro extends Component {
 					)}
 
 					<StyledCardMeta>
-						<Icon name="map outline" /> Stand:{" "}
+						<Icon name="map outline" /> Stand(s):{" "}
 						{this.filterStands(this.props.hit.STAND)}
 					</StyledCardMeta>
 				</Card.Content>
