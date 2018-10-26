@@ -57,16 +57,7 @@ class VisitasGuiadas extends Component {
 
 	componentDidUpdate(prevProps, prevState) {
 		if (this.state.events !== prevState.events) {
-			let oct = this.state.events.diasvisitasguiadas.octubre;
-			//let nov = this.state.events.diasvisitasguiadas.noviembre;
-			let curday = null;
-			for (let i = 0; i < oct.length; i++) {
-				if (oct[i][1] === "active") {
-					curday = oct[i][0].full;
-					break;
-				}
-			}
-			this.filterEvents(curday);
+			this.filterEvents(this.state.today);
 		}
 	}
 

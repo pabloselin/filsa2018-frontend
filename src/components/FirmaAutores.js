@@ -1,23 +1,11 @@
 import React, { Component } from "react";
-import { Container, Select, Tab, Responsive, Divider } from "semantic-ui-react";
+import { Container, Select, Divider } from "semantic-ui-react";
 import styled from "styled-components";
 import Loading from "./Loading";
 import Event from "./Event";
-import SearchEvents from "./SearchEvents";
 import Dias from "./Dias";
 import api from "../utils/api";
 
-const StyledTabPane = styled(Tab.Pane)`
-	&&&& {
-		border-width: 1px 0 0 0;
-	}
-	@media screen and (max-width: 769px) {
-		&&&& {
-			border-width: 0;
-			padding: 12px 0 0 0;
-		}
-	}
-`;
 
 const StyledContainer = styled(Container)`
 	&&& {
@@ -27,7 +15,7 @@ const StyledContainer = styled(Container)`
 	}
 `;
 
-class Programa extends Component {
+class FirmaAutores extends Component {
 	constructor(props) {
 		super(props);
 		let today = new Date();
@@ -47,7 +35,7 @@ class Programa extends Component {
 	}
 
 	componentDidMount() {
-		api.get("/filsa2018/v1/events/")
+		api.get("/filsa2018/v1/firma-de-autores/")
 			.then(res => {
 				this.setState({
 					events: res.data
@@ -63,11 +51,11 @@ class Programa extends Component {
 	}
 
 	dias() {
-		if (this.state.events.diaseventos !== null) {
+		if (this.state.events.diasfirmas !== null) {
 			return (
 				<Dias
 					trigger={this.changecurDay.bind(this)}
-					dias={this.state.events.diaseventos}
+					dias={this.state.events.diasfirmas}
 					curday={this.state.curday}
 				/>
 			);
@@ -185,77 +173,13 @@ class Programa extends Component {
 					/>
 			  ))
 			: null;
-
-		const panes = [
-			{
-				menuItem: {
-					content: "Por día",
-					icon: "calendar alternate outline",
-					key: "por-dia"
-				},
-				render: () => (
-					<StyledTabPane>
-						{this.dias()}
-						{showEventsTitle}
-						{showEvents}
-					</StyledTabPane>
-				)
-			},
-			{
-				menuItem: {
-					content: "Por tipo",
-					icon: "tags",
-					key: "por-tipo"
-				},
-				render: () => (
-					<StyledTabPane>
-						{this.tipos()}
-						{showEventsTitle}
-						{showEvents}
-					</StyledTabPane>
-				)
-			},
-			{
-				menuItem: {
-					content: "Buscar evento",
-					icon: "zoom",
-					key: "buscar"
-				},
-				render: () => (
-					<StyledTabPane>
-						<h2>Busca tu evento</h2>
-						<SearchEvents events={this.state.events} />
-					</StyledTabPane>
-				)
-			}
-		];
 		return (
 			<div>
 				{loading ? (
-					<StyledContainer>
-						<Responsive {...Responsive.onlyComputer}>
-							<Tab
-								onTabChange={this.resetEvents.bind(this)}
-								menuPosition="left"
-								menu={{
-									fluid: true,
-									vertical: true,
-									pointing: true
-								}}
-								panes={panes}
-							/>
-						</Responsive>
-						<Responsive {...Responsive.onlyMobile}>
-							<Tab
-								onTabChange={this.resetEvents.bind(this)}
-								menu={{
-									fluid: true,
-									pointing: true,
-									borderless: true
-								}}
-								panes={panes}
-							/>
-						</Responsive>
+					<StyledContainer text>
+						{this.dias()}
+						{showEventsTitle}
+						{showEvents}
 						<Divider hidden />
 					</StyledContainer>
 				) : (
@@ -266,4 +190,4 @@ class Programa extends Component {
 	}
 }
 
-export default Programa;
+export default FirmaAutores;

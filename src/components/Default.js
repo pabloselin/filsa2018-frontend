@@ -57,6 +57,11 @@ const VisitasGuiadas = Loadable({
   loading: Loading
 });
 
+const FirmaAutores = Loadable({
+  loader: () => import("./FirmaAutores"),
+  loading: Loading
+});
+
 const Title = styled.h1`
 	margin-top: 24px !important;
 	color: #cc1011;
@@ -168,6 +173,8 @@ class Default extends Component {
 					return <Invitados invitados={this.props.extrafields} />;
 				case "visitas-guiadas":
 					return <VisitasGuiadas />;
+				case "firmas":
+					return <FirmaAutores />;
 				case "buscalibros":
 					return <BuscaLibros />;
 				case "colaboradores":
