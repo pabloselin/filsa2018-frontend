@@ -91,12 +91,15 @@ class SocialHome extends Component {
 											/>
 										</a>
 									</Grid.Column>
-									<Grid.Column width={8}>
-										<YouTube
-											videoId={this.props.ytmain}
-											opts={opts}
-										/>
-									</Grid.Column>
+									{this.props.ytmain &&
+										this.props.ytextra && (
+											<Grid.Column width={8}>
+												<YouTube
+													videoId={this.props.ytmain}
+													opts={opts}
+												/>
+											</Grid.Column>
+										)}
 								</Fragment>
 							)}
 					</Grid>
