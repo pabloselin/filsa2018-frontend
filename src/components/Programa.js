@@ -132,29 +132,13 @@ class Programa extends Component {
 		});
 	}
 
-	cursos() {
-		if (this.state.events !== null) {
-			let options = this.state.events.cursos.map(curso => {
-				return { text: curso.name, value: curso.name };
-			});
-			const { curcurso } = this.state;
-			return (
-				<Select
-					placeholder="Escoge un curso"
-					options={options}
-					onChange={this.handleChange.bind(this)}
-					value={curcurso}
-				/>
-			);
-		}
-	}
-
 	tipos() {
 		if (this.state.events !== null) {
 			let tiposarray = Object.values(this.state.events.tipoevento);
 			let options = tiposarray.map((tipo, key) => {
 				return { text: tipo, value: tipo };
 			});
+			options.sort((a, b) => a.text.localeCompare(b.text));
 			const { curtipo } = this.state;
 			return (
 				<Select

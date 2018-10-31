@@ -209,7 +209,7 @@ class Filsa2018 extends Component {
               content={item.content}
               title={item.title}
               media={item.media}
-              otras_noticias={otrasnoticias}
+              otras_noticias={otrasnoticias.slice(0, 5)}
               seotitle={item.seotitle}
             />
           )}

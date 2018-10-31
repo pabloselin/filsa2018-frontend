@@ -82,7 +82,7 @@ class HomeEventos extends Component {
 			]
 		};
 
-		const todayEvents = this.props.eventos[this.state.today].map(
+		const todayEvents = this.props.eventos[this.state.today] ? this.props.eventos[this.state.today].map(
 			(evento, key) => (
 				<EventMini
 					key={evento.id}
@@ -93,9 +93,9 @@ class HomeEventos extends Component {
 					showday={false}
 				/>
 			)
-		);
+		) : <p>No hay eventos</p>;
 
-		const tomorrowEvents = this.props.eventos[this.state.tomorrow].map(
+		const tomorrowEvents = this.props.eventos[this.state.tomorrow] ? this.props.eventos[this.state.tomorrow].map(
 			(evento, key) => (
 				<EventMini
 					key={evento.id}
@@ -106,7 +106,7 @@ class HomeEventos extends Component {
 					showday={false}
 				/>
 			)
-		);
+		) : <p>No hay eventos</p>;
 
 		const panes = [
 			{
@@ -118,13 +118,13 @@ class HomeEventos extends Component {
 							en FILSA
 						</Responsive>
 						<Label>
-							{this.props.eventos[this.state.today].length}
+							{this.props.eventos[this.state.today] ? this.props.eventos[this.state.today].length : 0}
 						</Label>
 					</Menu.Item>
 				),
 				render: () => (
 					<Tab.Pane>
-						{this.props.eventos[this.state.today].length > 3 ? (
+						{this.props.eventos[this.state.today] && this.props.eventos[this.state.today].length > 3 ? (
 							<StyledSlider {...settings}>
 								{todayEvents}
 							</StyledSlider>
@@ -143,13 +143,13 @@ class HomeEventos extends Component {
 							en FILSA
 						</Responsive>
 						<Label>
-							{this.props.eventos[this.state.tomorrow].length}
+							{this.props.eventos[this.state.tomorrow] ? this.props.eventos[this.state.tomorrow].length : 0}
 						</Label>
 					</Menu.Item>
 				),
 				render: () => (
 					<Tab.Pane>
-						{this.props.eventos[this.state.tomorrow].length > 3 ? (
+						{this.props.eventos[this.state.tomorrow] && this.props.eventos[this.state.tomorrow].length > 3 ? (
 							<StyledSlider {...settings}>
 								{tomorrowEvents}
 							</StyledSlider>

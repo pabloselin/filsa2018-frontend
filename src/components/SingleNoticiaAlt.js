@@ -24,7 +24,7 @@ const TextContent = styled.div`
 
 const MainImg = styled.img`
 	margin-bottom: 24px;
-`
+`;
 
 const Title = styled.h1`
 	&& {
@@ -38,7 +38,7 @@ const Title = styled.h1`
 
 const AsideNoticias = styled(Grid.Column)`
 	margin-top: 36px;
-`
+`;
 
 const EditLink = styled.a`
 	font-family: sans-serif;
@@ -52,7 +52,7 @@ const SideNoticia = styled.div`
 	margin-bottom: 24px;
 	padding-bottom: 24px;
 	border-bottom: 1px solid #ccc;
-`
+`;
 
 class SingleNoticiaAlt extends Component {
 	componentDidMount() {
@@ -96,16 +96,16 @@ class SingleNoticiaAlt extends Component {
 					</Grid.Column>
 					<AsideNoticias mobile={16} computer={6}>
 						<h3>Más noticias</h3>
-						{this.props.otras_noticias.map( (noticia, key) => (
+						{this.props.otras_noticias.map((noticia, key) => (
 							<SideNoticia key={key}>
-							<Noticia
-								title={noticia.title}
-								link={"/noticias/" + noticia.slug + "/"}
-								slug={noticia.slug}
-								media={noticia.media}
-								content={noticia.content}
-								date={noticia.date}
-							/>
+								<Noticia
+									title={noticia.title}
+									link={"/noticias/" + noticia.slug + "/"}
+									slug={noticia.slug}
+									media={noticia.media}
+									content={noticia.content}
+									date={noticia.date}
+								/>
 							</SideNoticia>
 						))}
 					</AsideNoticias>
